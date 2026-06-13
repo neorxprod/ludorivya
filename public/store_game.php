@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 require_once __DIR__ . '/../src/bootstrap.php';
 
+require_login('login.php?redirect=create.php');
+
 if ($pdo === null) {
     flash('danger', 'Base de donnees non connectee.');
     redirect_to('index.php');
@@ -35,6 +37,7 @@ if ($coverUrl === '') {
 try {
     $pdo->beginTransaction();
 
+    // On cree un slug unique pour eviter deux URL identiques.
     $baseSlug = slugify($title);
     $slug = $baseSlug;
     $suffix = 2;
@@ -49,6 +52,7 @@ try {
         $suffix++;
     }
 
+    // Les insertions du jeu + plateformes + genres doivent reussir ensemble.
     $insertGame = $pdo->prepare("
         INSERT INTO games (studio_id, slug, title, description, release_date, age_rating, cover_url, live_players)
         VALUES (:studio_id, :slug, :title, :description, :release_date, :age_rating, :cover_url, :live_players)
@@ -94,4 +98,3 @@ try {
     flash('danger', 'Erreur pendant l ajout du jeu: ' . $exception->getMessage());
     redirect_to('create.php');
 }
-

@@ -62,8 +62,6 @@ $reviewStatement = $pdo->prepare("
 ");
 $reviewStatement->execute(['game_id' => $gameId]);
 $reviews = $reviewStatement->fetchAll();
-
-$users = $pdo->query('SELECT id, username FROM users ORDER BY username')->fetchAll();
 ?>
 
 <section class="detail-header mb-4">
@@ -132,33 +130,30 @@ $users = $pdo->query('SELECT id, username FROM users ORDER BY username')->fetchA
             <?php endif; ?>
         </div>
 
-        <form class="content-panel needs-validation" method="post" action="review_store.php" novalidate data-review-form>
-            <h2 class="h5">Ajouter un avis</h2>
-            <input type="hidden" name="game_id" value="<?= (int)$game['id'] ?>">
-            <div class="mb-3">
-                <label class="form-label" for="user_id">Utilisateur</label>
-                <select class="form-select" id="user_id" name="user_id" required>
-                    <option value="">Choisir...</option>
-                    <?php foreach ($users as $user): ?>
-                        <option value="<?= (int)$user['id'] ?>"><?= e($user['username']) ?></option>
-                    <?php endforeach; ?>
-                </select>
-                <div class="invalid-feedback">Choisis un utilisateur.</div>
+        <?php if (is_logged_in()): ?>
+            <form class="content-panel needs-validation" method="post" action="review_store.php" novalidate data-review-form>
+                <h2 class="h5">Ajouter mon avis</h2>
+                <input type="hidden" name="game_id" value="<?= (int)$game['id'] ?>">
+                <div class="mb-3">
+                    <label class="form-label" for="rating">Note /20</label>
+                    <input class="form-control" type="number" id="rating" name="rating" min="0" max="20" required>
+                    <div class="invalid-feedback">La note doit etre entre 0 et 20.</div>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label" for="comment">Commentaire</label>
+                    <textarea class="form-control" id="comment" name="comment" rows="4" maxlength="1000" required></textarea>
+                    <div class="invalid-feedback">Le commentaire est obligatoire.</div>
+                </div>
+                <button class="btn btn-primary w-100" type="submit">Publier l'avis</button>
+            </form>
+        <?php else: ?>
+            <div class="content-panel">
+                <h2 class="h5">Ajouter un avis</h2>
+                <p class="text-secondary">Il faut etre connecte pour publier une note sur ce jeu.</p>
+                <a class="btn btn-primary w-100" href="login.php?redirect=game.php?id=<?= (int)$game['id'] ?>">Se connecter</a>
             </div>
-            <div class="mb-3">
-                <label class="form-label" for="rating">Note /20</label>
-                <input class="form-control" type="number" id="rating" name="rating" min="0" max="20" required>
-                <div class="invalid-feedback">La note doit etre entre 0 et 20.</div>
-            </div>
-            <div class="mb-3">
-                <label class="form-label" for="comment">Commentaire</label>
-                <textarea class="form-control" id="comment" name="comment" rows="4" maxlength="1000" required></textarea>
-                <div class="invalid-feedback">Le commentaire est obligatoire.</div>
-            </div>
-            <button class="btn btn-primary w-100" type="submit">Publier l'avis</button>
-        </form>
+        <?php endif; ?>
     </aside>
 </div>
 
 <?php render_footer(); ?>
-

@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 require_once __DIR__ . '/../src/bootstrap.php';
 
+require_login('login.php?redirect=create.php');
+
 render_header('Ajouter un jeu', 'create');
 
 if ($pdo === null) {
@@ -103,4 +105,3 @@ $genres = $pdo->query('SELECT id, name FROM genres ORDER BY name')->fetchAll();
 </section>
 
 <?php render_footer(); ?>
-
