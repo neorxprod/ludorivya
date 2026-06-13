@@ -172,6 +172,56 @@ a {
     align-items: stretch;
 }
 
+.auth-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(320px, 440px);
+    gap: 1.5rem;
+    align-items: start;
+}
+
+.auth-intro {
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: clamp(1.25rem, 3vw, 2rem);
+    background:
+        linear-gradient(135deg, rgba(77, 212, 255, 0.12), rgba(128, 226, 126, 0.08)),
+        rgba(17, 20, 27, 0.88);
+}
+
+.auth-demo {
+    display: grid;
+    gap: 0.35rem;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    margin-top: 1.5rem;
+    padding: 1rem;
+    background: rgba(0, 0, 0, 0.18);
+}
+
+.auth-divider {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    gap: 0.75rem;
+    align-items: center;
+    margin: 1.25rem 0;
+    color: var(--muted);
+}
+
+.auth-divider::before,
+.auth-divider::after {
+    content: "";
+    height: 1px;
+    background: var(--line);
+}
+
+.profile-avatar {
+    width: min(260px, 100%);
+    min-height: 260px;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    object-fit: cover;
+}
+
 .detail-cover {
     min-height: 320px;
     border: 1px solid var(--line);
@@ -244,6 +294,10 @@ a {
 }
 
 @media (max-width: 767.98px) {
+    .auth-layout {
+        grid-template-columns: 1fr;
+    }
+
     .detail-header {
         grid-template-columns: 1fr;
     }
