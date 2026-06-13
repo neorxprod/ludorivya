@@ -9,6 +9,7 @@ DROP TABLE IF EXISTS reviews;
 DROP TABLE IF EXISTS library_entries;
 DROP TABLE IF EXISTS game_genres;
 DROP TABLE IF EXISTS game_platforms;
+DROP TABLE IF EXISTS oauth_accounts;
 DROP TABLE IF EXISTS user_profiles;
 DROP TABLE IF EXISTS games;
 DROP TABLE IF EXISTS users;
@@ -42,7 +43,22 @@ CREATE TABLE users (
     id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     username VARCHAR(60) NOT NULL UNIQUE,
     email VARCHAR(160) NOT NULL UNIQUE,
+    password_hash VARCHAR(255) NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB;
+
+-- Comptes OAuth prevus pour Google / Apple plus tard.
+-- Pour les activer vraiment, il faudra des cles OAuth et une URL HTTPS.
+CREATE TABLE oauth_accounts (
+    id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    user_id INT UNSIGNED NOT NULL,
+    provider ENUM('google', 'apple') NOT NULL,
+    provider_user_id VARCHAR(255) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    UNIQUE KEY uniq_oauth_provider_user (provider, provider_user_id),
+    CONSTRAINT fk_oauth_accounts_user
+        FOREIGN KEY (user_id) REFERENCES users(id)
+        ON DELETE CASCADE
 ) ENGINE=InnoDB;
 
 -- Relation 1-1: chaque utilisateur a au maximum un profil public.
@@ -159,10 +175,10 @@ INSERT INTO genres (name) VALUES
 ('Simulation'),
 ('Multijoueur');
 
-INSERT INTO users (username, email) VALUES
-('nora', 'nora@example.test'),
-('samir', 'samir@example.test'),
-('manel', 'manel@example.test');
+INSERT INTO users (username, email, password_hash) VALUES
+('nora', 'nora@example.test', '$2y$10$vxBVKoGUHEJDJ4pRoIf0ougUfbjNVCqE1vYHu9DaioX5gEpo9Io1K'),
+('samir', 'samir@example.test', '$2y$10$vxBVKoGUHEJDJ4pRoIf0ougUfbjNVCqE1vYHu9DaioX5gEpo9Io1K'),
+('manel', 'manel@example.test', '$2y$10$vxBVKoGUHEJDJ4pRoIf0ougUfbjNVCqE1vYHu9DaioX5gEpo9Io1K');
 
 INSERT INTO user_profiles (user_id, avatar_url, bio, favorite_platform) VALUES
 (1, 'https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=300&q=80', 'Fan de RPG et de mondes ouverts.', 'PC'),
@@ -199,4 +215,3 @@ INSERT INTO reviews (game_id, user_id, rating, comment) VALUES
 (2, 1, 18, 'Exploration agreable et bonne progression cooperative.'),
 (2, 3, 15, 'Bon jeu mais certaines recettes de craft sont longues.'),
 (4, 1, 16, 'Tres bon scenario et choix vraiment visibles.');
-
