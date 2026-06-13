@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 function e(?string $value): string
 {
+    // Petite fonction pratique pour eviter d'afficher du HTML dangereux.
     return htmlspecialchars($value ?? '', ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
 }
 
@@ -35,6 +36,20 @@ function redirect_to(string $path): void
     exit;
 }
 
+function is_logged_in(): bool
+{
+    return isset($_SESSION['user_id']);
+}
+
+function require_login(string $redirect = 'login.php'): void
+{
+    if (!is_logged_in()) {
+        // On garde les actions importantes pour les utilisateurs connectes.
+        flash('warning', 'Connecte-toi pour acceder a cette action.');
+        redirect_to($redirect);
+    }
+}
+
 function post_string(string $key, int $maxLength): string
 {
     $value = trim((string)($_POST[$key] ?? ''));
@@ -58,6 +73,7 @@ function post_int_array(string $key): array
         return [];
     }
 
+    // Les checkbox arrivent en tableau, donc on nettoie chaque valeur.
     return array_values(array_filter(array_map(static function ($value): ?int {
         $int = filter_var($value, FILTER_VALIDATE_INT);
         return $int === false ? null : $int;
@@ -76,6 +92,7 @@ function slugify(string $value): string
 function render_header(string $title, string $current = ''): void
 {
     $flash = pull_flash();
+    $connectedUsername = $_SESSION['user_username'] ?? null;
     ?>
     <!doctype html>
     <html lang="fr">
@@ -84,6 +101,7 @@ function render_header(string $title, string $current = ''): void
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title><?= e($title) ?> - Ludorivya</title>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
         <link href="assets/css/styles.css" rel="stylesheet">
     </head>
     <body>
@@ -100,6 +118,12 @@ function render_header(string $title, string $current = ''): void
                     <li class="nav-item"><a class="nav-link <?= current_page('platforms', $current) ?>" href="platforms.php">Plateformes</a></li>
                     <li class="nav-item"><a class="nav-link <?= current_page('users', $current) ?>" href="users.php">Joueurs</a></li>
                     <li class="nav-item"><a class="nav-link <?= current_page('stats', $current) ?>" href="stats.php">Statistiques</a></li>
+                    <?php if ($connectedUsername !== null): ?>
+                        <li class="nav-item"><a class="nav-link <?= current_page('profile', $current) ?>" href="profile.php"><i class="bi bi-person-circle"></i> <?= e((string)$connectedUsername) ?></a></li>
+                        <li class="nav-item"><a class="nav-link" href="logout.php">Deconnexion</a></li>
+                    <?php else: ?>
+                        <li class="nav-item"><a class="nav-link <?= current_page('login', $current) ?>" href="login.php">Connexion</a></li>
+                    <?php endif; ?>
                 </ul>
             </div>
         </div>

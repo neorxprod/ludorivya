@@ -19,8 +19,23 @@ $pdo = null;
 $databaseError = null;
 
 try {
+    // Le site continue d'afficher une page d'aide meme si MySQL est eteint.
     $pdo = Database::connect($config['database']);
 } catch (Throwable $exception) {
     $databaseError = $exception;
 }
 
+// Si un utilisateur est connecte, on garde ses infos a jour pour l'affichage.
+if ($pdo !== null && isset($_SESSION['user_id'])) {
+    $sessionStatement = $pdo->prepare('SELECT id, username, email FROM users WHERE id = :id');
+    $sessionStatement->execute(['id' => (int)$_SESSION['user_id']]);
+    $sessionUser = $sessionStatement->fetch();
+
+    if ($sessionUser) {
+        $_SESSION['user_username'] = $sessionUser['username'];
+        $_SESSION['user_email'] = $sessionUser['email'];
+    } else {
+        session_regenerate_id(true);
+        $_SESSION = [];
+    }
+}
