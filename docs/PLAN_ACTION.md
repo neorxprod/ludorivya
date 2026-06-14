@@ -4,13 +4,16 @@
 
 Nom final du projet: Ludorivya.
 
+Concept final: observatoire arcade des jeux multijoueurs avec statistiques live et arene 3D.
+
 Recherche exacte effectuee le 2026-06-09: aucun usage evident trouve pour ce nom dans les resultats consultes. On ne peut jamais garantir une unicite mondiale absolue, mais ce nom est suffisamment distinct pour un projet GitHub universitaire.
 
 ## Objectif
 
-Developper une application web dynamique sur le theme des jeux video avec:
+Developper une application web dynamique specialisee dans les jeux multijoueurs avec:
 
 - interface interactive,
+- arene 3D en JavaScript,
 - base relationnelle MySQL/MariaDB,
 - logique serveur PHP,
 - acces base via PDO,

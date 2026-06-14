@@ -2,15 +2,18 @@
 
 ![Banniere Ludorivya](docs/images/ludorivya-banner.svg)
 
-Ludorivya est une application web dynamique en **PHP 8**, **PDO** et **MySQL/MariaDB** pour gerer un catalogue de jeux video. Le projet est realise dans le cadre d'une SAE demandant une base relationnelle, une interface interactive, du JavaScript, Bootstrap et un depot Git avec des commits reguliers.
+Ludorivya est une application web dynamique en **PHP 8**, **PDO** et **MySQL/MariaDB**. Le concept est plus precis qu'un simple catalogue: c'est un observatoire arcade des jeux multijoueurs, avec joueurs live, plateformes, avis et une arene 3D interactive.
 
 ## Apercu du projet
 
 ![Schema visuel du projet](docs/images/schema-relations.svg)
 
+![Arene 3D desktop](docs/images/arena-desktop.png)
+
 Le site permet de:
 
 - consulter un catalogue de jeux video;
+- explorer une arene 3D generee avec Three.js;
 - rechercher un jeu par titre, description ou studio;
 - filtrer les jeux par plateforme;
 - voir une fiche detaillee avec studio, plateformes, genres et avis;
@@ -26,7 +29,7 @@ Le site permet de:
 | Partie | Technologie |
 | --- | --- |
 | Interface | HTML, CSS, Bootstrap 5 |
-| Interactions | JavaScript |
+| Interactions | JavaScript, Three.js |
 | Serveur | PHP 8.x |
 | Base de donnees | MySQL / MariaDB |
 | Acces BDD | PDO |
