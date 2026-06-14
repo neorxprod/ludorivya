@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 require_once __DIR__ . '/../src/bootstrap.php';
 
-render_header('Catalogue de jeux', 'home');
+render_header('Observatoire arcade', 'home');
 
 if ($pdo === null) {
     render_database_error($databaseError);
@@ -68,15 +68,16 @@ $games = $statement->fetchAll();
     <div class="hero-grid"></div>
     <div class="row align-items-center g-4 position-relative">
         <div class="col-lg-7">
-            <span class="badge text-bg-info mb-3">SAE PHP / PDO / MySQL</span>
-            <h1 class="display-5 fw-bold mb-3">Ludorivya</h1>
-            <p class="lead mb-0">Catalogue interactif de jeux video avec studios, plateformes, avis, bibliotheques utilisateur et statistiques relationnelles.</p>
+            <span class="badge text-bg-info mb-3">Observatoire arcade</span>
+            <h1 class="display-5 fw-bold mb-3">Ludorivya Arena</h1>
+            <p class="lead mb-3">Un site specialise dans les jeux multijoueurs: joueurs live, plateformes, notes et fiches detaillees, avec une carte 3D interactive.</p>
+            <a class="btn btn-primary btn-lg" href="arena.php"><i class="bi bi-stars"></i> Ouvrir l'arene 3D</a>
         </div>
         <div class="col-lg-5">
             <div class="live-panel">
                 <span class="small text-uppercase text-secondary">Tendance live</span>
                 <strong><?= number_format(array_sum(array_column($games, 'live_players')), 0, ',', ' ') ?></strong>
-                <span>joueurs suivis dans les donnees de demonstration</span>
+                <span>joueurs live suivis dans l'arene</span>
             </div>
         </div>
     </div>
@@ -138,4 +139,3 @@ $games = $statement->fetchAll();
 </section>
 
 <?php render_footer(); ?>
-

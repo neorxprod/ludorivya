@@ -114,6 +114,7 @@ function render_header(string $title, string $current = ''): void
             <div class="collapse navbar-collapse" id="mainNav">
                 <ul class="navbar-nav ms-auto gap-lg-2">
                     <li class="nav-item"><a class="nav-link <?= current_page('home', $current) ?>" href="index.php">Jeux</a></li>
+                    <li class="nav-item"><a class="nav-link <?= current_page('arena', $current) ?>" href="arena.php">Arena 3D</a></li>
                     <li class="nav-item"><a class="nav-link <?= current_page('create', $current) ?>" href="create.php">Ajouter</a></li>
                     <li class="nav-item"><a class="nav-link <?= current_page('platforms', $current) ?>" href="platforms.php">Plateformes</a></li>
                     <li class="nav-item"><a class="nav-link <?= current_page('users', $current) ?>" href="users.php">Joueurs</a></li>

@@ -293,6 +293,110 @@ a {
     background: rgba(255, 206, 106, 0.08);
 }
 
+.arena-shell {
+    display: grid;
+    grid-template-columns: minmax(280px, 0.75fr) minmax(0, 1.25fr);
+    gap: 1.5rem;
+    align-items: stretch;
+}
+
+.arena-copy,
+.arena-stage {
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    background: rgba(17, 20, 27, 0.88);
+    box-shadow: 0 16px 48px rgba(0, 0, 0, 0.25);
+}
+
+.arena-copy {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: clamp(1.25rem, 3vw, 2rem);
+}
+
+.arena-kpis {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.75rem;
+    margin-top: 1.25rem;
+}
+
+.arena-kpis div,
+.legend-item {
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 0.9rem;
+    background: rgba(255, 255, 255, 0.03);
+}
+
+.arena-kpis span {
+    display: block;
+    color: var(--muted);
+    font-size: 0.8rem;
+    text-transform: uppercase;
+}
+
+.arena-kpis strong {
+    display: block;
+    margin-top: 0.2rem;
+    font-size: clamp(1.6rem, 4vw, 2.5rem);
+    line-height: 1;
+}
+
+.arena-stage {
+    position: relative;
+    min-height: min(72vh, 680px);
+    overflow: hidden;
+}
+
+#arenaCanvas {
+    display: block;
+    width: 100%;
+    height: 100%;
+    min-height: min(72vh, 680px);
+}
+
+.arena-hud {
+    position: absolute;
+    right: 1rem;
+    bottom: 1rem;
+    width: min(360px, calc(100% - 2rem));
+    border: 1px solid rgba(77, 212, 255, 0.3);
+    border-radius: 8px;
+    padding: 1rem;
+    background: rgba(8, 9, 13, 0.78);
+    backdrop-filter: blur(14px);
+}
+
+.legend-item {
+    display: flex;
+    gap: 0.65rem;
+    align-items: center;
+}
+
+.legend-dot {
+    width: 0.8rem;
+    height: 0.8rem;
+    border-radius: 999px;
+    box-shadow: 0 0 18px currentColor;
+}
+
+.dot-cyan {
+    color: var(--cyan);
+    background: var(--cyan);
+}
+
+.dot-amber {
+    color: var(--amber);
+    background: var(--amber);
+}
+
+.dot-rose {
+    color: var(--rose);
+    background: var(--rose);
+}
+
 @media (max-width: 767.98px) {
     .auth-layout {
         grid-template-columns: 1fr;
@@ -304,6 +408,15 @@ a {
 
     .detail-cover {
         min-height: 220px;
+    }
+
+    .arena-shell {
+        grid-template-columns: 1fr;
+    }
+
+    .arena-stage,
+    #arenaCanvas {
+        min-height: 520px;
     }
 }
 
