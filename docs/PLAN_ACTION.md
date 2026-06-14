@@ -30,8 +30,7 @@ Developper une application web dynamique sur le theme des jeux video avec:
 
 - Creer le depot GitHub `ludorivya`.
 - Pousser le depot local.
-- Ajouter les noms du binome/trinome dans le README.
+- Ajouter le nom de l'auteur dans le README si demande par l'enseignant.
 - Importer `database/schema.sql` dans MariaDB.
 - Tester toutes les pages avec XAMPP.
 - Verifier que le lien GitHub est renseigne dans le formulaire de l'enseignant.
-

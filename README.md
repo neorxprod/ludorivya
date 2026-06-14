@@ -55,14 +55,14 @@ Le projet ajoute aussi:
 2. Importer la base:
 
 ```powershell
-cd "C:\Users\rosyp\Documents\LUDORIVYA"
+cd "C:\chemin\vers\LUDORIVYA"
 Get-Content database\schema.sql -Raw | C:\xampp\mysql\bin\mysql.exe -u root
 ```
 
 3. Le projet est relie a XAMPP avec:
 
 ```text
-C:\xampp\htdocs\ludorivya -> C:\Users\rosyp\Documents\LUDORIVYA
+C:\xampp\htdocs\ludorivya -> C:\chemin\vers\LUDORIVYA
 ```
 
 4. Ouvrir le site:
@@ -85,7 +85,7 @@ Les boutons Google et Apple sont presents dans l'interface, mais ils sont en mod
 ```text
 LUDORIVYA/
   .github/
-    PULL_REQUEST_TEMPLATE.md
+    workflows/php.yml
   config/
     database.example.php
   database/
@@ -111,7 +111,6 @@ LUDORIVYA/
     bootstrap.php
     Database.php
     functions.php
-  CONTRIBUTING.md
   README.md
 ```
 
@@ -125,21 +124,6 @@ LUDORIVYA/
 - Fichier `config/database.php` ignore par Git.
 - Validation cote JavaScript et cote serveur.
 
-## Collaboration Git
-
-On ne travaille pas directement sur `main`.
-
-Chaque membre doit:
-
-1. creer une branche;
-2. faire une petite modification logique;
-3. faire un commit en francais;
-4. pousser sa branche;
-5. ouvrir une Pull Request;
-6. attendre une validation avant fusion.
-
-Le guide complet est dans [CONTRIBUTING.md](CONTRIBUTING.md).
-
 ## Verification automatique
 
 Le projet contient une action GitHub dans:
@@ -148,7 +132,7 @@ Le projet contient une action GitHub dans:
 .github/workflows/php.yml
 ```
 
-Elle verifie la syntaxe de tous les fichiers PHP a chaque Pull Request. C'est utile pour travailler a plusieurs sans casser la branche principale.
+Elle verifie la syntaxe de tous les fichiers PHP a chaque push sur GitHub.
 
 ## Bonus NoSQL
 
@@ -165,6 +149,5 @@ Le fichier [docs/BONUS_NOSQL.md](docs/BONUS_NOSQL.md) explique pourquoi certaine
 - [x] JavaScript de validation.
 - [x] Documentation SAE.
 - [ ] Depot GitHub public.
-- [ ] Branch protection sur `main`.
 - [ ] Vraies captures d'ecran finales dans le README.
 - [ ] OAuth Google/Apple reel.
