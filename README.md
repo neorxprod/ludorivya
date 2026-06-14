@@ -1,140 +1,170 @@
 # Ludorivya
 
-Ludorivya est une application web dynamique de gestion de jeux video, realisee pour une SAE PHP/PDO/MySQL. Le site permet de consulter un catalogue de jeux, filtrer par plateforme, afficher des fiches detaillees, ajouter des jeux, publier des avis, consulter les joueurs et visualiser des statistiques SQL.
+![Banniere Ludorivya](docs/images/ludorivya-banner.svg)
 
-Nom du depot GitHub recommande: `ludorivya`
+Ludorivya est une application web dynamique en **PHP 8**, **PDO** et **MySQL/MariaDB** pour gerer un catalogue de jeux video. Le projet est realise dans le cadre d'une SAE demandant une base relationnelle, une interface interactive, du JavaScript, Bootstrap et un depot Git avec des commits reguliers.
 
-## Technologies
+## Apercu du projet
 
-- PHP 8.x
-- PDO pour l'acces a la base de donnees
-- MySQL / MariaDB
-- JavaScript pour validation et interactions
-- Bootstrap 5 pour l'interface
-- Git pour le versionnage
+![Schema visuel du projet](docs/images/schema-relations.svg)
 
-## Fonctionnalites
+Le site permet de:
 
-- Catalogue de jeux avec recherche.
-- Filtre par plateforme.
-- Fiche detaillee d'un jeu.
-- Ajout d'un nouveau jeu.
-- Ajout ou mise a jour d'un avis joueur.
-- Page plateformes avec nombre de jeux lies.
-- Page joueurs montrant profils et bibliotheques.
-- Page statistiques basee sur des jointures SQL.
+- consulter un catalogue de jeux video;
+- rechercher un jeu par titre, description ou studio;
+- filtrer les jeux par plateforme;
+- voir une fiche detaillee avec studio, plateformes, genres et avis;
+- creer un compte local;
+- se connecter et se deconnecter;
+- ajouter un jeu quand on est connecte;
+- publier un avis quand on est connecte;
+- consulter les joueurs et leurs bibliotheques;
+- afficher des statistiques basees sur des jointures SQL.
 
-## Relations SQL obligatoires
+## Technologies utilisees
 
-Le projet respecte les trois types de relations demandes:
+| Partie | Technologie |
+| --- | --- |
+| Interface | HTML, CSS, Bootstrap 5 |
+| Interactions | JavaScript |
+| Serveur | PHP 8.x |
+| Base de donnees | MySQL / MariaDB |
+| Acces BDD | PDO |
+| Versionnage | Git + GitHub |
 
-- Relation 1-1: `users` vers `user_profiles`.
-- Relation 1-N: `studios` vers `games`.
-- Relation N-N: `games` vers `platforms` via `game_platforms`.
+## Relations SQL demandees
 
-Le projet contient aussi:
+Le sujet demande au minimum une relation 1-1, une relation 1-N et une relation N-N.
 
-- N-N `games` vers `genres` via `game_genres`.
-- N-N enrichie `users` vers `games` via `library_entries`.
-- Avis `reviews` entre utilisateurs et jeux.
+| Type | Tables | Explication |
+| --- | --- | --- |
+| 1-1 | `users` / `user_profiles` | chaque utilisateur a un seul profil public |
+| 1-N | `studios` / `games` | un studio peut creer plusieurs jeux |
+| N-N | `games` / `platforms` | un jeu peut sortir sur plusieurs plateformes |
+
+Le projet ajoute aussi:
+
+- `games` / `genres` en N-N;
+- `users` / `games` via `library_entries`;
+- `reviews` pour les avis des joueurs.
 
 ## Installation avec XAMPP
 
-1. Placer ou garder le projet dans:
+1. Demarrer **Apache** et **MySQL** dans le panneau XAMPP.
 
-```text
-C:\Users\rosyp\Documents\LUDORIVYA
-```
-
-2. Verifier PHP et MariaDB:
+2. Importer la base:
 
 ```powershell
-C:\xampp\php\php.exe -v
-C:\xampp\mysql\bin\mysql.exe --version
+cd "C:\Users\rosyp\Documents\LUDORIVYA"
+Get-Content database\schema.sql -Raw | C:\xampp\mysql\bin\mysql.exe -u root
 ```
 
-3. Creer la base de donnees et importer les donnees:
-
-```powershell
-C:\xampp\mysql\bin\mysql.exe -u root < database\schema.sql
-```
-
-4. Verifier la configuration locale:
+3. Le projet est relie a XAMPP avec:
 
 ```text
-config/database.php
+C:\xampp\htdocs\ludorivya -> C:\Users\rosyp\Documents\LUDORIVYA
 ```
 
-Par defaut, le projet utilise:
-
-- host: `127.0.0.1`
-- port: `3306`
-- database: `ludorivya`
-- user: `root`
-- password: vide
-
-5. Lancer le serveur local depuis le dossier du projet:
-
-```powershell
-C:\xampp\php\php.exe -S localhost:8080 -t public
-```
-
-6. Ouvrir:
+4. Ouvrir le site:
 
 ```text
-http://localhost:8080
+http://localhost/ludorivya/public/
 ```
+
+## Compte de test
+
+```text
+Email: nora@example.test
+Mot de passe: Ludorivya2026!
+```
+
+Les boutons Google et Apple sont presents dans l'interface, mais ils sont en mode preparation. Pour les activer vraiment, il faudra creer des cles OAuth, utiliser HTTPS et brancher les callbacks.
 
 ## Structure du projet
 
 ```text
 LUDORIVYA/
+  .github/
+    PULL_REQUEST_TEMPLATE.md
   config/
     database.example.php
-    database.php
   database/
     schema.sql
   docs/
     BONUS_NOSQL.md
     COMMITS.md
+    PLAN_ACTION.md
     SCHEMA_RELATIONNEL.md
+    images/
   public/
     assets/
       css/styles.css
       js/app.js
     index.php
+    login.php
+    register.php
+    profile.php
     game.php
     create.php
-    store_game.php
-    review_store.php
-    platforms.php
-    users.php
     stats.php
   src/
     bootstrap.php
     Database.php
     functions.php
+  CONTRIBUTING.md
   README.md
 ```
 
-## Securite
+## Securite appliquee
 
-- Les requetes SQL qui utilisent des entrees utilisateur passent par des requetes preparees PDO.
-- Les sorties HTML sont echappees avec la fonction `e()`.
-- Les formulaires sont valides cote JavaScript et cote serveur.
-- Le fichier `config/database.php` est ignore par Git.
+- Requetes preparees PDO pour les donnees venant des formulaires.
+- Echappement HTML avec la fonction `e()`.
+- Mots de passe stockes avec `password_hash`.
+- Verification avec `password_verify`.
+- Sessions PHP avec regeneration de session apres connexion.
+- Fichier `config/database.php` ignore par Git.
+- Validation cote JavaScript et cote serveur.
 
-## Limites et scalabilite
+## Collaboration Git
 
-Le bonus NoSQL est documente dans:
+On ne travaille pas directement sur `main`.
+
+Chaque membre doit:
+
+1. creer une branche;
+2. faire une petite modification logique;
+3. faire un commit en francais;
+4. pousser sa branche;
+5. ouvrir une Pull Request;
+6. attendre une validation avant fusion.
+
+Le guide complet est dans [CONTRIBUTING.md](CONTRIBUTING.md).
+
+## Verification automatique
+
+Le projet contient une action GitHub dans:
 
 ```text
-docs/BONUS_NOSQL.md
+.github/workflows/php.yml
 ```
 
-Il explique pourquoi certaines requetes relationnelles deviennent couteuses quand le catalogue grandit fortement, puis propose une alternative conceptuelle avec MongoDB.
+Elle verifie la syntaxe de tous les fichiers PHP a chaque Pull Request. C'est utile pour travailler a plusieurs sans casser la branche principale.
 
-## Auteurs
+## Bonus NoSQL
 
-Projet a realiser en binome ou trinome selon les consignes de la SAE.
+Le fichier [docs/BONUS_NOSQL.md](docs/BONUS_NOSQL.md) explique pourquoi certaines requetes relationnelles deviennent couteuses avec beaucoup de jeux, beaucoup d'avis et beaucoup de statistiques live. Il propose une alternative conceptuelle avec MongoDB, sans implementation.
 
+## Etat du projet
+
+- [x] Base SQL relationnelle.
+- [x] Donnees de demonstration.
+- [x] Pages principales.
+- [x] Connexion locale.
+- [x] Inscription locale.
+- [x] Interface Bootstrap.
+- [x] JavaScript de validation.
+- [x] Documentation SAE.
+- [ ] Depot GitHub public.
+- [ ] Branch protection sur `main`.
+- [ ] Vraies captures d'ecran finales dans le README.
+- [ ] OAuth Google/Apple reel.

@@ -1,0 +1,50 @@
+<svg width="1200" height="520" viewBox="0 0 1200 520" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="520" fill="#0B0D12"/>
+  <style>
+    .box { fill: #151A23; stroke: #2A3140; stroke-width: 2; }
+    .title { fill: #F4F7FB; font: 700 24px Segoe UI, Arial, sans-serif; }
+    .text { fill: #98A2B3; font: 18px Segoe UI, Arial, sans-serif; }
+    .tag { fill: #4DD4FF; font: 700 16px Segoe UI, Arial, sans-serif; }
+    .line { stroke: #4DD4FF; stroke-width: 4; }
+    .line2 { stroke: #80E27E; stroke-width: 4; }
+    .line3 { stroke: #FFCE6A; stroke-width: 4; }
+  </style>
+  <text x="60" y="55" class="title">Schema relationnel simplifie</text>
+
+  <rect x="90" y="105" width="230" height="120" rx="10" class="box"/>
+  <text x="120" y="150" class="title">studios</text>
+  <text x="120" y="185" class="text">1 studio</text>
+
+  <rect x="485" y="105" width="230" height="120" rx="10" class="box"/>
+  <text x="515" y="150" class="title">games</text>
+  <text x="515" y="185" class="text">plusieurs jeux</text>
+
+  <rect x="880" y="105" width="230" height="120" rx="10" class="box"/>
+  <text x="910" y="150" class="title">platforms</text>
+  <text x="910" y="185" class="text">PC, console, mobile</text>
+
+  <rect x="485" y="315" width="230" height="120" rx="10" class="box"/>
+  <text x="515" y="360" class="title">users</text>
+  <text x="515" y="395" class="text">joueurs inscrits</text>
+
+  <rect x="90" y="315" width="230" height="120" rx="10" class="box"/>
+  <text x="120" y="360" class="title">user_profiles</text>
+  <text x="120" y="395" class="text">profil public</text>
+
+  <rect x="880" y="315" width="230" height="120" rx="10" class="box"/>
+  <text x="910" y="360" class="title">reviews</text>
+  <text x="910" y="395" class="text">avis et notes</text>
+
+  <path d="M320 165H485" class="line"/>
+  <text x="365" y="145" class="tag">1-N</text>
+
+  <path d="M715 165H880" class="line2"/>
+  <text x="760" y="145" class="tag">N-N</text>
+
+  <path d="M485 375H320" class="line3"/>
+  <text x="365" y="355" class="tag">1-1</text>
+
+  <path d="M715 375H880" class="line2"/>
+  <text x="760" y="355" class="tag">avis</text>
+</svg>
+
