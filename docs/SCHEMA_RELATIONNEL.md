@@ -1,91 +1,92 @@
-# Schema relationnel
+# Schéma relationnel
 
 ## Objectif
 
-Ludorivya gere des jeux video, leurs studios, plateformes, genres, avis et bibliotheques utilisateur.
+Ludorivya est une médiathèque de jeux vidéo : jeux, studios, plateformes, genres, avis des joueurs et bibliothèques personnelles.
+
+Le schéma complet est dans [`database/schema.sql`](../database/schema.sql) (10 tables).
+
+## Diagramme
+
+![Schéma relationnel](images/schema-relations.svg)
+
+```text
+studios   (1) ---- (N) games                          <- 1-N demandee
+users     (1) ---- (1) user_profiles                  <- 1-1 demandee (PK partagee)
+games     (N) ---- (N) platforms  via game_platforms  <- N-N demandee (PK composite)
+games     (N) ---- (N) genres     via game_genres     <- 2e N-N (filtrage)
+users     (N) ---- (N) games      via library_entries <- N-N porteuse (statut, heures)
+users     (N) ---- (N) games      via reviews         <- N-N porteuse (note, commentaire)
+users     (1) ---- (N) games      via created_by      <- qui a ajoute la fiche
+platforms (1) ---- (N) user_profiles                  <- plateforme preferee (FK)
+```
 
 ## Tables
 
 ### `studios`
 
-Contient les studios de developpement.
+Studios de développement.
 
-- `id` cle primaire.
-- `name` nom unique.
-- `country` pays.
-- `founded_year` annee de creation.
-- `website` site officiel.
+- `id` clé primaire.
+- `name` nom unique, `country`, `founded_year`, `website`.
 
 ### `games`
 
-Contient les jeux.
+Les jeux du catalogue.
 
-- `id` cle primaire.
-- `studio_id` cle etrangere vers `studios`.
-- `slug` identifiant lisible unique.
-- `title` titre.
-- `description` resume.
-- `release_date` date de sortie.
-- `age_rating` age conseille.
-- `cover_url` image.
-- `live_players` valeur de demonstration.
+- `id` clé primaire.
+- `studio_id` clé étrangère **NOT NULL** vers `studios` (`ON DELETE RESTRICT` : impossible de supprimer un studio qui a encore des jeux).
+- `created_by` clé étrangère **NULL** vers `users` (`ON DELETE SET NULL`) : l'utilisateur qui a ajouté la fiche. Seul lui peut la modifier ou la supprimer.
+- `title`, `description`, `release_date`, `age_rating` (CHECK 3–18), `cover_url` (facultatif).
 
-Relation 1-N: un studio peut avoir plusieurs jeux, mais un jeu a un studio principal.
+**Relation 1-N** : un studio produit plusieurs jeux, chaque jeu a un studio principal.
 
 ### `users` et `user_profiles`
 
-`users` stocke les comptes de demonstration.
+- `users` : identité et connexion (`username` et `email` uniques, `password_hash` bcrypt).
+- `user_profiles` : présentation publique (`bio`, `favorite_platform_id`).
 
-`user_profiles` stocke le profil public.
+**Relation 1-1** : `user_profiles.user_id` est à la fois **clé primaire et clé étrangère** (PK partagée). C'est la forme la plus stricte du 1-1 : un utilisateur ne peut pas avoir deux profils.
 
-Relation 1-1: un utilisateur a au maximum un profil, grace a `user_profiles.user_id` qui est a la fois cle primaire et cle etrangere.
+`favorite_platform_id` est une clé étrangère vers `platforms` (`ON DELETE SET NULL`) : pas de texte libre, pas d'incohérence possible.
 
-### `platforms`
+### `platforms` et `game_platforms`
 
-Contient les plateformes de jeu.
+**Relation N-N** : un jeu sort sur plusieurs plateformes, une plateforme accueille plusieurs jeux.
 
-### `game_platforms`
-
-Table de liaison entre jeux et plateformes.
-
-Relation N-N: un jeu peut sortir sur plusieurs plateformes, et une plateforme peut contenir plusieurs jeux.
+`game_platforms` a une **clé primaire composite** `(game_id, platform_id)` — aucun doublon possible — et porte l'attribut de liaison `release_region`.
 
 ### `genres` et `game_genres`
 
-Deuxieme relation N-N entre jeux et genres.
+Deuxième relation N-N, clé primaire composite `(game_id, genre_id)`. Elle sert au **filtrage du catalogue par genre**.
 
 ### `library_entries`
 
-Bibliotheque utilisateur.
+La bibliothèque personnelle : relation **N-N porteuse d'attributs** entre `users` et `games` :
 
-Relation N-N enrichie entre `users` et `games`, avec des attributs:
+- `status` (souhaité, en cours, terminé, abandonné),
+- `playtime_hours`,
+- `added_at`.
 
-- statut,
-- temps de jeu,
-- date d'ajout.
+La contrainte `UNIQUE (user_id, game_id)` garantit qu'un jeu n'apparaît qu'une fois par bibliothèque, et permet le `INSERT ... ON DUPLICATE KEY UPDATE` côté PHP (ajout ou mise à jour en une requête).
 
 ### `reviews`
 
-Avis des joueurs sur les jeux.
+Avis des joueurs : note `rating` (CHECK 0–20) + `comment`.
 
-Un utilisateur peut noter plusieurs jeux. Un jeu peut recevoir plusieurs avis. La contrainte `UNIQUE(game_id, user_id)` evite deux avis du meme utilisateur sur le meme jeu.
+La contrainte `UNIQUE (game_id, user_id)` impose **un seul avis par joueur et par jeu** (modifiable via upsert).
 
-## Diagramme simplifie
+## Choix d'intégrité
 
-```text
-studios (1) ---- (N) games
-games   (N) ---- (N) platforms via game_platforms
-games   (N) ---- (N) genres    via game_genres
-users   (1) ---- (1) user_profiles
-users   (N) ---- (N) games     via library_entries
-users   (N) ---- (N) games     via reviews
-```
+| Cas | Politique | Pourquoi |
+|---|---|---|
+| Supprimer un studio qui a des jeux | `RESTRICT` | on ne perd jamais un jeu par accident |
+| Supprimer un jeu | `CASCADE` | ses liaisons, avis et entrées de bibliothèque partent avec |
+| Supprimer un utilisateur | `CASCADE` profil/avis/bibliothèque, `SET NULL` sur `games.created_by` | ses contributions au catalogue restent |
+| Supprimer une plateforme | `SET NULL` sur la plateforme préférée | le profil survit |
 
-## Requetes SQL interessantes
+## Remarques techniques
 
-- Catalogue avec studio, plateformes et note moyenne.
-- Filtre par plateforme avec `EXISTS`.
-- Statistiques de jeux par plateforme.
-- Classement par note moyenne.
-- Bibliotheque utilisateur avec jointure `users`, `library_entries`, `games`.
-
+- Toutes les tables : `ENGINE=InnoDB`, `utf8mb4_unicode_ci`.
+- Les contraintes `CHECK` sont appliquées à partir de MySQL 8.0.16 / MariaDB 10.4 ; les bornes sont de toute façon revalidées côté PHP.
+- Le script est rejouable : `CREATE DATABASE IF NOT EXISTS` + `DROP TABLE IF EXISTS` dans l'ordre des dépendances.
