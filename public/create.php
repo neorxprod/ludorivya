@@ -6,7 +6,7 @@ require_once __DIR__ . '/../src/bootstrap.php';
 
 require_login('login.php?redirect=create.php');
 
-render_header('Ajouter un jeu', 'create');
+render_header('Ajouter un jeu', 'games');
 
 if ($pdo === null) {
     render_database_error($databaseError);
@@ -19,87 +19,86 @@ $platforms = $pdo->query('SELECT id, name FROM platforms ORDER BY name')->fetchA
 $genres = $pdo->query('SELECT id, name FROM genres ORDER BY name')->fetchAll();
 ?>
 
-<section class="content-panel">
-    <div class="d-flex flex-column flex-lg-row justify-content-between gap-3 mb-4">
-        <div>
-            <h1 class="h3 mb-1">Ajouter un jeu</h1>
-            <p class="text-secondary mb-0">Le formulaire valide les donnees cote client et le serveur revalide avant insertion PDO.</p>
-        </div>
-        <a class="btn btn-outline-light align-self-lg-start" href="index.php">Annuler</a>
-    </div>
+<section class="container page-head">
+    <p class="eyebrow reveal">Contribution</p>
+    <h1 class="page-title reveal">Ajouter un jeu<span class="text-soft"> au catalogue.</span></h1>
+    <p class="page-lead reveal">La fiche t’appartiendra : toi seul pourras la modifier ou la supprimer.</p>
+</section>
 
-    <form class="needs-validation" method="post" action="store_game.php" novalidate data-game-form>
+<section class="container narrow-form">
+    <form class="content-panel needs-validation reveal" method="post" action="game_store.php" novalidate data-game-form>
+        <?= csrf_field() ?>
+
         <div class="row g-3">
-            <div class="col-lg-8">
-                <label class="form-label" for="title">Titre</label>
-                <input class="form-control" id="title" name="title" maxlength="150" required>
-                <div class="invalid-feedback">Le titre est obligatoire.</div>
+            <div class="col-md-8">
+                <label class="form-label" for="title">Titre du jeu</label>
+                <input class="form-control" id="title" name="title" required minlength="2" maxlength="150" placeholder="Ex : Starlane Runners">
+                <div class="invalid-feedback">Un titre d’au moins 2 caractères est requis.</div>
             </div>
-            <div class="col-lg-4">
+            <div class="col-md-4">
                 <label class="form-label" for="release_date">Date de sortie</label>
-                <input class="form-control" type="date" id="release_date" name="release_date" required>
-                <div class="invalid-feedback">La date est obligatoire.</div>
+                <input class="form-control" id="release_date" name="release_date" type="date" required>
+                <div class="invalid-feedback">Une date de sortie est requise.</div>
             </div>
-            <div class="col-lg-6">
-                <label class="form-label" for="studio_id">Studio</label>
+            <div class="col-md-8">
+                <label class="form-label" for="studio_id">Studio (relation 1-N)</label>
                 <select class="form-select" id="studio_id" name="studio_id" required>
-                    <option value="">Choisir...</option>
+                    <option value="">Choisir un studio…</option>
                     <?php foreach ($studios as $studio): ?>
                         <option value="<?= (int)$studio['id'] ?>"><?= e($studio['name']) ?></option>
                     <?php endforeach; ?>
                 </select>
-                <div class="invalid-feedback">Choisis un studio.</div>
+                <div class="invalid-feedback">Choisis le studio du jeu.</div>
             </div>
-            <div class="col-lg-3">
-                <label class="form-label" for="age_rating">Age conseille</label>
-                <input class="form-control" type="number" id="age_rating" name="age_rating" min="3" max="18" value="12" required>
-                <div class="invalid-feedback">Age entre 3 et 18.</div>
-            </div>
-            <div class="col-lg-3">
-                <label class="form-label" for="live_players">Joueurs live</label>
-                <input class="form-control" type="number" id="live_players" name="live_players" min="0" max="100000000" value="0" required>
-                <div class="invalid-feedback">Nombre positif attendu.</div>
+            <div class="col-md-4">
+                <label class="form-label" for="age_rating">Âge minimum</label>
+                <input class="form-control" id="age_rating" name="age_rating" type="number" min="3" max="18" required value="3">
+                <div class="invalid-feedback">Entre 3 et 18.</div>
             </div>
             <div class="col-12">
-                <label class="form-label" for="cover_url">URL image de couverture</label>
-                <input class="form-control" type="url" id="cover_url" name="cover_url" maxlength="500" placeholder="https://...">
+                <label class="form-label" for="cover_url">URL de la jaquette <span class="text-soft">(facultatif)</span></label>
+                <input class="form-control" id="cover_url" name="cover_url" type="url" maxlength="500" placeholder="https://…">
+                <div class="invalid-feedback">L’URL doit commencer par http:// ou https://.</div>
             </div>
             <div class="col-12">
                 <label class="form-label" for="description">Description</label>
-                <textarea class="form-control" id="description" name="description" rows="5" maxlength="2000" required></textarea>
-                <div class="invalid-feedback">La description est obligatoire.</div>
+                <textarea class="form-control" id="description" name="description" rows="4" required minlength="10" maxlength="5000" placeholder="Présente le jeu en quelques phrases…"></textarea>
+                <div class="invalid-feedback">Une description d’au moins 10 caractères est requise.</div>
             </div>
-            <div class="col-lg-6">
+
+            <div class="col-md-6">
                 <fieldset>
-                    <legend class="h6">Plateformes au lancement</legend>
-                    <div class="choice-grid">
+                    <legend class="form-label">Plateformes <span class="text-soft">(relation N-N)</span></legend>
+                    <div class="choice-grid" data-required-group="platform_ids[]">
                         <?php foreach ($platforms as $platform): ?>
-                            <label class="form-check">
-                                <input class="form-check-input" type="checkbox" name="platform_ids[]" value="<?= (int)$platform['id'] ?>">
-                                <span class="form-check-label"><?= e($platform['name']) ?></span>
-                            </label>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" name="platform_ids[]" value="<?= (int)$platform['id'] ?>" id="platform-<?= (int)$platform['id'] ?>">
+                                <label class="form-check-label" for="platform-<?= (int)$platform['id'] ?>"><?= e($platform['name']) ?></label>
+                            </div>
                         <?php endforeach; ?>
                     </div>
-                    <p class="small text-secondary mt-2">Relation N-N via <code>game_platforms</code>.</p>
+                    <div class="invalid-feedback d-block group-feedback" hidden>Choisis au moins une plateforme.</div>
                 </fieldset>
             </div>
-            <div class="col-lg-6">
+            <div class="col-md-6">
                 <fieldset>
-                    <legend class="h6">Genres</legend>
-                    <div class="choice-grid">
+                    <legend class="form-label">Genres <span class="text-soft">(relation N-N)</span></legend>
+                    <div class="choice-grid" data-required-group="genre_ids[]">
                         <?php foreach ($genres as $genre): ?>
-                            <label class="form-check">
-                                <input class="form-check-input" type="checkbox" name="genre_ids[]" value="<?= (int)$genre['id'] ?>">
-                                <span class="form-check-label"><?= e($genre['name']) ?></span>
-                            </label>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" name="genre_ids[]" value="<?= (int)$genre['id'] ?>" id="genre-<?= (int)$genre['id'] ?>">
+                                <label class="form-check-label" for="genre-<?= (int)$genre['id'] ?>"><?= e($genre['name']) ?></label>
+                            </div>
                         <?php endforeach; ?>
                     </div>
-                    <p class="small text-secondary mt-2">Deuxieme relation N-N via <code>game_genres</code>.</p>
+                    <div class="invalid-feedback d-block group-feedback" hidden>Choisis au moins un genre.</div>
                 </fieldset>
             </div>
-            <div class="col-12 d-grid d-md-flex justify-content-md-end">
-                <button class="btn btn-primary btn-lg" type="submit">Enregistrer le jeu</button>
-            </div>
+        </div>
+
+        <div class="d-flex gap-2 mt-4">
+            <button class="btn btn-accent" type="submit"><i class="bi bi-plus-lg"></i> Ajouter le jeu</button>
+            <a class="btn btn-ghost" href="games.php">Annuler</a>
         </div>
     </form>
 </section>

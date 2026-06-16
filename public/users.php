@@ -12,84 +12,91 @@ if ($pdo === null) {
     exit;
 }
 
-$users = $pdo->query("
+// Joueurs + profil (relation 1-1) + plateforme preferee (FK) + agregats
+// sur la bibliotheque et les avis. Les emails restent prives.
+$usersStatement = $pdo->query("
     SELECT
         u.id,
         u.username,
-        u.email,
-        up.avatar_url,
+        u.created_at,
         up.bio,
-        up.favorite_platform,
-        COUNT(le.id) AS library_count,
-        COALESCE(SUM(le.playtime_hours), 0) AS total_playtime
+        p.name AS favorite_platform_name,
+        (SELECT COUNT(*) FROM library_entries le WHERE le.user_id = u.id) AS library_count,
+        (SELECT COALESCE(SUM(le.playtime_hours), 0) FROM library_entries le WHERE le.user_id = u.id) AS total_hours,
+        (SELECT COUNT(*) FROM reviews r WHERE r.user_id = u.id) AS review_count
     FROM users u
     LEFT JOIN user_profiles up ON up.user_id = u.id
-    LEFT JOIN library_entries le ON le.user_id = u.id
-    GROUP BY u.id, u.username, u.email, up.avatar_url, up.bio, up.favorite_platform
-    ORDER BY u.username
-")->fetchAll();
+    LEFT JOIN platforms p ON p.id = up.favorite_platform_id
+    ORDER BY total_hours DESC, u.username ASC
+");
+$players = $usersStatement->fetchAll();
 
-$libraryStatement = $pdo->query("
-    SELECT u.username, g.title, le.status, le.playtime_hours
+// Activite recente des bibliotheques (N-N porteuse affichee publiquement).
+$activityStatement = $pdo->query("
+    SELECT u.username, g.id AS game_id, g.title, le.status, le.playtime_hours, le.added_at
     FROM library_entries le
     INNER JOIN users u ON u.id = le.user_id
     INNER JOIN games g ON g.id = le.game_id
-    ORDER BY u.username, le.added_at DESC
+    ORDER BY le.added_at DESC, le.id DESC
+    LIMIT 8
 ");
-$libraryEntries = $libraryStatement->fetchAll();
+$activity = $activityStatement->fetchAll();
 ?>
 
-<section class="mb-4">
-    <h1 class="h3">Joueurs et profils</h1>
-    <p class="text-secondary">Cette page montre la relation 1-1 entre <code>users</code> et <code>user_profiles</code>, puis la bibliotheque N-N entre joueurs et jeux.</p>
+<section class="container page-head">
+    <p class="eyebrow reveal">Communauté</p>
+    <h1 class="page-title reveal">Les joueurs<span class="text-soft"> de Ludorivya.</span></h1>
+    <p class="page-lead reveal">Profils publics, bibliothèques et temps de jeu — sans données privées.</p>
 </section>
 
-<section class="row g-3 mb-4">
-    <?php foreach ($users as $user): ?>
-        <article class="col-md-6 col-xl-4">
-            <div class="content-panel h-100">
-                <div class="d-flex gap-3">
-                    <img class="avatar" src="<?= e($user['avatar_url']) ?>" alt="">
+<section class="container">
+    <div class="player-grid">
+        <?php foreach ($players as $i => $player): ?>
+            <article class="player-card content-panel reveal" style="--reveal-delay: <?= ($i % 3) * 90 ?>ms">
+                <div class="review-quote-head">
+                    <span class="avatar-initial" aria-hidden="true"><?= e(mb_strtoupper(mb_substr($player['username'], 0, 1))) ?></span>
                     <div>
-                        <h2 class="h5 mb-1"><?= e($user['username']) ?></h2>
-                        <p class="small text-secondary mb-2"><?= e($user['favorite_platform']) ?></p>
+                        <strong><?= e($player['username']) ?></strong>
+                        <span class="review-quote-game">membre depuis <?= e(substr((string)$player['created_at'], 0, 4)) ?></span>
                     </div>
+                    <?php if (!empty($player['favorite_platform_name'])): ?>
+                        <span class="chip"><?= e($player['favorite_platform_name']) ?></span>
+                    <?php endif; ?>
                 </div>
-                <p class="mt-3 mb-3"><?= e($user['bio']) ?></p>
-                <div class="d-flex justify-content-between text-secondary small">
-                    <span><?= (int)$user['library_count'] ?> jeux</span>
-                    <span><?= number_format((float)$user['total_playtime'], 1, ',', ' ') ?> h</span>
+                <?php if (!empty($player['bio'])): ?>
+                    <p class="text-soft mt-3 mb-3"><?= e($player['bio']) ?></p>
+                <?php endif; ?>
+                <div class="player-stats">
+                    <div><strong><?= (int)$player['library_count'] ?></strong><span>jeux suivis</span></div>
+                    <div><strong><?= number_format((float)$player['total_hours'], 0, ',', ' ') ?></strong><span>heures</span></div>
+                    <div><strong><?= (int)$player['review_count'] ?></strong><span>avis</span></div>
                 </div>
-            </div>
-        </article>
-    <?php endforeach; ?>
-</section>
-
-<section class="content-panel">
-    <h2 class="h4">Bibliotheques utilisateur</h2>
-    <div class="table-responsive">
-        <table class="table table-dark table-hover align-middle">
-            <thead>
-            <tr>
-                <th>Joueur</th>
-                <th>Jeu</th>
-                <th>Statut</th>
-                <th class="text-end">Temps de jeu</th>
-            </tr>
-            </thead>
-            <tbody>
-            <?php foreach ($libraryEntries as $entry): ?>
-                <tr>
-                    <td><?= e($entry['username']) ?></td>
-                    <td><?= e($entry['title']) ?></td>
-                    <td><?= e($entry['status']) ?></td>
-                    <td class="text-end"><?= number_format((float)$entry['playtime_hours'], 1, ',', ' ') ?> h</td>
-                </tr>
-            <?php endforeach; ?>
-            </tbody>
-        </table>
+            </article>
+        <?php endforeach; ?>
     </div>
+
+    <?php if ($activity !== []): ?>
+        <div class="content-panel reveal mt-4">
+            <h2 class="h4 mb-3"><i class="bi bi-activity"></i> Activité récente des bibliothèques</h2>
+            <div class="table-responsive">
+                <table class="table align-middle mb-0">
+                    <thead>
+                        <tr><th>Joueur</th><th>Jeu</th><th>Statut</th><th class="text-end">Heures</th></tr>
+                    </thead>
+                    <tbody>
+                        <?php foreach ($activity as $entry): ?>
+                            <tr>
+                                <td><?= e($entry['username']) ?></td>
+                                <td><a href="game.php?id=<?= (int)$entry['game_id'] ?>"><?= e($entry['title']) ?></a></td>
+                                <td><span class="status-badge status-<?= e($entry['status']) ?>"><?= e(library_status_label((string)$entry['status'])) ?></span></td>
+                                <td class="text-end"><?= number_format((float)$entry['playtime_hours'], 1, ',', ' ') ?></td>
+                            </tr>
+                        <?php endforeach; ?>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    <?php endif; ?>
 </section>
 
 <?php render_footer(); ?>
-
