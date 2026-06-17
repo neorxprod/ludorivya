@@ -1,39 +1,29 @@
-# Plan d'action conforme SAE
+# Plan d'action SAE
 
-## Nom
+## Concept
 
-Nom final du projet: Ludorivya.
+**Ludorivya** : une médiathèque de jeux vidéo. Catalogue consultable par tous, et pour les joueurs connectés : avis (un par jeu), bibliothèque personnelle (statut + temps de jeu) et contribution au catalogue.
 
-Concept final: observatoire arcade des jeux multijoueurs avec statistiques live et arene 3D.
+## Objectifs techniques
 
-Recherche exacte effectuee le 2026-06-09: aucun usage evident trouve pour ce nom dans les resultats consultes. On ne peut jamais garantir une unicite mondiale absolue, mais ce nom est suffisamment distinct pour un projet GitHub universitaire.
+- Base relationnelle MySQL/MariaDB avec relations 1-1, 1-N et N-N réellement utilisées.
+- PHP 8 + PDO : requêtes préparées partout, transactions pour les écritures multi-tables.
+- Sécurité : CSRF sur tous les formulaires, mots de passe hachés, sessions durcies, validation serveur systématique.
+- CRUD complet : jeux (créer/lire/modifier/supprimer), avis, bibliothèque, profil.
+- Interface : Bootstrap 5 + design system personnalisé, JavaScript pour la validation et les interactions.
+- Git : commits réguliers et explicites, en français.
 
-## Objectif
+## Priorités d'évaluation
 
-Developper une application web dynamique specialisee dans les jeux multijoueurs avec:
+1. Modélisation relationnelle solide (25 %).
+2. PHP/PDO propre avec requêtes préparées (25 %).
+3. Relations SQL visibles dans l'application (20 %).
+4. Commits Git réguliers (15 %).
+5. README complet (10 %).
+6. Bonus NoSQL (+5 %).
 
-- interface interactive,
-- arene 3D en JavaScript,
-- base relationnelle MySQL/MariaDB,
-- logique serveur PHP,
-- acces base via PDO,
-- design Bootstrap,
-- versionnage Git.
+## Avant le rendu final
 
-## Priorites d'evaluation
-
-1. Modelisation relationnelle solide.
-2. PHP/PDO propre avec requetes preparees.
-3. Relations SQL visibles dans l'application.
-4. Commits Git reguliers.
-5. README complet.
-6. Bonus NoSQL clair.
-
-## Travail restant avant rendu final
-
-- Creer le depot GitHub `ludorivya`.
-- Pousser le depot local.
-- Ajouter le nom de l'auteur dans le README si demande par l'enseignant.
-- Importer `database/schema.sql` dans MariaDB.
-- Tester toutes les pages avec XAMPP.
-- Verifier que le lien GitHub est renseigne dans le formulaire de l'enseignant.
+- Vérifier que le dépôt GitHub est à jour et public.
+- Tester l'installation complète depuis zéro avec XAMPP (import du schéma, navigation, compte de démo).
+- Vérifier que le lien du dépôt est renseigné dans le formulaire de l'enseignant.
