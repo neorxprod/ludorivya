@@ -216,4 +216,200 @@
     document.querySelectorAll('[data-filter-form] [data-auto-submit]').forEach((select) => {
         select.addEventListener('change', () => select.closest('form').requestSubmit());
     });
+
+    /* ---------- Titres reveles mot par mot (blur-text) ---------- */
+
+    document.querySelectorAll('[data-blur-text]').forEach((el) => {
+        const words = el.textContent.trim().split(/\s+/);
+        el.textContent = '';
+        words.forEach((word, i) => {
+            const span = document.createElement('span');
+            span.className = 'blur-word';
+            span.style.setProperty('--word-delay', `${i * 90}ms`);
+            span.textContent = word;
+            el.appendChild(span);
+        });
+        el.classList.add('blur-ready', 'reveal');
+        // S'il est deja a l'ecran, on le revele tout de suite.
+        if (el.getBoundingClientRect().top < window.innerHeight) {
+            el.classList.add('revealed');
+        } else if ('IntersectionObserver' in window && !reducedMotion) {
+            const io = new IntersectionObserver((entries) => {
+                entries.forEach((entry) => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('revealed');
+                        io.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.2 });
+            io.observe(el);
+        } else {
+            el.classList.add('revealed');
+        }
+    });
+
+    /* ---------- Particules flottantes (canvas) ---------- */
+
+    document.querySelectorAll('[data-particles]').forEach((canvas) => {
+        if (reducedMotion) {
+            return;
+        }
+        const context = canvas.getContext('2d');
+        const colors = ['rgba(139,92,246,', 'rgba(196,132,252,', 'rgba(34,211,238,', 'rgba(255,255,255,'];
+        let particles = [];
+
+        const resize = () => {
+            canvas.width = canvas.offsetWidth;
+            canvas.height = canvas.offsetHeight;
+            particles = Array.from({ length: Math.min(80, Math.floor(canvas.width / 16)) }, () => ({
+                x: Math.random() * canvas.width,
+                y: Math.random() * canvas.height,
+                radius: 0.6 + Math.random() * 1.8,
+                speed: 0.15 + Math.random() * 0.45,
+                drift: (Math.random() - 0.5) * 0.2,
+                color: colors[Math.floor(Math.random() * colors.length)],
+                alpha: 0.2 + Math.random() * 0.5,
+            }));
+        };
+
+        const tick = () => {
+            context.clearRect(0, 0, canvas.width, canvas.height);
+            particles.forEach((p) => {
+                p.y -= p.speed;
+                p.x += p.drift;
+                if (p.y < -4) { p.y = canvas.height + 4; p.x = Math.random() * canvas.width; }
+                context.beginPath();
+                context.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+                context.fillStyle = p.color + p.alpha + ')';
+                context.fill();
+            });
+            requestAnimationFrame(tick);
+        };
+
+        resize();
+        window.addEventListener('resize', resize, { passive: true });
+        requestAnimationFrame(tick);
+    });
+
+    /* ---------- Mode versus ---------- */
+
+    const arena = document.querySelector('[data-versus]');
+    if (arena) {
+        const stage = arena.querySelector('[data-versus-stage]');
+        const cards = Array.from(arena.querySelectorAll('[data-versus-card]'));
+        const isLogged = arena.dataset.logged === '1';
+        const csrf = arena.dataset.csrf || '';
+        let busy = false;
+
+        const setHud = (selector, value) => {
+            const el = arena.querySelector(selector);
+            if (el && value !== undefined && value !== null) {
+                el.textContent = String(value);
+                const block = el.closest('.hud-block');
+                if (block) {
+                    block.classList.remove('pop');
+                    void block.offsetWidth;
+                    block.classList.add('pop');
+                }
+            }
+        };
+
+        // Injecte la nouvelle paire renvoyee par le serveur et rejoue le slam.
+        const loadPair = (pair) => {
+            cards.forEach((card, i) => {
+                const game = pair[i];
+                card.dataset.gameId = String(game.id);
+                card.dataset.gameTitle = game.title;
+                card.querySelector('[data-versus-img]').src = game.cover_url;
+                card.querySelector('[data-versus-img]').alt = 'Jaquette de ' + game.title;
+                card.querySelector('[data-versus-title]').textContent = game.title;
+                card.querySelector('[data-versus-meta]').textContent = game.studio_name + (game.genre_names ? ' · ' + game.genre_names : '');
+                card.querySelector('[data-versus-elo]').textContent = String(game.elo);
+                const delta = card.querySelector('[data-versus-delta]');
+                delta.className = 'versus-delta';
+                delta.textContent = '';
+                card.classList.remove('winner', 'loser');
+                card.disabled = !isLogged;
+                // Rejoue l'animation d'entree.
+                const slam = card.classList.contains('versus-left') ? 'versus-left' : 'versus-right';
+                card.classList.remove(slam);
+                void card.offsetWidth;
+                card.classList.add(slam);
+            });
+            busy = false;
+        };
+
+        const vote = async (winnerCard) => {
+            if (busy || !isLogged) {
+                return;
+            }
+            busy = true;
+            const loserCard = cards.find((c) => c !== winnerCard);
+
+            // Feedback immediat : flash + vainqueur / perdant.
+            stage.classList.remove('flash');
+            void stage.offsetWidth;
+            stage.classList.add('flash');
+            winnerCard.classList.add('winner');
+            loserCard.classList.add('loser');
+            cards.forEach((c) => { c.disabled = true; });
+
+            const body = new FormData();
+            body.append('ajax', '1');
+            body.append('csrf_token', csrf);
+            body.append('winner_id', winnerCard.dataset.gameId);
+            body.append('loser_id', loserCard.dataset.gameId);
+
+            try {
+                const response = await fetch('duel_store.php', { method: 'POST', body });
+                const data = await response.json();
+
+                if (!data.ok) {
+                    if (data.login) {
+                        window.location.href = 'login.php?redirect=versus.php';
+                        return;
+                    }
+                    busy = false;
+                    winnerCard.classList.remove('winner');
+                    loserCard.classList.remove('loser');
+                    cards.forEach((c) => { c.disabled = false; });
+                    return;
+                }
+
+                // Deltas Elo flottants + mise a jour des compteurs.
+                const winDelta = winnerCard.querySelector('[data-versus-delta]');
+                winDelta.textContent = '+' + data.delta;
+                winDelta.classList.add('show-gain');
+                winnerCard.querySelector('[data-versus-elo]').textContent = String(data.winner.elo);
+
+                const loseDelta = loserCard.querySelector('[data-versus-delta]');
+                loseDelta.textContent = '-' + data.delta;
+                loseDelta.classList.add('show-loss');
+                loserCard.querySelector('[data-versus-elo]').textContent = String(data.loser.elo);
+
+                const duelsEl = arena.querySelector('[data-hud-duels]');
+                if (duelsEl) {
+                    const current = parseInt(duelsEl.textContent.replace(/\s/g, ''), 10) || 0;
+                    setHud('[data-hud-duels]', (current + 1).toLocaleString('fr-FR'));
+                }
+                setHud('[data-hud-streak]', data.streak);
+                setHud('[data-hud-xp]', data.xp);
+                setHud('[data-hud-level]', data.level);
+
+                // Duel suivant apres l'animation de victoire.
+                setTimeout(() => loadPair(data.next), 1000);
+            } catch (error) {
+                busy = false;
+                cards.forEach((c) => { c.disabled = false; });
+            }
+        };
+
+        cards.forEach((card) => card.addEventListener('click', () => vote(card)));
+
+        // Vote au clavier : fleche gauche / fleche droite.
+        document.addEventListener('keydown', (event) => {
+            if (event.key === 'ArrowLeft') { vote(cards[0]); }
+            if (event.key === 'ArrowRight') { vote(cards[1]); }
+        });
+    }
 })();

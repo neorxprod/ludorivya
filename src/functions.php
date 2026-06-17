@@ -268,6 +268,38 @@ function library_status_label(string $status): string
     };
 }
 
+// Ajoute de l'XP a un joueur (duel, avis, contribution au catalogue).
+function award_xp(PDO $pdo, int $userId, int $amount): void
+{
+    $statement = $pdo->prepare('UPDATE users SET xp = xp + :xp WHERE id = :id');
+    $statement->execute(['xp' => max(0, $amount), 'id' => $userId]);
+}
+
+// Niveau d'un joueur a partir de son XP : palier de 250 XP, simple et lisible.
+function level_from_xp(int $xp): int
+{
+    return 1 + intdiv(max(0, $xp), 250);
+}
+
+// Progression (0 a 100) dans le niveau courant, pour les barres d'XP.
+function level_progress(int $xp): int
+{
+    return (int)round((max(0, $xp) % 250) / 250 * 100);
+}
+
+// Effet "flamme" facon Splaze : trois calques du meme texte (deux flous
+// anime, un net) tous distordus par le filtre SVG #flame-filter injecte
+// une fois dans le header. Le texte reste lisible pour les lecteurs d'ecran.
+function flame_text(string $text): string
+{
+    $safe = e($text);
+    return '<span class="flame">'
+        . '<span class="flame-glow flame-glow-1" aria-hidden="true">' . $safe . '</span>'
+        . '<span class="flame-glow flame-glow-2" aria-hidden="true">' . $safe . '</span>'
+        . '<span class="flame-core">' . $safe . '</span>'
+        . '</span>';
+}
+
 /* =========================================================
    Rendu : layout commun (header / footer)
    ========================================================= */
@@ -291,6 +323,17 @@ function render_header(string $title, string $current = '', bool $fullBleed = fa
         <link href="assets/css/styles.css" rel="stylesheet">
     </head>
     <body>
+    <!-- Filtre SVG reutilise par tous les textes "flamme" (effet Splaze). -->
+    <svg class="flame-filter-def" aria-hidden="true" focusable="false">
+        <defs>
+            <filter id="flame-filter" x="-20%" y="-40%" width="140%" height="200%">
+                <feTurbulence type="fractalNoise" baseFrequency="0.015 0.08" numOctaves="3" seed="2">
+                    <animate attributeName="seed" from="1" to="100" dur="8s" repeatCount="indefinite"></animate>
+                </feTurbulence>
+                <feDisplacementMap in="SourceGraphic" scale="6" xChannelSelector="R" yChannelSelector="G"></feDisplacementMap>
+            </filter>
+        </defs>
+    </svg>
     <header class="site-header" data-site-header>
         <nav class="navbar navbar-expand-lg" aria-label="Navigation principale">
             <div class="container">
@@ -302,8 +345,9 @@ function render_header(string $title, string $current = '', bool $fullBleed = fa
                     <ul class="navbar-nav mx-auto gap-lg-1">
                         <li class="nav-item"><a class="nav-link <?= current_page('home', $current) ?>" href="index.php">Accueil</a></li>
                         <li class="nav-item"><a class="nav-link <?= current_page('games', $current) ?>" href="games.php">Jeux</a></li>
+                        <li class="nav-item"><a class="nav-link nav-link-hot <?= current_page('versus', $current) ?>" href="versus.php">Versus</a></li>
+                        <li class="nav-item"><a class="nav-link <?= current_page('rankings', $current) ?>" href="rankings.php">Classements</a></li>
                         <li class="nav-item"><a class="nav-link <?= current_page('users', $current) ?>" href="users.php">Joueurs</a></li>
-                        <li class="nav-item"><a class="nav-link <?= current_page('stats', $current) ?>" href="stats.php">Statistiques</a></li>
                     </ul>
                     <div class="d-flex align-items-center gap-2 nav-actions">
                         <?php if ($connectedUsername !== null): ?>
@@ -357,7 +401,8 @@ function render_footer(): void
                 </div>
                 <nav class="footer-links" aria-label="Liens du pied de page">
                     <a href="games.php">Catalogue</a>
-                    <a href="users.php">Joueurs</a>
+                    <a href="versus.php">Versus</a>
+                    <a href="rankings.php">Classements</a>
                     <a href="stats.php">Statistiques</a>
                 </nav>
             </div>
@@ -392,10 +437,14 @@ function render_game_card(array $game, int $revealDelay = 0): void
                 <?php else: ?>
                     <div class="game-card-placeholder" aria-hidden="true"><?= e(mb_substr((string)$game['title'], 0, 1)) ?></div>
                 <?php endif; ?>
-                <span class="game-card-rating" title="Note moyenne sur 20">
+                <span class="game-card-rating" title="Note moyenne des joueurs sur 20">
                     <i class="bi bi-star-fill"></i>
                     <?= $game['average_rating'] !== null ? format_rating((string)$game['average_rating']) : 'NR' ?>
                 </span>
+                <?php if (isset($game['metascore']) && $game['metascore'] !== null): ?>
+                    <?php $ms = (int)$game['metascore']; ?>
+                    <span class="game-card-metascore <?= $ms >= 75 ? 'ms-good' : ($ms >= 50 ? 'ms-mid' : 'ms-bad') ?>" title="Note presse (Metascore)"><?= $ms ?></span>
+                <?php endif; ?>
             </div>
             <div class="game-card-body">
                 <h3 class="game-card-title"><?= e($game['title']) ?></h3>
