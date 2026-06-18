@@ -91,6 +91,7 @@ $sql = "
         g.title,
         g.cover_url,
         g.release_date,
+        g.metascore,
         s.name AS studio_name,
         (SELECT ROUND(AVG(r.rating), 1) FROM reviews r WHERE r.game_id = g.id) AS average_rating,
         (SELECT COUNT(*) FROM reviews r WHERE r.game_id = g.id) AS review_count,

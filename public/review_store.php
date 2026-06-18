@@ -49,6 +49,12 @@ try {
         'rating' => $rating,
         'comment' => $comment,
     ]);
+
+    // Avec ON DUPLICATE KEY, rowCount vaut 1 pour une insertion
+    // et 2 pour une mise a jour : l'XP n'est donnee qu'au premier avis.
+    if ($statement->rowCount() === 1) {
+        award_xp($pdo, (int)current_user_id(), 20);
+    }
 } catch (Throwable $exception) {
     error_log('[Ludorivya] Enregistrement d’avis impossible : ' . $exception->getMessage());
     flash('danger', 'La publication de l’avis a échoué, merci de réessayer.');

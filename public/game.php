@@ -22,12 +22,14 @@ if ($gameId === false || $gameId === null || $gameId < 1) {
 $gameStatement = $pdo->prepare("
     SELECT
         g.id, g.title, g.description, g.release_date, g.age_rating,
-        g.cover_url, g.created_by,
+        g.cover_url, g.created_by, g.metascore, g.elo,
         s.name AS studio_name, s.country AS studio_country,
         s.founded_year AS studio_year, s.website AS studio_website,
         creator.username AS creator_name,
         (SELECT ROUND(AVG(r.rating), 1) FROM reviews r WHERE r.game_id = g.id) AS average_rating,
-        (SELECT COUNT(*) FROM reviews r WHERE r.game_id = g.id) AS review_count
+        (SELECT COUNT(*) FROM reviews r WHERE r.game_id = g.id) AS review_count,
+        (SELECT COUNT(*) FROM duels d WHERE d.winner_game_id = g.id) AS duel_wins,
+        (SELECT COUNT(*) FROM duels d WHERE d.loser_game_id = g.id) AS duel_losses
     FROM games g
     INNER JOIN studios s ON s.id = g.studio_id
     LEFT JOIN users creator ON creator.id = g.created_by
@@ -95,7 +97,7 @@ $isOwner = $userId !== null && $game['created_by'] !== null && (int)$game['creat
 // (exploitation de la relation N-N game_genres dans les deux sens).
 $similarStatement = $pdo->prepare("
     SELECT
-        g.id, g.title, g.cover_url, g.release_date,
+        g.id, g.title, g.cover_url, g.release_date, g.metascore,
         s.name AS studio_name,
         COUNT(*) AS shared_genres,
         (SELECT ROUND(AVG(r.rating), 1) FROM reviews r WHERE r.game_id = g.id) AS average_rating,
@@ -139,6 +141,10 @@ render_header($game['title'], 'games', true);
                     <i class="bi bi-star-fill"></i>
                     <?= $game['average_rating'] !== null ? format_rating((string)$game['average_rating']) . '/20' : 'Pas encore noté' ?>
                 </span>
+                <?php if ($game['metascore'] !== null): ?>
+                    <span class="meta-pill" title="Note presse"><i class="bi bi-newspaper"></i> Metascore <?= (int)$game['metascore'] ?></span>
+                <?php endif; ?>
+                <span class="meta-pill" title="Classement communautaire du mode versus"><i class="bi bi-fire"></i> <?= (int)$game['elo'] ?> Elo · <?= (int)$game['duel_wins'] ?> V / <?= (int)$game['duel_losses'] ?> D</span>
                 <span class="meta-pill"><i class="bi bi-calendar3"></i> <?= format_date_fr((string)$game['release_date']) ?></span>
                 <span class="meta-pill"><i class="bi bi-person-badge"></i> <?= (int)$game['age_rating'] ?>+</span>
                 <span class="meta-pill"><i class="bi bi-chat-text"></i> <?= (int)$game['review_count'] ?> avis</span>

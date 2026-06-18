@@ -49,6 +49,11 @@ try {
         'status' => $status,
         'playtime_hours' => $playtime,
     ]);
+
+    // XP uniquement quand le jeu ENTRE dans la bibliotheque (rowCount = 1).
+    if ($statement->rowCount() === 1) {
+        award_xp($pdo, (int)current_user_id(), 10);
+    }
 } catch (Throwable $exception) {
     error_log('[Ludorivya] Mise a jour bibliotheque impossible : ' . $exception->getMessage());
     flash('danger', 'La mise à jour de ta bibliothèque a échoué, merci de réessayer.');

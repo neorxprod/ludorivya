@@ -20,7 +20,7 @@ $userId = (int)current_user_id();
 // et la plateforme preferee via sa cle etrangere.
 $profileStatement = $pdo->prepare("
     SELECT
-        u.username, u.email, u.created_at,
+        u.username, u.email, u.created_at, u.xp,
         up.bio, up.favorite_platform_id,
         p.name AS favorite_platform_name
     FROM users u
@@ -61,15 +61,22 @@ $totalHours = array_sum(array_map(static fn (array $row): float => (float)$row['
 <section class="container page-head">
     <div class="profile-head reveal">
         <span class="avatar-initial avatar-initial-lg" aria-hidden="true"><?= e(mb_strtoupper(mb_substr((string)$profile['username'], 0, 1))) ?></span>
-        <div>
-            <h1 class="page-title mb-1"><?= e($profile['username']) ?></h1>
-            <p class="text-soft mb-0">
+        <div class="flex-grow-1">
+            <h1 class="page-title mb-1"><?= e($profile['username']) ?>
+                <span class="level-badge align-middle ms-2"><i class="bi bi-lightning-charge-fill"></i> Niveau <?= level_from_xp((int)$profile['xp']) ?></span>
+            </h1>
+            <p class="text-soft mb-2">
                 Membre depuis le <?= format_date_fr(substr((string)$profile['created_at'], 0, 10)) ?>
                 · <?= e($profile['email']) ?>
                 <?php if (!empty($profile['favorite_platform_name'])): ?>
                     · joue surtout sur <strong><?= e($profile['favorite_platform_name']) ?></strong>
                 <?php endif; ?>
             </p>
+            <div class="d-flex align-items-center gap-2" style="max-width: 360px;">
+                <span class="xp-track flex-grow-1 reveal revealed"><span class="xp-fill" style="--xp-width: <?= level_progress((int)$profile['xp']) ?>%"></span></span>
+                <span class="text-soft small"><?= (int)$profile['xp'] ?> XP</span>
+            </div>
+            <p class="text-soft small mt-1 mb-0">Gagne de l'XP en jouant des <a href="versus.php">duels</a> (+5), en publiant des avis (+20) et en enrichissant le catalogue (+30).</p>
         </div>
     </div>
 </section>

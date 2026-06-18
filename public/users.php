@@ -19,6 +19,7 @@ $usersStatement = $pdo->query("
         u.id,
         u.username,
         u.created_at,
+        u.xp,
         up.bio,
         p.name AS favorite_platform_name,
         (SELECT COUNT(*) FROM library_entries le WHERE le.user_id = u.id) AS library_count,
@@ -59,9 +60,7 @@ $activity = $activityStatement->fetchAll();
                         <strong><?= e($player['username']) ?></strong>
                         <span class="review-quote-game">membre depuis <?= e(substr((string)$player['created_at'], 0, 4)) ?></span>
                     </div>
-                    <?php if (!empty($player['favorite_platform_name'])): ?>
-                        <span class="chip"><?= e($player['favorite_platform_name']) ?></span>
-                    <?php endif; ?>
+                    <span class="level-badge">Niv. <?= level_from_xp((int)$player['xp']) ?></span>
                 </div>
                 <?php if (!empty($player['bio'])): ?>
                     <p class="text-soft mt-3 mb-3"><?= e($player['bio']) ?></p>

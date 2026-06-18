@@ -54,6 +54,9 @@ try {
         $insertGenre->execute(['game_id' => $gameId, 'genre_id' => $genreId]);
     }
 
+    // Contribuer au catalogue rapporte de l'XP.
+    award_xp($pdo, (int)current_user_id(), 30);
+
     $pdo->commit();
 } catch (Throwable $exception) {
     if ($pdo->inTransaction()) {
