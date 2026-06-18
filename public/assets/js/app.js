@@ -291,6 +291,31 @@
         requestAnimationFrame(tick);
     });
 
+    /* ---------- Selecteur d'etoiles (avis) ---------- */
+
+    document.querySelectorAll('[data-star-picker]').forEach((picker) => {
+        const input = picker.querySelector('input[name="stars"]');
+        const buttons = Array.from(picker.querySelectorAll('.star-btn'));
+        const valueLabel = picker.querySelector('[data-star-value]');
+
+        const paint = (count) => {
+            buttons.forEach((btn, i) => btn.classList.toggle('lit', i < count));
+        };
+
+        const current = () => parseInt(input.value, 10) || 0;
+        paint(current());
+
+        buttons.forEach((btn) => {
+            btn.addEventListener('mouseenter', () => paint(parseInt(btn.dataset.star, 10)));
+            btn.addEventListener('click', () => {
+                input.value = btn.dataset.star;
+                paint(current());
+                if (valueLabel) { valueLabel.textContent = btn.dataset.star + '/10'; }
+            });
+        });
+        picker.addEventListener('mouseleave', () => paint(current()));
+    });
+
     /* ---------- Mode versus ---------- */
 
     const arena = document.querySelector('[data-versus]');
@@ -339,6 +364,39 @@
             busy = false;
         };
 
+        // Compteur Elo qui "roule" de l'ancienne valeur a la nouvelle.
+        const rollElo = (el, target) => {
+            const start = parseInt(el.textContent.replace(/\s/g, ''), 10) || 0;
+            const t0 = performance.now();
+            const tick = (now) => {
+                const p = Math.min((now - t0) / 600, 1);
+                el.textContent = String(Math.round(start + (target - start) * (1 - Math.pow(1 - p, 3))));
+                if (p < 1) { requestAnimationFrame(tick); }
+            };
+            requestAnimationFrame(tick);
+        };
+
+        // Pluie de confettis projetee depuis la carte gagnante.
+        const burstConfetti = (card) => {
+            if (reducedMotion) { return; }
+            const palette = ['#8b5cf6', '#c084fc', '#22d3ee', '#fbbf24', '#fb7185', '#ffffff'];
+            const rect = card.getBoundingClientRect();
+            const stageRect = stage.getBoundingClientRect();
+            for (let i = 0; i < 26; i++) {
+                const piece = document.createElement('span');
+                piece.className = 'confetti';
+                piece.style.left = (rect.left - stageRect.left + rect.width / 2) + 'px';
+                piece.style.top = (rect.top - stageRect.top + rect.height / 3) + 'px';
+                piece.style.background = palette[i % palette.length];
+                const angle = Math.random() * Math.PI * 2;
+                const distance = 90 + Math.random() * 160;
+                piece.style.setProperty('--cx', Math.cos(angle) * distance + 'px');
+                piece.style.setProperty('--cy', (Math.sin(angle) * distance - 70) + 'px');
+                stage.appendChild(piece);
+                setTimeout(() => piece.remove(), 1200);
+            }
+        };
+
         const vote = async (winnerCard) => {
             if (busy || !isLogged) {
                 return;
@@ -346,12 +404,19 @@
             busy = true;
             const loserCard = cards.find((c) => c !== winnerCard);
 
-            // Feedback immediat : flash + vainqueur / perdant.
-            stage.classList.remove('flash');
+            // Feedback immediat : flash + secousse + impact VS + confettis.
+            stage.classList.remove('flash', 'shake');
             void stage.offsetWidth;
-            stage.classList.add('flash');
+            stage.classList.add('flash', 'shake');
+            const vs = arena.querySelector('.versus-vs');
+            if (vs) {
+                vs.classList.remove('hit');
+                void vs.offsetWidth;
+                vs.classList.add('hit');
+            }
             winnerCard.classList.add('winner');
             loserCard.classList.add('loser');
+            burstConfetti(winnerCard);
             cards.forEach((c) => { c.disabled = true; });
 
             const body = new FormData();
@@ -380,12 +445,12 @@
                 const winDelta = winnerCard.querySelector('[data-versus-delta]');
                 winDelta.textContent = '+' + data.delta;
                 winDelta.classList.add('show-gain');
-                winnerCard.querySelector('[data-versus-elo]').textContent = String(data.winner.elo);
+                rollElo(winnerCard.querySelector('[data-versus-elo]'), data.winner.elo);
 
                 const loseDelta = loserCard.querySelector('[data-versus-delta]');
                 loseDelta.textContent = '-' + data.delta;
                 loseDelta.classList.add('show-loss');
-                loserCard.querySelector('[data-versus-elo]').textContent = String(data.loser.elo);
+                rollElo(loserCard.querySelector('[data-versus-elo]'), data.loser.elo);
 
                 const duelsEl = arena.querySelector('[data-hud-duels]');
                 if (duelsEl) {

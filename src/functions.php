@@ -257,6 +257,35 @@ function format_rating(?string $rating): string
     return number_format((float)$rating, 1, ',', ' ');
 }
 
+// La base stocke les notes sur 20 ; l'interface les affiche en etoiles sur 10.
+function format_stars10(?string $rating20): string
+{
+    if ($rating20 === null) {
+        return '—';
+    }
+
+    return number_format((float)$rating20 / 2, 1, ',', ' ');
+}
+
+// Rangee de 10 etoiles (pleines / demi / vides) pour une note sur 20.
+function render_stars(int $rating20): string
+{
+    $tenths = $rating20 / 2;
+    $full = (int)floor($tenths);
+    $half = ($tenths - $full) >= 0.5;
+    $html = '<span class="stars" aria-label="' . format_stars10((string)$rating20) . ' étoiles sur 10">';
+    for ($i = 1; $i <= 10; $i++) {
+        if ($i <= $full) {
+            $html .= '<i class="bi bi-star-fill"></i>';
+        } elseif ($half && $i === $full + 1) {
+            $html .= '<i class="bi bi-star-half"></i>';
+        } else {
+            $html .= '<i class="bi bi-star"></i>';
+        }
+    }
+    return $html . '</span>';
+}
+
 function library_status_label(string $status): string
 {
     return match ($status) {
@@ -347,6 +376,7 @@ function render_header(string $title, string $current = '', bool $fullBleed = fa
                         <li class="nav-item"><a class="nav-link <?= current_page('games', $current) ?>" href="games.php">Jeux</a></li>
                         <li class="nav-item"><a class="nav-link nav-link-hot <?= current_page('versus', $current) ?>" href="versus.php">Versus</a></li>
                         <li class="nav-item"><a class="nav-link <?= current_page('rankings', $current) ?>" href="rankings.php">Classements</a></li>
+                        <li class="nav-item"><a class="nav-link <?= current_page('forum', $current) ?>" href="forum.php">Forum</a></li>
                         <li class="nav-item"><a class="nav-link <?= current_page('users', $current) ?>" href="users.php">Joueurs</a></li>
                     </ul>
                     <div class="d-flex align-items-center gap-2 nav-actions">
@@ -403,6 +433,7 @@ function render_footer(): void
                     <a href="games.php">Catalogue</a>
                     <a href="versus.php">Versus</a>
                     <a href="rankings.php">Classements</a>
+                    <a href="forum.php">Forum</a>
                     <a href="stats.php">Statistiques</a>
                 </nav>
             </div>
@@ -437,9 +468,9 @@ function render_game_card(array $game, int $revealDelay = 0): void
                 <?php else: ?>
                     <div class="game-card-placeholder" aria-hidden="true"><?= e(mb_substr((string)$game['title'], 0, 1)) ?></div>
                 <?php endif; ?>
-                <span class="game-card-rating" title="Note moyenne des joueurs sur 20">
+                <span class="game-card-rating" title="Note moyenne des joueurs (étoiles sur 10)">
                     <i class="bi bi-star-fill"></i>
-                    <?= $game['average_rating'] !== null ? format_rating((string)$game['average_rating']) : 'NR' ?>
+                    <?= $game['average_rating'] !== null ? format_stars10((string)$game['average_rating']) : 'NR' ?>
                 </span>
                 <?php if (isset($game['metascore']) && $game['metascore'] !== null): ?>
                     <?php $ms = (int)$game['metascore']; ?>

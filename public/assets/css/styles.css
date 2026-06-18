@@ -659,6 +659,26 @@ a:hover {
 .rating-pill .bi-star-fill { color: var(--amber); }
 .rating-pill-lg { padding: 0.45rem 1rem; font-size: 1rem; }
 
+/* Rangee d'etoiles (affichage des notes). */
+.stars { color: var(--amber); font-size: 0.95rem; letter-spacing: 1px; white-space: nowrap; }
+.stars .bi-star { opacity: 0.32; }
+
+/* Selecteur d'etoiles interactif du formulaire d'avis. */
+.star-picker { display: flex; align-items: center; gap: 0.15rem; flex-wrap: wrap; }
+.star-btn {
+    padding: 0.1rem;
+    border: 0;
+    background: transparent;
+    color: var(--amber);
+    font-size: 1.45rem;
+    line-height: 1;
+    cursor: pointer;
+    transition: transform 150ms var(--ease);
+}
+.star-btn:hover { transform: scale(1.25) rotate(-8deg); }
+.star-btn.lit i::before { content: '\f586'; } /* bi-star-fill */
+.star-picker-value { margin-left: 0.6rem; }
+
 .review { border-top: 1px solid var(--line); padding: 1.25rem 0; }
 .review:last-child { padding-bottom: 0; }
 .review-form { border: 1px solid var(--line); border-radius: var(--radius-sm); padding: 1.25rem; background: rgba(255, 255, 255, 0.03); }
@@ -786,6 +806,53 @@ a:hover {
 .footer-links a:hover { color: var(--ink); text-decoration: none; }
 .footer-note { margin: 2rem 0 0; color: var(--ink-soft); font-size: 0.82rem; }
 
+/* ---------- Forum ---------- */
+
+.forum-row {
+    display: grid;
+    grid-template-columns: 44px minmax(0, 1fr) auto;
+    gap: 1rem;
+    align-items: center;
+    padding: 1rem 1.5rem;
+    border-bottom: 1px solid var(--line);
+    color: var(--ink);
+    text-decoration: none;
+    transition: background-color 200ms var(--ease);
+}
+
+.forum-row:last-child { border-bottom: 0; }
+.forum-row:hover { background: rgba(139, 92, 246, 0.07); color: var(--ink); text-decoration: none; }
+.forum-row-main { display: grid; gap: 0.2rem; min-width: 0; }
+.forum-row-main strong { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.forum-row-replies { display: grid; justify-items: center; min-width: 52px; padding: 0.4rem 0.6rem; border-radius: var(--radius-sm); background: rgba(139, 92, 246, 0.12); }
+.forum-row-replies strong { font-size: 1.05rem; }
+.forum-row-replies span { color: var(--ink-soft); font-size: 0.7rem; text-transform: uppercase; }
+
+.forum-post { padding: 1.5rem; }
+.forum-post + .forum-post { margin-top: 1rem; }
+.forum-post-op { border-left: 3px solid var(--primary); }
+
+details.content-panel summary { list-style: none; }
+details.content-panel summary::-webkit-details-marker { display: none; }
+details.content-panel[open] summary { margin-bottom: 0.5rem; }
+
+/* ---------- Decoration manette ---------- */
+
+.deco-manette {
+    position: absolute;
+    width: clamp(180px, 22vw, 320px);
+    opacity: 0.14;
+    transform: rotate(-18deg);
+    filter: drop-shadow(0 0 30px rgba(139, 92, 246, 0.6));
+    pointer-events: none;
+    animation: decoFloat 7s ease-in-out infinite;
+}
+
+@keyframes decoFloat {
+    0%, 100% { transform: rotate(-18deg) translateY(0); }
+    50% { transform: rotate(-14deg) translateY(-16px); }
+}
+
 /* ---------- Liquid glass (chrome translucide) ---------- */
 
 .liquid-glass {
@@ -910,8 +977,18 @@ a:hover {
 .versus-arena {
     position: relative;
     overflow: hidden;
-    min-height: calc(100vh - var(--header-h));
-    padding: 3rem 0 5rem;
+    padding: 2rem 0 4rem;
+}
+
+/* Le plateau se dimensionne selon la hauteur de l'ecran : les cartes
+   (ratio 3/4) ne depassent jamais, tout reste visible sans scroller. */
+@media (max-height: 860px) {
+    .versus-arena .page-lead { display: none; }
+    .versus-arena .page-title { font-size: 1.9rem; }
+    .versus-arena .eyebrow { margin-bottom: 0.3rem; }
+    .versus-hud { margin-bottom: 1.25rem; }
+    .hud-block { padding: 0.5rem 1rem; min-width: 104px; }
+    .hud-value { font-size: 1.05rem; }
 }
 
 .versus-hud {
@@ -948,11 +1025,47 @@ a:hover {
 .versus-stage {
     position: relative;
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: clamp(2.5rem, 8vw, 6rem);
-    max-width: 880px;
+    /* Largeur de carte = la plus petite de : 30vw, la place verticale
+       restante (hauteur x ratio 0.75), 300px. */
+    grid-template-columns: repeat(2, min(30vw, calc((100vh - 440px) * 0.75), 300px));
+    justify-content: center;
+    gap: clamp(1.5rem, 6vw, 5rem);
     margin: 0 auto;
     perspective: 1300px;
+}
+
+.versus-stage.shake { animation: stageShake 450ms var(--ease); }
+
+@keyframes stageShake {
+    0%, 100% { transform: translate(0, 0); }
+    20% { transform: translate(-7px, 3px) rotate(-0.5deg); }
+    40% { transform: translate(6px, -4px) rotate(0.4deg); }
+    60% { transform: translate(-4px, 2px); }
+    80% { transform: translate(3px, -2px); }
+}
+
+.versus-vs.hit { animation: vsHit 600ms var(--ease); }
+
+@keyframes vsHit {
+    0% { transform: scale(1) rotate(0deg); }
+    40% { transform: scale(1.6) rotate(-8deg); filter: drop-shadow(0 0 50px rgba(196, 132, 252, 1)); }
+    100% { transform: scale(1) rotate(0deg); }
+}
+
+/* Confettis projetes depuis la carte gagnante. */
+.confetti {
+    position: absolute;
+    width: 9px;
+    height: 9px;
+    border-radius: 2px;
+    pointer-events: none;
+    z-index: 10;
+    animation: confettiFly 1100ms var(--ease) forwards;
+}
+
+@keyframes confettiFly {
+    0% { opacity: 1; transform: translate(0, 0) rotate(0deg) scale(1); }
+    100% { opacity: 0; transform: translate(var(--cx), var(--cy)) rotate(540deg) scale(0.4); }
 }
 
 .versus-card {
@@ -1019,9 +1132,9 @@ a:hover {
     to { transform: translateX(120%); }
 }
 
-.versus-card-body { display: grid; gap: 0.3rem; padding: 1rem 0.25rem 0; }
-.versus-title { font-size: 1.2rem; font-weight: 800; letter-spacing: -0.01em; }
-.versus-meta { color: var(--ink-soft); font-size: 0.85rem; min-height: 2.2em; }
+.versus-card-body { display: grid; gap: 0.25rem; padding: 0.8rem 0.25rem 0; }
+.versus-title { font-size: 1.1rem; font-weight: 800; letter-spacing: -0.01em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.versus-meta { color: var(--ink-soft); font-size: 0.83rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
 .versus-elo {
     position: relative;
