@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 200" fill="none">
+  <defs>
+    <linearGradient id="pad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#8b5cf6"/>
+      <stop offset="1" stop-color="#c084fc"/>
+    </linearGradient>
+  </defs>
+  <!-- Corps de la manette -->
+  <path d="M84 40 C60 40 44 58 36 86 C28 114 20 150 34 164 C48 178 70 168 84 148 L102 124 L218 124 L236 148 C250 168 272 178 286 164 C300 150 292 114 284 86 C276 58 260 40 236 40 Z"
+        stroke="url(#pad)" stroke-width="7" fill="rgba(139,92,246,0.08)" stroke-linejoin="round"/>
+  <!-- Croix directionnelle -->
+  <path d="M88 76 L100 76 L100 64 L114 64 L114 76 L126 76 L126 90 L114 90 L114 102 L100 102 L100 90 L88 90 Z"
+        fill="url(#pad)" opacity="0.9"/>
+  <!-- Boutons -->
+  <circle cx="216" cy="66" r="9" fill="#22d3ee"/>
+  <circle cx="240" cy="84" r="9" fill="#fb7185"/>
+  <circle cx="192" cy="84" r="9" fill="#fbbf24"/>
+  <circle cx="216" cy="102" r="9" fill="#34d399"/>
+  <!-- Sticks -->
+  <circle cx="132" cy="112" r="13" stroke="url(#pad)" stroke-width="6" fill="rgba(139,92,246,0.15)"/>
+  <circle cx="188" cy="112" r="13" stroke="url(#pad)" stroke-width="6" fill="rgba(139,92,246,0.15)"/>
+  <!-- Boutons centraux -->
+  <rect x="148" y="78" width="10" height="6" rx="3" fill="url(#pad)"/>
+  <rect x="162" y="78" width="10" height="6" rx="3" fill="url(#pad)"/>
+</svg>
