@@ -2,7 +2,7 @@
 
 ## Concept
 
-**Ludorivya** : une médiathèque de jeux vidéo. Catalogue consultable par tous, et pour les joueurs connectés : avis (un par jeu), bibliothèque personnelle (statut + temps de jeu) et contribution au catalogue.
+**Ludorivya** : le réseau de tes jeux vidéo. Un catalogue de vrais jeux consultable par tous, et pour les joueurs connectés : le **mode versus** (votes qui font évoluer un classement Elo, XP et niveaux), des avis (un par jeu), une bibliothèque personnelle (statut + temps de jeu) et la contribution au catalogue.
 
 ## Objectifs techniques
 

@@ -11,7 +11,7 @@
   </style>
 
   <rect width="1140" height="600" fill="#f8f8fb"/>
-  <text x="40" y="38" font-size="17" font-weight="700" fill="#1d1d1f">Ludorivya — schéma relationnel (10 tables)</text>
+  <text x="40" y="38" font-size="17" font-weight="700" fill="#1d1d1f">Ludorivya — schéma relationnel (11 tables)</text>
 
   <!-- Lignes (dessinées sous les boîtes) -->
   <line class="line" x1="135" y1="118" x2="580" y2="135"/>
@@ -25,6 +25,8 @@
   <line class="line" x1="980" y1="115" x2="705" y2="485"/>
   <line class="line" x1="580" y1="135" x2="705" y2="485"/>
   <line class="line dashed" x1="980" y1="115" x2="580" y2="135"/>
+  <line class="line" x1="580" y1="210" x2="580" y2="320"/>
+  <line class="line dashed" x1="980" y1="170" x2="690" y2="360"/>
 
   <!-- Étiquettes de relations -->
   <text class="rel" x="330" y="115">1-N</text>
@@ -108,6 +110,13 @@
   <text class="key" x="875" y="488">UNIQUE (game_id, user_id)</text>
   <text class="col" x="875" y="504">rating (0–20) · comment</text>
   <text class="col" x="875" y="520">created_at</text>
+
+  <!-- duels -->
+  <rect class="box assoc" x="470" y="320" width="220" height="92" rx="10"/>
+  <text class="tname" x="485" y="342">duels (mode versus)</text>
+  <text class="key" x="485" y="362">winner_game_id (FK)</text>
+  <text class="key" x="485" y="378">loser_game_id (FK)</text>
+  <text class="col" x="485" y="394">user_id (FK, SET NULL) · created_at</text>
 
   <!-- Légende -->
   <rect x="40" y="540" width="14" height="14" rx="4" class="box"/>

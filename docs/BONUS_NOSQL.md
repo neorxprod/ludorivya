@@ -8,6 +8,7 @@ Imaginons que Ludorivya devienne une grande plateforme publique :
 - 200 millions d'utilisateurs.
 - 10 milliards d'avis.
 - 50 milliards d'entrées de bibliothèque.
+- Des **millions de votes versus par heure** aux heures de pointe.
 - Filtres combinés : plateforme, genre, studio, note, année, popularité.
 
 ## Pourquoi le relationnel devient limitant
@@ -25,6 +26,7 @@ Exemples concrets tirés de ce projet, problématiques à grande échelle :
 - La requête du catalogue (`games.php`) : deux sous-requêtes agrégées (note moyenne, genres concaténés) **par ligne affichée** + deux `EXISTS` de filtrage sur les tables de liaison.
 - Le top 5 (`stats.php`) : `AVG` + `GROUP BY` + `HAVING` sur la totalité de la table `reviews` à chaque visite.
 - La recherche (`LIKE` sur titre, description et nom de studio joints) sur des millions de jeux.
+- Le mode versus (`duel_store.php`) : chaque vote fait un `UPDATE games SET elo = ...` — à des millions de votes/heure, les jeux populaires deviennent des **lignes chaudes** (contention de verrous sur les mêmes enregistrements), et la table `duels` grossit sans fin.
 
 ## Alternative NoSQL conceptuelle (sans implémentation)
 
@@ -41,6 +43,7 @@ Une solution réaliste serait d'utiliser **MongoDB en complément**, sans rempla
 - Des **documents de recherche dénormalisés** : un document par jeu, qui embarque déjà studio, plateformes, genres et note moyenne — le catalogue se lit alors **sans aucune jointure**.
 - Des **snapshots de statistiques** précalculés (tops, compteurs) régénérés périodiquement.
 - Les avis récents, dénormalisés avec le pseudo de l'auteur.
+- Les **votes versus** dans un journal append-only (ou des compteurs distribués) : on absorbe les pics d'écriture, et le classement Elo est recalculé par lots toutes les quelques secondes au lieu d'un UPDATE par vote.
 
 Exemple de document MongoDB pour la recherche :
 
