@@ -18,13 +18,17 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 require_valid_csrf('games.php');
 
 $gameId = post_int('game_id', 1, 1000000000);
-$rating = post_int('rating', 0, 20);
+// La note arrive en etoiles (1 a 10) et est stockee sur 20 en base.
+$stars = post_int('stars', 1, 10);
+// Le commentaire est facultatif : on peut noter d'un simple clic.
 $comment = post_string('comment', 1000);
 
-if ($gameId === null || $rating === null || $comment === '') {
-    flash('danger', 'Avis invalide : il faut une note entre 0 et 20 et un commentaire.');
+if ($gameId === null || $stars === null) {
+    flash('danger', 'Choisis une note entre 1 et 10 étoiles.');
     redirect_to($gameId !== null ? 'game.php?id=' . $gameId : 'games.php');
 }
+
+$rating = $stars * 2;
 
 // On verifie que le jeu existe avant d'inserer (message propre plutot
 // qu'une violation de cle etrangere).
@@ -61,5 +65,5 @@ try {
     redirect_to('game.php?id=' . $gameId);
 }
 
-flash('success', 'Ton avis a bien été enregistré.');
+flash('success', 'Ta note de ' . $stars . '/10 a bien été enregistrée.');
 redirect_to('game.php?id=' . $gameId);

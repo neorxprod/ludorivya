@@ -137,9 +137,9 @@ render_header($game['title'], 'games', true);
             <p class="eyebrow eyebrow-glow"><?= e($game['studio_name']) ?></p>
             <h1 class="game-hero-title"><?= e($game['title']) ?></h1>
             <div class="game-hero-meta">
-                <span class="rating-pill rating-pill-lg" title="Note moyenne sur 20">
+                <span class="rating-pill rating-pill-lg" title="Note moyenne des joueurs">
                     <i class="bi bi-star-fill"></i>
-                    <?= $game['average_rating'] !== null ? format_rating((string)$game['average_rating']) . '/20' : 'Pas encore noté' ?>
+                    <?= $game['average_rating'] !== null ? format_stars10((string)$game['average_rating']) . '/10' : 'Pas encore noté' ?>
                 </span>
                 <?php if ($game['metascore'] !== null): ?>
                     <span class="meta-pill" title="Note presse"><i class="bi bi-newspaper"></i> Metascore <?= (int)$game['metascore'] ?></span>
@@ -199,23 +199,21 @@ render_header($game['title'], 'games', true);
                 </div>
 
                 <?php if ($userId !== null): ?>
-                    <form class="review-form needs-validation" method="post" action="review_store.php" novalidate>
+                    <form class="review-form" method="post" action="review_store.php">
                         <?= csrf_field() ?>
                         <input type="hidden" name="game_id" value="<?= (int)$game['id'] ?>">
-                        <div class="row g-3 align-items-end">
-                            <div class="col-sm-3">
-                                <label class="form-label" for="rating">Ta note /20</label>
-                                <input class="form-control" id="rating" name="rating" type="number" min="0" max="20" required value="<?= $myReview !== null ? (int)$myReview['rating'] : '' ?>">
-                                <div class="invalid-feedback">Une note entre 0 et 20.</div>
-                            </div>
-                            <div class="col-sm-9">
-                                <label class="form-label" for="comment">Ton avis</label>
-                                <textarea class="form-control" id="comment" name="comment" rows="2" maxlength="1000" required placeholder="Qu’en as-tu pensé ?"><?= $myReview !== null ? e($myReview['comment']) : '' ?></textarea>
-                                <div class="invalid-feedback">Un commentaire est requis (1000 caractères max).</div>
-                            </div>
+                        <label class="form-label mb-1">Ta note</label>
+                        <div class="star-picker" data-star-picker>
+                            <input type="hidden" name="stars" value="<?= $myReview !== null ? (int)round((int)$myReview['rating'] / 2) : '' ?>" required>
+                            <?php for ($i = 1; $i <= 10; $i++): ?>
+                                <button type="button" class="star-btn" data-star="<?= $i ?>" aria-label="<?= $i ?> étoile<?= $i > 1 ? 's' : '' ?> sur 10"><i class="bi bi-star"></i></button>
+                            <?php endfor; ?>
+                            <span class="star-picker-value text-soft small" data-star-value><?= $myReview !== null ? (int)round((int)$myReview['rating'] / 2) . '/10' : 'Clique sur les étoiles' ?></span>
                         </div>
+                        <label class="form-label mt-3" for="comment">Un commentaire ? <span class="text-soft">(facultatif)</span></label>
+                        <textarea class="form-control" id="comment" name="comment" rows="2" maxlength="1000" placeholder="Qu’en as-tu pensé ?"><?= $myReview !== null ? e($myReview['comment']) : '' ?></textarea>
                         <div class="d-flex gap-2 mt-3">
-                            <button class="btn btn-accent btn-sm" type="submit"><?= $myReview !== null ? 'Mettre à jour mon avis' : 'Publier mon avis' ?></button>
+                            <button class="btn btn-accent btn-sm" type="submit"><?= $myReview !== null ? 'Mettre à jour ma note' : 'Publier ma note' ?></button>
                         </div>
                     </form>
                     <?php if ($myReview !== null): ?>
@@ -241,9 +239,11 @@ render_header($game['title'], 'games', true);
                                     <strong><?= e($review['username']) ?></strong>
                                     <span class="review-quote-game"><?= format_date_fr(substr((string)$review['created_at'], 0, 10)) ?></span>
                                 </div>
-                                <span class="rating-pill"><i class="bi bi-star-fill"></i> <?= (int)$review['rating'] ?>/20</span>
+                                <?= render_stars((int)$review['rating']) ?>
                             </div>
-                            <p class="mb-0 mt-2 text-body-secondary"><?= nl2br(e($review['comment'])) ?></p>
+                            <?php if (trim((string)$review['comment']) !== ''): ?>
+                                <p class="mb-0 mt-2 text-body-secondary"><?= nl2br(e($review['comment'])) ?></p>
+                            <?php endif; ?>
                         </article>
                     <?php endforeach; ?>
                 <?php endif; ?>
