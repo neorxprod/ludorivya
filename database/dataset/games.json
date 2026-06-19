@@ -1,0 +1,2477 @@
+[
+    {
+        "title":  "Counter-Strike 2",
+        "appid":  730,
+        "studio":  "Valve",
+        "studio_country":  "États-Unis",
+        "studio_year":  1996,
+        "release_date":  "2023-09-27",
+        "age_rating":  18,
+        "genres":  [
+                       "FPS",
+                       "Multijoueur"
+                   ],
+        "platforms":  [
+                          "PC"
+                      ],
+        "metascore":  82,
+        "description_fr":  "La référence absolue du FPS compétitif en 5 contre 5, reconstruite sur le moteur Source 2 avec des fumées volumétriques et un tick-rate repensé. Chaque round se joue à l\u0027économie, au placement et au sang-froid."
+    },
+    {
+        "title":  "Dota 2",
+        "appid":  570,
+        "studio":  "Valve",
+        "studio_country":  "États-Unis",
+        "studio_year":  1996,
+        "release_date":  "2013-07-09",
+        "age_rating":  12,
+        "genres":  [
+                       "Stratégie",
+                       "Multijoueur"
+                   ],
+        "platforms":  [
+                          "PC"
+                      ],
+        "metascore":  90,
+        "description_fr":  "Le MOBA le plus profond du marché, avec plus d\u0027une centaine de héros et une courbe d\u0027apprentissage vertigineuse. Son tournoi The International a longtemps détenu les plus grosses cagnottes de l\u0027esport."
+    },
+    {
+        "title":  "Team Fortress 2",
+        "appid":  440,
+        "studio":  "Valve",
+        "studio_country":  "États-Unis",
+        "studio_year":  1996,
+        "release_date":  "2007-10-10",
+        "age_rating":  16,
+        "genres":  [
+                       "FPS",
+                       "Multijoueur"
+                   ],
+        "platforms":  [
+                          "PC"
+                      ],
+        "metascore":  92,
+        "description_fr":  "Neuf classes au caractère bien trempé s\u0027affrontent dans un FPS d\u0027équipe au style cartoon inimitable. Près de vingt ans après sa sortie, sa communauté et son humour restent intacts."
+    },
+    {
+        "title":  "Left 4 Dead 2",
+        "appid":  550,
+        "studio":  "Valve",
+        "studio_country":  "États-Unis",
+        "studio_year":  1996,
+        "release_date":  "2009-11-17",
+        "age_rating":  18,
+        "genres":  [
+                       "FPS",
+                       "Horreur",
+                       "Multijoueur"
+                   ],
+        "platforms":  [
+                          "PC"
+                      ],
+        "metascore":  89,
+        "description_fr":  "Quatre survivants traversent le sud des États-Unis envahi par des hordes d\u0027infectés, orchestrées par un Directeur IA qui adapte la tension en temps réel. Le jeu coop à quatre par excellence."
+    },
+    {
+        "title":  "Portal",
+        "appid":  400,
+        "studio":  "Valve",
+        "studio_country":  "États-Unis",
+        "studio_year":  1996,
+        "release_date":  "2007-10-10",
+        "age_rating":  12,
+        "genres":  [
+                       "Aventure",
+                       "Plateforme"
+                   ],
+        "platforms":  [
+                          "PC",
+                          "Nintendo Switch"
+                      ],
+        "metascore":  90,
+        "description_fr":  "Armé d\u0027un pistolet à portails, vous résolvez les salles de test d\u0027Aperture Science sous l\u0027œil sarcastique de l\u0027IA GLaDOS. Court, brillant et culte dès sa sortie."
+    },
+    {
+        "title":  "Portal 2",
+        "appid":  620,
+        "studio":  "Valve",
+        "studio_country":  "États-Unis",
+        "studio_year":  1996,
+        "release_date":  "2011-04-19",
+        "age_rating":  12,
+        "genres":  [
+                       "Aventure",
+                       "Multijoueur"
+                   ],
+        "platforms":  [
+                          "PC",
+                          "Nintendo Switch"
+                      ],
+        "metascore":  95,
+        "description_fr":  "La suite enrichit la formule des portails avec gels propulseurs, ponts lumineux et une écriture hilarante portée par GLaDOS et Wheatley. Sa campagne coopérative à deux est un modèle du genre."
+    },
+    {
+        "title":  "Half-Life 2",
+        "appid":  220,
+        "studio":  "Valve",
+        "studio_country":  "États-Unis",
+        "studio_year":  1996,
+        "release_date":  "2004-11-16",
+        "age_rating":  16,
+        "genres":  [
+                       "FPS",
+                       "Action"
+                   ],
+        "platforms":  [
+                          "PC"
+                      ],
+        "metascore":  96,
+        "description_fr":  "Gordon Freeman se réveille dans une Cité 17 sous le joug du Cartel, pistolet antigravité en main. Une révolution de la narration et de la physique qui a marqué toute une génération de FPS."
+    },
+    {
+        "title":  "Apex Legends",
+        "appid":  1172470,
+        "studio":  "Respawn Entertainment",
+        "studio_country":  "États-Unis",
+        "studio_year":  2010,
+        "release_date":  "2019-02-04",
+        "age_rating":  16,
+        "genres":  [
+                       "FPS",
+                       "Multijoueur"
+                   ],
+        "platforms":  [
+                          "PC",
+                          "PlayStation 5",
+                          "PlayStation 4",
+                          "Xbox Series X/S",
+                          "Xbox One",
+                          "Nintendo Switch"
+                      ],
+        "metascore":  88,
+        "description_fr":  "Battle royale en escouades de trois où chaque Légende apporte ses capacités uniques, hérité du gunplay nerveux de Titanfall. Son système de ping a redéfini la communication en jeu d\u0027équipe."
+    },
+    {
+        "title":  "Destiny 2",
+        "appid":  1085660,
+        "studio":  "Bungie",
+        "studio_country":  "États-Unis",
+        "studio_year":  1991,
+        "release_date":  "2017-10-24",
+        "age_rating":  16,
+        "genres":  [
+                       "FPS",
+                       "RPG",
+                       "Multijoueur"
+                   ],
+        "platforms":  [
+                          "PC",
+                          "PlayStation 5",
+                          "PlayStation 4",
+                          "Xbox Series X/S",
+                          "Xbox One"
+                      ],
+        "metascore":  85,
+        "description_fr":  "Le MMO-FPS de Bungie marie sensations de tir impeccables, raids exigeants à six joueurs et chasse au loot dans un univers de science-fiction en constante évolution."
+    },
+    {
+        "title":  "PUBG: Battlegrounds",
+        "appid":  578080,
+        "studio":  "PUBG Studios",
+        "studio_country":  "Corée du Sud",
+        "studio_year":  2007,
+        "release_date":  "2017-12-21",
+        "age_rating":  16,
+        "genres":  [
+                       "FPS",
+                       "Action",
+                       "Multijoueur"
+                   ],
+        "platforms":  [
+                          "PC",
+                          "PlayStation 4",
+                          "Xbox One",
+                          "Mobile"
+                      ],
+        "metascore":  86,
+        "description_fr":  "Le jeu qui a popularisé le battle royale : cent joueurs largués sur une île, un cercle qui rétrécit et un seul survivant. Tension réaliste et parties mémorables garanties."
+    },
+    {
+        "title":  "Rust",
+        "appid":  252490,
+        "studio":  "Facepunch Studios",
+        "studio_country":  "Royaume-Uni",
+        "studio_year":  2004,
+        "release_date":  "2018-02-08",
+        "age_rating":  18,
+        "genres":  [
+                       "Aventure",
+                       "Action",
+                       "Multijoueur"
+                   ],
+        "platforms":  [
+                          "PC",
+                          "PlayStation 4",
+                          "Xbox One"
+                      ],
+        "metascore":  69,
+        "description_fr":  "Survie multijoueur impitoyable où l\u0027on part nu sur une île pour bâtir une base, s\u0027armer et survivre aux raids des autres joueurs. La méfiance est la première règle du jeu."
+    },
+    {
+        "title":  "Warframe",
+        "appid":  230410,
+        "studio":  "Digital Extremes",
+        "studio_country":  "Canada",
+        "studio_year":  1993,
+        "release_date":  "2013-03-25",
+        "age_rating":  18,
+        "genres":  [
+                       "Action",
+                       "RPG",
+                       "Multijoueur"
+                   ],
+        "platforms":  [
+                          "PC",
+                          "PlayStation 5",
+                          "PlayStation 4",
+                          "Xbox Series X/S",
+                          "Xbox One",
+                          "Nintendo Switch",
+                          "Mobile"
+                      ],
+        "metascore":  70,
+        "description_fr":  "Incarnez un ninja de l\u0027espace en armure biomécanique dans ce jeu d\u0027action coopératif free-to-play d\u0027une mobilité grisante. Plus de dix ans de contenu gratuit et une communauté fidèle."
+    },
+    {
+        "title":  "Among Us",
+        "appid":  945360,
+        "studio":  "Innersloth",
+        "studio_country":  "États-Unis",
+        "studio_year":  2015,
+        "release_date":  "2018-11-16",
+        "age_rating":  7,
+        "genres":  [
+                       "Multijoueur"
+                   ],
+        "platforms":  [
+                          "PC",
+                          "PlayStation 5",
+                          "PlayStation 4",
+                          "Xbox Series X/S",
+                          "Xbox One",
+                          "Nintendo Switch",
+                          "Mobile"
+                      ],
+        "metascore":  82,
+        "description_fr":  "Jeu de déduction sociale où un imposteur sabote le vaisseau et élimine l\u0027équipage sans se faire démasquer. Devenu un phénomène planétaire des soirées entre amis en 2020."
+    },
+    {
+        "title":  "Fall Guys",
+        "appid":  1097150,
+        "studio":  "Mediatonic",
+        "studio_country":  "Royaume-Uni",
+        "studio_year":  2005,
+        "release_date":  "2020-08-04",
+        "age_rating":  3,
+        "genres":  [
+                       "Multijoueur",
+                       "Plateforme"
+                   ],
+        "platforms":  [
+                          "PC",
+                          "PlayStation 5",
+                          "PlayStation 4",
+                          "Xbox Series X/S",
+                          "Xbox One",
+                          "Nintendo Switch",
+                          "Mobile"
+                      ],
+        "metascore":  80,
+        "description_fr":  "Battle royale festif où des dizaines de haricots maladroits s\u0027affrontent dans des parcours d\u0027obstacles délirants. Un concentré de chaos bon enfant accessible à tous les âges."
+    },
+    {
+        "title":  "Phasmophobia",
+        "appid":  739630,
+        "studio":  "Kinetic Games",
+        "studio_country":  "Royaume-Uni",
+        "studio_year":  2019,
+        "release_date":  "2020-09-18",
+        "age_rating":  16,
+        "genres":  [
+                       "Horreur",
+                       "Multijoueur"
+                   ],
+        "platforms":  [
+                          "PC",
+                          "PlayStation 5",
+                          "Xbox Series X/S"
+                      ],
+        "metascore":  78,
+        "description_fr":  "Enquête paranormale en coop jusqu\u0027à quatre : caméras thermiques, spirit box et EMF pour identifier le fantôme qui vous traque. Le chat vocal de proximité décuple les frayeurs."
+    },
+    {
+        "title":  "Lethal Company",
+        "appid":  1966720,
+        "studio":  "Zeekerss",
+        "studio_country":  "États-Unis",
+        "studio_year":  2020,
+        "release_date":  "2023-10-23",
+        "age_rating":  16,
+        "genres":  [
+                       "Horreur",
+                       "Multijoueur"
+                   ],
+        "platforms":  [
+                          "PC"
+                      ],
+        "metascore":  80,
+        "description_fr":  "Récupérez de la ferraille sur des lunes hostiles pour remplir le quota de votre employeur, en évitant des créatures aussi mortelles qu\u0027absurdes. Le phénomène coop horrifique signé d\u0027un développeur solo."
+    },
+    {
+        "title":  "Valheim",
+        "appid":  892970,
+        "studio":  "Iron Gate Studio",
+        "studio_country":  "Suède",
+        "studio_year":  2018,
+        "release_date":  "2021-02-02",
+        "age_rating":  12,
+        "genres":  [
+                       "Aventure",
+                       "Multijoueur"
+                   ],
+        "platforms":  [
+                          "PC",
+                          "Xbox Series X/S",
+                          "Xbox One"
+                      ],
+        "metascore":  81,
+        "description_fr":  "Survie viking en coop dans un purgatoire procédural inspiré de la mythologie nordique : on construit des drakkars, on abat des trolls et on défie les boss anciens. Un carton surprise de 2021."
+    },
+    {
+        "title":  "Sea of Thieves",
+        "appid":  1172620,
+        "studio":  "Rare",
+        "studio_country":  "Royaume-Uni",
+        "studio_year":  1985,
+        "release_date":  "2018-03-20",
+        "age_rating":  12,
+        "genres":  [
+                       "Aventure",
+                       "Action",
+                       "Multijoueur"
+                   ],
+        "platforms":  [
+                          "PC",
+                          "PlayStation 5",
+                          "Xbox Series X/S",
+                          "Xbox One"
+                      ],
+        "metascore":  69,
+        "description_fr":  "Prenez la mer en équipage dans un monde partagé de pirates où chaque voile à l\u0027horizon peut être un allié ou un abordage. La navigation à plusieurs y est un pur plaisir de coordination."
+    },
+    {
+        "title":  "DOOM (2016)",
+        "appid":  379720,
+        "studio":  "id Software",
+        "studio_country":  "États-Unis",
+        "studio_year":  1991,
+        "release_date":  "2016-05-13",
+        "age_rating":  18,
+        "genres":  [
+                       "FPS",
+                       "Action"
+                   ],
+        "platforms":  [
+                          "PC",
+                          "PlayStation 4",
+                          "Xbox One",
+                          "Nintendo Switch"
+                      ],
+        "metascore":  85,
+        "description_fr":  "Le retour triomphal du Doom Slayer sur Mars : un FPS ultra-rapide où l\u0027on fonce dans le tas au rythme d\u0027une bande-son metal devenue légendaire. Pas de couverture, que de l\u0027agression."
+    },
+    {
+        "title":  "DOOM Eternal",
+        "appid":  782330,
+        "studio":  "id Software",
+        "studio_country":  "États-Unis",
+        "studio_year":  1991,
+        "release_date":  "2020-03-20",
+        "age_rating":  18,
+        "genres":  [
+                       "FPS",
+                       "Action"
+                   ],
+        "platforms":  [
+                          "PC",
+                          "PlayStation 5",
+                          "PlayStation 4",
+                          "Xbox Series X/S",
+                          "Xbox One",
+                          "Nintendo Switch"
+                      ],
+        "metascore":  88,
+        "description_fr":  "La suite pousse le combat-puzzle à son paroxysme : gestion des ressources par glory kills, mobilité aérienne et hordes démoniaques toujours plus agressives. Exigeant et jouissif."
+    },
+    {
+        "title":  "Titanfall 2",
+        "appid":  1237970,
+        "studio":  "Respawn Entertainment",
+        "studio_country":  "États-Unis",
+        "studio_year":  2010,
+        "release_date":  "2016-10-28",
+        "age_rating":  16,
+        "genres":  [
+                       "FPS",
+                       "Action",
+                       "Multijoueur"
+                   ],
+        "platforms":  [
+                          "PC",
+                          "PlayStation 4",
+                          "Xbox One"
+                      ],
+        "metascore":  86,
+        "description_fr":  "Pilotes ultra-mobiles et titans de combat alternent dans un FPS au mouvement exemplaire, dont la campagne solo (et sa mission Effet et Cause) est régulièrement citée parmi les meilleures du genre."
+    },
+    {
+        "title":  "Deep Rock Galactic",
+        "appid":  548430,
+        "studio":  "Ghost Ship Games",
+        "studio_country":  "Danemark",
+        "studio_year":  2016,
+        "release_date":  "2020-05-13",
+        "age_rating":  12,
+        "genres":  [
+                       "FPS",
+                       "Multijoueur"
+                   ],
+        "platforms":  [
+                          "PC",
+                          "PlayStation 5",
+                          "PlayStation 4",
+                          "Xbox Series X/S",
+                          "Xbox One"
+                      ],
+        "metascore":  85,
+        "description_fr":  "Quatre nains mineurs de l\u0027espace forent des cavernes procédurales infestées d\u0027insectes géants, entre extraction de minerai et chopes de bière au retour. Rock and Stone !"
+    },
+    {
+        "title":  "Helldivers 2",
+        "appid":  553850,
+        "studio":  "Arrowhead Game Studios",
+        "studio_country":  "Suède",
+        "studio_year":  2008,
+        "release_date":  "2024-02-08",
+        "age_rating":  16,
+        "genres":  [
+                       "Action",
+                       "Multijoueur"
+                   ],
+        "platforms":  [
+                          "PC",
+                          "PlayStation 5",
+                          "Xbox Series X/S"
+                      ],
+        "metascore":  82,
+        "description_fr":  "Répandez la démocratie managée à coups de frappes orbitales dans ce shooter coopératif satirique où le tir allié fait autant de dégâts que les insectes géants. Une guerre galactique vécue par toute la communauté."
+    },
+    {
+        "title":  "Dead by Daylight",
+        "appid":  381210,
+        "studio":  "Behaviour Interactive",
+        "studio_country":  "Canada",
+        "studio_year":  1992,
+        "release_date":  "2016-06-14",
+        "age_rating":  18,
+        "genres":  [
+                       "Horreur",
+                       "Multijoueur"
+                   ],
+        "platforms":  [
+                          "PC",
+                          "PlayStation 5",
+                          "PlayStation 4",
+                          "Xbox Series X/S",
+                          "Xbox One",
+                          "Nintendo Switch",
+                          "Mobile"
+                      ],
+        "metascore":  71,
+        "description_fr":  "Le jeu d\u0027horreur asymétrique de référence : quatre survivants réparent des générateurs pendant qu\u0027un tueur, souvent issu de licences cultes du cinéma, les traque sans relâche."
+    },
+    {
+        "title":  "Garry\u0027s Mod",
+        "appid":  4000,
+        "studio":  "Facepunch Studios",
+        "studio_country":  "Royaume-Uni",
+        "studio_year":  2004,
+        "release_date":  "2006-11-29",
+        "age_rating":  16,
+        "genres":  [
+                       "Simulation",
+                       "Multijoueur"
+                   ],
+        "platforms":  [
+                          "PC"
+                      ],
+        "metascore":  76,
+        "description_fr":  "Bac à sable physique basé sur le moteur Source, sans objectif imposé : la communauté y a inventé d\u0027innombrables modes de jeu, de Prop Hunt au roleplay. Un laboratoire de créativité inépuisable."
+    },
+    {
+        "title":  "Overcooked! 2",
+        "appid":  728880,
+        "studio":  "Ghost Town Games",
+        "studio_country":  "Royaume-Uni",
+        "studio_year":  2015,
+        "release_date":  "2018-08-07",
+        "age_rating":  3,
+        "genres":  [
+                       "Multijoueur",
+                       "Simulation"
+                   ],
+        "platforms":  [
+                          "PC",
+                          "PlayStation 4",
+                          "Xbox One",
+                          "Nintendo Switch"
+                      ],
+        "metascore":  81,
+        "description_fr":  "Cuisinez en équipe dans des cuisines absurdes qui se séparent, prennent feu ou flottent dans les airs. Le jeu parfait pour tester (ou ruiner) une amitié en coop locale."
+    },
+    {
+        "title":  "Rocket League",
+        "appid":  252950,
+        "studio":  "Psyonix",
+        "studio_country":  "États-Unis",
+        "studio_year":  2000,
+        "release_date":  "2015-07-07",
+        "age_rating":  3,
+        "genres":  [
+                       "Course",
+                       "Multijoueur"
+                   ],
+        "platforms":  [
+                          "PC",
+                          "PlayStation 4",
+                          "Xbox One",
+                          "Nintendo Switch"
+                      ],
+        "metascore":  86,
+        "description_fr":  "Du football avec des voitures propulsées par fusées : un concept simple, une profondeur mécanique immense et une scène esport florissante depuis 2015."
+    },
+    {
+        "title":  "Halo: The Master Chief Collection",
+        "appid":  976730,
+        "studio":  "343 Industries",
+        "studio_country":  "États-Unis",
+        "studio_year":  2007,
+        "release_date":  "2019-12-03",
+        "age_rating":  16,
+        "genres":  [
+                       "FPS",
+                       "Action",
+                       "Multijoueur"
+                   ],
+        "platforms":  [
+                          "PC",
+                          "Xbox Series X/S",
+                          "Xbox One"
+                      ],
+        "metascore":  85,
+        "description_fr":  "Six jeux Halo remastérisés dans une seule collection : toute la saga du Major jouable en campagne coop et en multijoueur classique. L\u0027arrivée sur PC a été un événement pour les fans."
+    },
+    {
+        "title":  "Elden Ring",
+        "appid":  1245620,
+        "studio":  "FromSoftware",
+        "studio_country":  "Japon",
+        "studio_year":  1986,
+        "release_date":  "2022-02-25",
+        "age_rating":  16,
+        "genres":  [
+                       "Action",
+                       "RPG"
+                   ],
+        "platforms":  [
+                          "PC",
+                          "PlayStation 5",
+                          "PlayStation 4",
+                          "Xbox Series X/S",
+                          "Xbox One"
+                      ],
+        "metascore":  94,
+        "description_fr":  "Un action-RPG en monde ouvert imaginé avec George R.R. Martin, où chaque recoin de l\u0027Entre-terre cache un boss redoutable ou un secret. Exigeant mais d\u0027une liberté grisante."
+    },
+    {
+        "title":  "Dark Souls III",
+        "appid":  374320,
+        "studio":  "FromSoftware",
+        "studio_country":  "Japon",
+        "studio_year":  1986,
+        "release_date":  "2016-04-12",
+        "age_rating":  16,
+        "genres":  [
+                       "Action",
+                       "RPG"
+                   ],
+        "platforms":  [
+                          "PC",
+                          "PlayStation 4",
+                          "Xbox One"
+                      ],
+        "metascore":  89,
+        "description_fr":  "La conclusion nerveuse et sombre de la trilogie Dark Souls, avec des boss mémorables et un level design en boucle magistral. Mourir y est une leçon, jamais une punition gratuite."
+    },
+    {
+        "title":  "Sekiro: Shadows Die Twice",
+        "appid":  814380,
+        "studio":  "FromSoftware",
+        "studio_country":  "Japon",
+        "studio_year":  1986,
+        "release_date":  "2019-03-22",
+        "age_rating":  18,
+        "genres":  [
+                       "Action",
+                       "Aventure"
+                   ],
+        "platforms":  [
+                          "PC",
+                          "PlayStation 4",
+                          "Xbox One"
+                      ],
+        "metascore":  89,
+        "description_fr":  "Un shinobi borgne part se venger dans un Japon Sengoku fantasmé, sabre au clair. Son système de parade au timing millimétré transforme chaque duel en chorégraphie mortelle."
+    },
+    {
+        "title":  "The Witcher 3: Wild Hunt",
+        "appid":  292030,
+        "studio":  "CD Projekt Red",
+        "studio_country":  "Pologne",
+        "studio_year":  2002,
+        "release_date":  "2015-05-19",
+        "age_rating":  18,
+        "genres":  [
+                       "RPG",
+                       "Aventure"
+                   ],
+        "platforms":  [
+                          "PC",
+                          "PlayStation 5",
+                          "PlayStation 4",
+                          "Xbox Series X/S",
+                          "Xbox One",
+                          "Nintendo Switch"
+                      ],
+        "metascore":  93,
+        "description_fr":  "Geralt de Riv traque sa fille adoptive à travers un monde ouvert ravagé par la guerre, où même les quêtes secondaires racontent des histoires inoubliables. Une référence absolue du RPG."
+    },
+    {
+        "title":  "Cyberpunk 2077",
+        "appid":  1091500,
+        "studio":  "CD Projekt Red",
+        "studio_country":  "Pologne",
+        "studio_year":  2002,
+        "release_date":  "2020-12-10",
+        "age_rating":  18,
+        "genres":  [
+                       "RPG",
+                       "Action"
+                   ],
+        "platforms":  [
+                          "PC",
+                          "PlayStation 5",
+                          "PlayStation 4",
+                          "Xbox Series X/S",
+                          "Xbox One"
+                      ],
+        "metascore":  86,
+        "description_fr":  "Mercenaire à Night City, vous partagez votre crâne avec le fantôme numérique d\u0027une rockstar terroriste. Après un lancement chaotique, le jeu s\u0027est mué en RPG futuriste somptueux."
+    },
+    {
+        "title":  "The Elder Scrolls V: Skyrim Special Edition",
+        "appid":  489830,
+        "studio":  "Bethesda Game Studios",
+        "studio_country":  "Etats-Unis",
+        "studio_year":  2001,
+        "release_date":  "2016-10-28",
+        "age_rating":  18,
+        "genres":  [
+                       "RPG",
+                       "Aventure"
+                   ],
+        "platforms":  [
+                          "PC",
+                          "PlayStation 5",
+                          "PlayStation 4",
+                          "Xbox Series X/S",
+                          "Xbox One",
+                          "Nintendo Switch"
+                      ],
+        "metascore":  81,
+        "description_fr":  "La version remasterisée du monde ouvert culte de Bordeciel, où l\u0027Enfant de dragon crie sur tout ce qui bouge. Des milliers de mods prolongent l\u0027aventure à l\u0027infini."
+    },
+    {
+        "title":  "Fallout 4",
+        "appid":  377160,
+        "studio":  "Bethesda Game Studios",
+        "studio_country":  "Etats-Unis",
+        "studio_year":  2001,
+        "release_date":  "2015-11-10",
+        "age_rating":  18,
+        "genres":  [
+                       "RPG",
+                       "Action"
+                   ],
+        "platforms":  [
+                          "PC",
+                          "PlayStation 5",
+                          "PlayStation 4",
+                          "Xbox Series X/S",
+                          "Xbox One"
+                      ],
+        "metascore":  84,
+        "description_fr":  "Sorti de votre abri 200 ans après l\u0027apocalypse nucléaire, vous explorez les ruines de Boston à la recherche de votre fils. Construction de colonies et armures assistées au programme."
+    },
+    {
+        "title":  "Baldur\u0027s Gate 3",
+        "appid":  1086940,
+        "studio":  "Larian Studios",
+        "studio_country":  "Belgique",
+        "studio_year":  1996,
+        "release_date":  "2023-08-03",
+        "age_rating":  18,
+        "genres":  [
+                       "RPG",
+                       "Stratégie"
+                   ],
+        "platforms":  [
+                          "PC",
+                          "PlayStation 5",
+                          "Xbox Series X/S"
+                      ],
+        "metascore":  96,
+        "description_fr":  "Un parasite mental illithid dans le crâne, vous menez une troupe de compagnons hauts en couleur à travers Faerûn. Le RPG Donjons \u0026 Dragons ultime, où presque tout est possible."
+    },
+    {
+        "title":  "Disco Elysium - The Final Cut",
+        "appid":  632470,
+        "studio":  "ZA/UM",
+        "studio_country":  "Estonie",
+        "studio_year":  2016,
+        "release_date":  "2019-10-15",
+        "age_rating":  18,
+        "genres":  [
+                       "RPG",
+                       "Aventure"
+                   ],
+        "platforms":  [
+                          "PC",
+                          "PlayStation 5",
+                          "PlayStation 4",
+                          "Xbox Series X/S",
+                          "Xbox One",
+                          "Nintendo Switch"
+                      ],
+        "metascore":  91,
+        "description_fr":  "Un détective amnésique et alcoolique enquête sur un pendu dans une ville en ruine, dialoguant avec ses propres pulsions. Un RPG sans combat, porté par une écriture vertigineuse."
+    },
+    {
+        "title":  "Divinity: Original Sin 2",
+        "appid":  435150,
+        "studio":  "Larian Studios",
+        "studio_country":  "Belgique",
+        "studio_year":  1996,
+        "release_date":  "2017-09-14",
+        "age_rating":  16,
+        "genres":  [
+                       "RPG",
+                       "Stratégie"
+                   ],
+        "platforms":  [
+                          "PC",
+                          "PlayStation 4",
+                          "Xbox One",
+                          "Nintendo Switch"
+                      ],
+        "metascore":  93,
+        "description_fr":  "Un RPG tactique où les éléments se combinent en réactions en chaîne dévastatrices : électrifiez l\u0027eau, enflammez le poison. Jouable en coopération jusqu\u0027à quatre, trahisons incluses."
+    },
+    {
+        "title":  "God of War",
+        "appid":  1593500,
+        "studio":  "Santa Monica Studio",
+        "studio_country":  "Etats-Unis",
+        "studio_year":  1999,
+        "release_date":  "2022-01-14",
+        "age_rating":  18,
+        "genres":  [
+                       "Action",
+                       "Aventure"
+                   ],
+        "platforms":  [
+                          "PC",
+                          "PlayStation 4"
+                      ],
+        "metascore":  93,
+        "description_fr":  "Kratos, vieilli et endeuillé, traverse les royaumes nordiques avec son fils Atreus pour disperser les cendres de sa femme. Un voyage père-fils filmé en un seul plan-séquence."
+    },
+    {
+        "title":  "Marvel\u0027s Spider-Man Remastered",
+        "appid":  1817070,
+        "studio":  "Insomniac Games",
+        "studio_country":  "Etats-Unis",
+        "studio_year":  1994,
+        "release_date":  "2022-08-12",
+        "age_rating":  16,
+        "genres":  [
+                       "Action",
+                       "Aventure"
+                   ],
+        "platforms":  [
+                          "PC",
+                          "PlayStation 5"
+                      ],
+        "metascore":  87,
+        "description_fr":  "Se balancer entre les gratte-ciel de Manhattan n\u0027a jamais été aussi jouissif que dans cette aventure de Peter Parker face à une galerie de super-vilains. Le portage PC est exemplaire."
+    },
+    {
+        "title":  "Horizon Zero Dawn Complete Edition",
+        "appid":  1151640,
+        "studio":  "Guerrilla Games",
+        "studio_country":  "Pays-Bas",
+        "studio_year":  2000,
+        "release_date":  "2020-08-07",
+        "age_rating":  16,
+        "genres":  [
+                       "Action",
+                       "RPG",
+                       "Aventure"
+                   ],
+        "platforms":  [
+                          "PC",
+                          "PlayStation 5",
+                          "PlayStation 4"
+                      ],
+        "metascore":  84,
+        "description_fr":  "Dans un futur lointain redevenu sauvage, la chasseuse Aloy traque des machines colossales à l\u0027arc et à la lance. Un monde post-apocalyptique d\u0027une beauté saisissante."
+    },
+    {
+        "title":  "Death Stranding",
+        "appid":  1190460,
+        "studio":  "Kojima Productions",
+        "studio_country":  "Japon",
+        "studio_year":  2015,
+        "release_date":  "2020-07-14",
+        "age_rating":  18,
+        "genres":  [
+                       "Action",
+                       "Aventure"
+                   ],
+        "platforms":  [
+                          "PC",
+                          "PlayStation 5",
+                          "PlayStation 4"
+                      ],
+        "metascore":  86,
+        "description_fr":  "Sam Porter Bridges relie à pied les survivants d\u0027une Amérique fracturée, chargé comme un mulet sous la pluie qui fait vieillir. L\u0027oeuvre la plus étrange et contemplative de Kojima."
+    },
+    {
+        "title":  "Ghost of Tsushima Director\u0027s Cut",
+        "appid":  2215430,
+        "studio":  "Sucker Punch Productions",
+        "studio_country":  "Etats-Unis",
+        "studio_year":  1997,
+        "release_date":  "2024-05-16",
+        "age_rating":  18,
+        "genres":  [
+                       "Action",
+                       "Aventure"
+                   ],
+        "platforms":  [
+                          "PC",
+                          "PlayStation 5",
+                          "PlayStation 4"
+                      ],
+        "metascore":  87,
+        "description_fr":  "Le samouraï Jin Sakai défend l\u0027île de Tsushima contre l\u0027invasion mongole, tiraillé entre honneur et tactiques de fantôme. Un monde ouvert d\u0027estampe japonaise guidé par le vent."
+    },
+    {
+        "title":  "Red Dead Redemption 2",
+        "appid":  1174180,
+        "studio":  "Rockstar Studios",
+        "studio_country":  "Etats-Unis",
+        "studio_year":  1998,
+        "release_date":  "2019-12-05",
+        "age_rating":  18,
+        "genres":  [
+                       "Action",
+                       "Aventure"
+                   ],
+        "platforms":  [
+                          "PC",
+                          "PlayStation 4",
+                          "Xbox One"
+                      ],
+        "metascore":  93,
+        "description_fr":  "Arthur Morgan accompagne le déclin de la bande de Van der Linde dans un Far West au crépuscule. Probablement le monde ouvert le plus détaillé et vivant jamais créé."
+    },
+    {
+        "title":  "Grand Theft Auto V",
+        "appid":  271590,
+        "studio":  "Rockstar North",
+        "studio_country":  "Royaume-Uni",
+        "studio_year":  1987,
+        "release_date":  "2015-04-14",
+        "age_rating":  18,
+        "genres":  [
+                       "Action",
+                       "Aventure",
+                       "Multijoueur"
+                   ],
+        "platforms":  [
+                          "PC",
+                          "PlayStation 5",
+                          "PlayStation 4",
+                          "Xbox Series X/S",
+                          "Xbox One"
+                      ],
+        "metascore":  96,
+        "description_fr":  "Trois criminels que tout oppose enchaînent les braquages dans la satire géante de Los Santos. Le mode GTA Online en a fait un phénomène qui dure depuis plus d\u0027une décennie."
+    },
+    {
+        "title":  "Hogwarts Legacy",
+        "appid":  990080,
+        "studio":  "Avalanche Software",
+        "studio_country":  "Etats-Unis",
+        "studio_year":  1995,
+        "release_date":  "2023-02-10",
+        "age_rating":  12,
+        "genres":  [
+                       "Action",
+                       "RPG",
+                       "Aventure"
+                   ],
+        "platforms":  [
+                          "PC",
+                          "PlayStation 5",
+                          "PlayStation 4",
+                          "Xbox Series X/S",
+                          "Xbox One",
+                          "Nintendo Switch"
+                      ],
+        "metascore":  84,
+        "description_fr":  "Élève de cinquième année à Poudlard au XIXe siècle, vous apprenez sortilèges et potions tout en déjouant une rébellion gobeline. Le rêve de tout fan de l\u0027univers des sorciers."
+    },
+    {
+        "title":  "Dying Light",
+        "appid":  239140,
+        "studio":  "Techland",
+        "studio_country":  "Pologne",
+        "studio_year":  1991,
+        "release_date":  "2015-01-26",
+        "age_rating":  18,
+        "genres":  [
+                       "Action",
+                       "Horreur"
+                   ],
+        "platforms":  [
+                          "PC",
+                          "PlayStation 4",
+                          "Xbox One",
+                          "Nintendo Switch"
+                      ],
+        "metascore":  75,
+        "description_fr":  "Du parkour en pleine épidémie zombie : le jour, on pille les toits de Harran ; la nuit, les infectés deviennent des prédateurs et c\u0027est vous la proie."
+    },
+    {
+        "title":  "Dying Light 2 Stay Human",
+        "appid":  534380,
+        "studio":  "Techland",
+        "studio_country":  "Pologne",
+        "studio_year":  1991,
+        "release_date":  "2022-02-04",
+        "age_rating":  18,
+        "genres":  [
+                       "Action",
+                       "Horreur",
+                       "RPG"
+                   ],
+        "platforms":  [
+                          "PC",
+                          "PlayStation 5",
+                          "PlayStation 4",
+                          "Xbox Series X/S",
+                          "Xbox One"
+                      ],
+        "metascore":  77,
+        "description_fr":  "Quinze ans après la chute du monde, le pèlerin Aiden escalade une cité survivante où chaque choix redessine les quartiers. Parkour amélioré, parapente et nuits toujours aussi terrifiantes."
+    },
+    {
+        "title":  "Monster Hunter: World",
+        "appid":  582010,
+        "studio":  "Capcom",
+        "studio_country":  "Japon",
+        "studio_year":  1979,
+        "release_date":  "2018-08-09",
+        "age_rating":  16,
+        "genres":  [
+                       "Action",
+                       "RPG",
+                       "Multijoueur"
+                   ],
+        "platforms":  [
+                          "PC",
+                          "PlayStation 4",
+                          "Xbox One"
+                      ],
+        "metascore":  88,
+        "description_fr":  "Traquez des dragons gigantesques dans des écosystèmes vivants, puis transformez leurs carcasses en armes et armures toujours plus folles. La boucle de chasse parfaite, seul ou à quatre."
+    },
+    {
+        "title":  "Monster Hunter Rise",
+        "appid":  1446780,
+        "studio":  "Capcom",
+        "studio_country":  "Japon",
+        "studio_year":  1979,
+        "release_date":  "2022-01-12",
+        "age_rating":  12,
+        "genres":  [
+                       "Action",
+                       "RPG",
+                       "Multijoueur"
+                   ],
+        "platforms":  [
+                          "PC",
+                          "Nintendo Switch",
+                          "PlayStation 5",
+                          "PlayStation 4",
+                          "Xbox Series X/S",
+                          "Xbox One"
+                      ],
+        "metascore":  87,
+        "description_fr":  "Une chasse aux monstres plus verticale et nerveuse grâce au filoptère, qui propulse le chasseur dans les airs, et aux fidèles Chumsky à chevaucher. L\u0027épisode le plus accessible de la série."
+    },
+    {
+        "title":  "NieR: Automata",
+        "appid":  524220,
+        "studio":  "PlatinumGames",
+        "studio_country":  "Japon",
+        "studio_year":  2007,
+        "release_date":  "2017-03-17",
+        "age_rating":  18,
+        "genres":  [
+                       "Action",
+                       "RPG"
+                   ],
+        "platforms":  [
+                          "PC",
+                          "PlayStation 4",
+                          "Xbox One",
+                          "Nintendo Switch"
+                      ],
+        "metascore":  85,
+        "description_fr":  "Les androïdes 2B et 9S combattent des machines sur une Terre abandonnée par l\u0027humanité, dans un récit philosophique qui exige plusieurs fins pour livrer tous ses secrets. La bande-son est légendaire."
+    },
+    {
+        "title":  "Persona 5 Royal",
+        "appid":  1687950,
+        "studio":  "Atlus",
+        "studio_country":  "Japon",
+        "studio_year":  1986,
+        "release_date":  "2022-10-21",
+        "age_rating":  16,
+        "genres":  [
+                       "RPG"
+                   ],
+        "platforms":  [
+                          "PC",
+                          "PlayStation 5",
+                          "PlayStation 4",
+                          "Xbox Series X/S",
+                          "Xbox One",
+                          "Nintendo Switch"
+                      ],
+        "metascore":  94,
+        "description_fr":  "Lycéen le jour, Voleur Fantôme la nuit : vous infiltrez les palais mentaux d\u0027adultes corrompus pour leur voler leur coeur. Un JRPG au style visuel insolemment classe."
+    },
+    {
+        "title":  "Yakuza 0",
+        "appid":  638970,
+        "studio":  "Ryu Ga Gotoku Studio",
+        "studio_country":  "Japon",
+        "studio_year":  2011,
+        "release_date":  "2018-08-01",
+        "age_rating":  18,
+        "genres":  [
+                       "Action",
+                       "Aventure"
+                   ],
+        "platforms":  [
+                          "PC",
+                          "PlayStation 4",
+                          "Xbox One"
+                      ],
+        "metascore":  85,
+        "description_fr":  "Tokyo, 1988 : Kiryu et Majima plongent dans une guerre de clans autour d\u0027un minuscule terrain vague. Drame criminel poignant d\u0027un côté, mini-jeux délirants au karaoké de l\u0027autre."
+    },
+    {
+        "title":  "Yakuza: Like a Dragon",
+        "appid":  1235140,
+        "studio":  "Ryu Ga Gotoku Studio",
+        "studio_country":  "Japon",
+        "studio_year":  2011,
+        "release_date":  "2020-11-10",
+        "age_rating":  18,
+        "genres":  [
+                       "RPG",
+                       "Aventure"
+                   ],
+        "platforms":  [
+                          "PC",
+                          "PlayStation 5",
+                          "PlayStation 4",
+                          "Xbox Series X/S",
+                          "Xbox One"
+                      ],
+        "metascore":  84,
+        "description_fr":  "Ichiban Kasuga, yakuza trahi et fan de Dragon Quest, repart de zéro à Yokohama avec une bande de marginaux attachants. La série bascule au tour par tour sans perdre son grain de folie."
+    },
+    {
+        "title":  "Final Fantasy VII Remake Intergrade",
+        "appid":  1462040,
+        "studio":  "Square Enix",
+        "studio_country":  "Japon",
+        "studio_year":  2003,
+        "release_date":  "2022-06-17",
+        "age_rating":  16,
+        "genres":  [
+                       "Action",
+                       "RPG"
+                   ],
+        "platforms":  [
+                          "PC",
+                          "PlayStation 5"
+                      ],
+        "metascore":  87,
+        "description_fr":  "La première partie du mythique FF7 réinventée : Cloud et Avalanche sabotent les réacteurs Mako de Midgar dans des combats mêlant action et pause tactique. Inclut l\u0027épisode dédié à Yuffie."
+    },
+    {
+        "title":  "Final Fantasy XIV Online",
+        "appid":  39210,
+        "studio":  "Square Enix",
+        "studio_country":  "Japon",
+        "studio_year":  2003,
+        "release_date":  "2014-02-14",
+        "age_rating":  16,
+        "genres":  [
+                       "RPG",
+                       "Multijoueur"
+                   ],
+        "platforms":  [
+                          "PC",
+                          "PlayStation 5",
+                          "PlayStation 4",
+                          "Xbox Series X/S"
+                      ],
+        "metascore":  83,
+        "description_fr":  "Le MMORPG ressuscité de ses cendres devenu l\u0027un des plus aimés au monde, où un seul personnage peut exercer tous les métiers. Ses extensions rivalisent avec les meilleurs Final Fantasy solo."
+    },
+    {
+        "title":  "The Last of Us Part I",
+        "appid":  1888930,
+        "studio":  "Naughty Dog",
+        "studio_country":  "Etats-Unis",
+        "studio_year":  1984,
+        "release_date":  "2023-03-28",
+        "age_rating":  18,
+        "genres":  [
+                       "Action",
+                       "Aventure",
+                       "Horreur"
+                   ],
+        "platforms":  [
+                          "PC",
+                          "PlayStation 5"
+                      ],
+        "metascore":  80,
+        "description_fr":  "Joel escorte l\u0027adolescente Ellie à travers une Amérique dévastée par un champignon parasite, dans le remake intégral d\u0027un des récits les plus marquants du jeu vidéo."
+    },
+    {
+        "title":  "Mass Effect Legendary Edition",
+        "appid":  1328670,
+        "studio":  "BioWare",
+        "studio_country":  "Canada",
+        "studio_year":  1995,
+        "release_date":  "2021-05-14",
+        "age_rating":  18,
+        "genres":  [
+                       "RPG",
+                       "Action"
+                   ],
+        "platforms":  [
+                          "PC",
+                          "PlayStation 4",
+                          "Xbox One"
+                      ],
+        "metascore":  86,
+        "description_fr":  "La trilogie spatiale du commandant Shepard remasterisée en un seul pack : trois jeux, des dizaines de choix lourds de conséquences et un équipage qu\u0027on n\u0027oublie jamais."
+    },
+    {
+        "title":  "Hades",
+        "appid":  1145360,
+        "studio":  "Supergiant Games",
+        "studio_country":  "États-Unis",
+        "studio_year":  2009,
+        "release_date":  "2020-09-17",
+        "age_rating":  12,
+        "genres":  [
+                       "Roguelite",
+                       "Action"
+                   ],
+        "platforms":  [
+                          "PC",
+                          "PlayStation 5",
+                          "PlayStation 4",
+                          "Xbox Series X/S",
+                          "Xbox One",
+                          "Nintendo Switch",
+                          "Mobile"
+                      ],
+        "metascore":  93,
+        "description_fr":  "Incarnez Zagreus, fils d\u0027Hadès, qui tente de s\u0027échapper des Enfers à coups d\u0027armes divines et de faveurs olympiennes. Chaque mort fait avancer une narration brillante, ce qui rend l\u0027échec presque aussi gratifiant que la victoire."
+    },
+    {
+        "title":  "Hollow Knight",
+        "appid":  367520,
+        "studio":  "Team Cherry",
+        "studio_country":  "Australie",
+        "studio_year":  2014,
+        "release_date":  "2017-02-24",
+        "age_rating":  7,
+        "genres":  [
+                       "Plateforme",
+                       "Action",
+                       "Aventure"
+                   ],
+        "platforms":  [
+                          "PC",
+                          "PlayStation 4",
+                          "Xbox One",
+                          "Nintendo Switch"
+                      ],
+        "metascore":  87,
+        "description_fr":  "Un metroidvania somptueux où un petit chevalier silencieux explore le royaume insecte déchu d\u0027Hallownest. Direction artistique dessinée à la main, combats exigeants et secrets à n\u0027en plus finir."
+    },
+    {
+        "title":  "Celeste",
+        "appid":  504230,
+        "studio":  "Maddy Makes Games",
+        "studio_country":  "Canada",
+        "studio_year":  2013,
+        "release_date":  "2018-01-25",
+        "age_rating":  7,
+        "genres":  [
+                       "Plateforme"
+                   ],
+        "platforms":  [
+                          "PC",
+                          "PlayStation 4",
+                          "Xbox One",
+                          "Nintendo Switch"
+                      ],
+        "metascore":  91,
+        "description_fr":  "Madeline gravit la montagne Celeste dans un jeu de plateforme au pixel près, aussi exigeant que bienveillant. Sous le défi se cache une histoire touchante sur l\u0027anxiété et le dépassement de soi."
+    },
+    {
+        "title":  "Stardew Valley",
+        "appid":  413150,
+        "studio":  "ConcernedApe",
+        "studio_country":  "États-Unis",
+        "studio_year":  2012,
+        "release_date":  "2016-02-26",
+        "age_rating":  12,
+        "genres":  [
+                       "Simulation",
+                       "RPG",
+                       "Gestion"
+                   ],
+        "platforms":  [
+                          "PC",
+                          "PlayStation 4",
+                          "Xbox One",
+                          "Nintendo Switch",
+                          "Mobile"
+                      ],
+        "metascore":  89,
+        "description_fr":  "Héritez d\u0027une ferme délabrée et reconstruisez votre vie au rythme des saisons : cultures, élevage, pêche, mines et amitiés villageoises. Créé par une seule personne, c\u0027est devenu la référence absolue du jeu de ferme."
+    },
+    {
+        "title":  "Terraria",
+        "appid":  105600,
+        "studio":  "Re-Logic",
+        "studio_country":  "États-Unis",
+        "studio_year":  2011,
+        "release_date":  "2011-05-16",
+        "age_rating":  12,
+        "genres":  [
+                       "Aventure",
+                       "Action"
+                   ],
+        "platforms":  [
+                          "PC",
+                          "PlayStation 4",
+                          "Xbox One",
+                          "Nintendo Switch",
+                          "Mobile"
+                      ],
+        "metascore":  83,
+        "description_fr":  "Un bac à sable 2D gigantesque où l\u0027on creuse, construit et affronte des boss de plus en plus délirants. Plus de dix ans de mises à jour gratuites en font l\u0027un des jeux les plus généreux de Steam."
+    },
+    {
+        "title":  "Undertale",
+        "appid":  391540,
+        "studio":  "tobyfox",
+        "studio_country":  "États-Unis",
+        "studio_year":  2013,
+        "release_date":  "2015-09-15",
+        "age_rating":  12,
+        "genres":  [
+                       "RPG"
+                   ],
+        "platforms":  [
+                          "PC",
+                          "PlayStation 4",
+                          "Xbox One",
+                          "Nintendo Switch"
+                      ],
+        "metascore":  92,
+        "description_fr":  "Un RPG où l\u0027on peut épargner chaque monstre, et où le jeu se souvient de tout ce que vous faites. Humour, musique culte et retournements narratifs en ont fait un phénomène."
+    },
+    {
+        "title":  "Cuphead",
+        "appid":  268910,
+        "studio":  "Studio MDHR",
+        "studio_country":  "Canada",
+        "studio_year":  2013,
+        "release_date":  "2017-09-29",
+        "age_rating":  7,
+        "genres":  [
+                       "Action",
+                       "Plateforme"
+                   ],
+        "platforms":  [
+                          "PC",
+                          "PlayStation 4",
+                          "Xbox One",
+                          "Nintendo Switch"
+                      ],
+        "metascore":  88,
+        "description_fr":  "Un run and gun entièrement animé à la main dans le style des cartoons des années 1930. Derrière son charme rétro se cache une suite de combats de boss redoutablement difficiles."
+    },
+    {
+        "title":  "Dead Cells",
+        "appid":  588650,
+        "studio":  "Motion Twin",
+        "studio_country":  "France",
+        "studio_year":  2001,
+        "release_date":  "2018-08-07",
+        "age_rating":  16,
+        "genres":  [
+                       "Roguelite",
+                       "Action",
+                       "Plateforme"
+                   ],
+        "platforms":  [
+                          "PC",
+                          "PlayStation 4",
+                          "Xbox One",
+                          "Nintendo Switch",
+                          "Mobile"
+                      ],
+        "metascore":  89,
+        "description_fr":  "Un roguelite d\u0027action français au gameplay nerveux et précis, où chaque mort relance l\u0027exploration d\u0027une île maudite en perpétuel changement. Sa boucle de combat est l\u0027une des plus jouissives du genre."
+    },
+    {
+        "title":  "Slay the Spire",
+        "appid":  646570,
+        "studio":  "Mega Crit",
+        "studio_country":  "États-Unis",
+        "studio_year":  2015,
+        "release_date":  "2019-01-23",
+        "age_rating":  12,
+        "genres":  [
+                       "Stratégie",
+                       "Roguelite"
+                   ],
+        "platforms":  [
+                          "PC",
+                          "PlayStation 4",
+                          "Xbox One",
+                          "Nintendo Switch",
+                          "Mobile"
+                      ],
+        "metascore":  89,
+        "description_fr":  "Le jeu qui a inventé le deckbuilding roguelite : on grimpe une tour en construisant son paquet de cartes au fil des combats. Simple à apprendre, terriblement profond, impossible à lâcher."
+    },
+    {
+        "title":  "Risk of Rain 2",
+        "appid":  632360,
+        "studio":  "Hopoo Games",
+        "studio_country":  "États-Unis",
+        "studio_year":  2012,
+        "release_date":  "2020-08-11",
+        "age_rating":  12,
+        "genres":  [
+                       "Action",
+                       "Roguelite",
+                       "Multijoueur"
+                   ],
+        "platforms":  [
+                          "PC",
+                          "PlayStation 5",
+                          "PlayStation 4",
+                          "Xbox Series X/S",
+                          "Xbox One",
+                          "Nintendo Switch"
+                      ],
+        "metascore":  85,
+        "description_fr":  "Un shooter roguelite en 3D où la difficulté monte en temps réel pendant que vous empilez des objets aux synergies absurdes. Excellent en solo, encore meilleur en coopération."
+    },
+    {
+        "title":  "Vampire Survivors",
+        "appid":  1794680,
+        "studio":  "poncle",
+        "studio_country":  "Royaume-Uni",
+        "studio_year":  2021,
+        "release_date":  "2022-10-20",
+        "age_rating":  7,
+        "genres":  [
+                       "Action",
+                       "Roguelite"
+                   ],
+        "platforms":  [
+                          "PC",
+                          "PlayStation 5",
+                          "PlayStation 4",
+                          "Xbox Series X/S",
+                          "Xbox One",
+                          "Nintendo Switch",
+                          "Mobile"
+                      ],
+        "metascore":  86,
+        "description_fr":  "Survivez à des hordes de monstres pendant que votre personnage attaque tout seul et que l\u0027écran se remplit d\u0027effets délirants. Un concept minimaliste devenu un phénomène mondial et le père d\u0027un genre entier."
+    },
+    {
+        "title":  "The Binding of Isaac: Rebirth",
+        "appid":  250900,
+        "studio":  "Nicalis",
+        "studio_country":  "États-Unis",
+        "studio_year":  2007,
+        "release_date":  "2014-11-04",
+        "age_rating":  16,
+        "genres":  [
+                       "Roguelite",
+                       "Action"
+                   ],
+        "platforms":  [
+                          "PC",
+                          "PlayStation 4",
+                          "Xbox One",
+                          "Nintendo Switch"
+                      ],
+        "metascore":  86,
+        "description_fr":  "Isaac fuit dans la cave familiale et affronte des donjons générés aléatoirement, gavés d\u0027objets aux combinaisons imprévisibles. Sombre, dérangeant et d\u0027une rejouabilité quasi infinie."
+    },
+    {
+        "title":  "Enter the Gungeon",
+        "appid":  311690,
+        "studio":  "Dodge Roll",
+        "studio_country":  "États-Unis",
+        "studio_year":  2014,
+        "release_date":  "2016-04-05",
+        "age_rating":  12,
+        "genres":  [
+                       "Roguelite",
+                       "Action"
+                   ],
+        "platforms":  [
+                          "PC",
+                          "PlayStation 4",
+                          "Xbox One",
+                          "Nintendo Switch"
+                      ],
+        "metascore":  82,
+        "description_fr":  "Un roguelite bullet hell où l\u0027on descend dans un donjon-armurerie à la recherche du flingue capable de tuer le passé. Armes loufoques, roulades salvatrices et humour omniprésent."
+    },
+    {
+        "title":  "Ori and the Blind Forest: Definitive Edition",
+        "appid":  387290,
+        "studio":  "Moon Studios",
+        "studio_country":  "Autriche",
+        "studio_year":  2010,
+        "release_date":  "2016-04-27",
+        "age_rating":  7,
+        "genres":  [
+                       "Plateforme",
+                       "Aventure"
+                   ],
+        "platforms":  [
+                          "PC",
+                          "Xbox One",
+                          "Nintendo Switch"
+                      ],
+        "metascore":  88,
+        "description_fr":  "Un metroidvania d\u0027une beauté renversante où un petit esprit lumineux tente de sauver sa forêt mourante. Plateforme précise, musique bouleversante et émotion dès les premières minutes."
+    },
+    {
+        "title":  "Ori and the Will of the Wisps",
+        "appid":  1057090,
+        "studio":  "Moon Studios",
+        "studio_country":  "Autriche",
+        "studio_year":  2010,
+        "release_date":  "2020-03-11",
+        "age_rating":  7,
+        "genres":  [
+                       "Plateforme",
+                       "Aventure"
+                   ],
+        "platforms":  [
+                          "PC",
+                          "Xbox Series X/S",
+                          "Xbox One",
+                          "Nintendo Switch"
+                      ],
+        "metascore":  90,
+        "description_fr":  "La suite d\u0027Ori pousse tous les curseurs plus loin : combats enrichis, monde plus vaste et séquences d\u0027évasion spectaculaires. L\u0027un des plus beaux jeux 2D jamais réalisés."
+    },
+    {
+        "title":  "A Hat in Time",
+        "appid":  253230,
+        "studio":  "Gears for Breakfast",
+        "studio_country":  "Danemark",
+        "studio_year":  2012,
+        "release_date":  "2017-10-05",
+        "age_rating":  7,
+        "genres":  [
+                       "Plateforme",
+                       "Aventure"
+                   ],
+        "platforms":  [
+                          "PC",
+                          "PlayStation 4",
+                          "Xbox One",
+                          "Nintendo Switch"
+                      ],
+        "metascore":  78,
+        "description_fr":  "Un platformer 3D plein de charme où une petite fille au chapeau voyage de monde en monde pour récupérer ses sabliers. Héritier assumé des classiques de l\u0027ère Nintendo 64, avec un humour irrésistible."
+    },
+    {
+        "title":  "Psychonauts 2",
+        "appid":  607080,
+        "studio":  "Double Fine Productions",
+        "studio_country":  "États-Unis",
+        "studio_year":  2000,
+        "release_date":  "2021-08-25",
+        "age_rating":  12,
+        "genres":  [
+                       "Plateforme",
+                       "Aventure",
+                       "Action"
+                   ],
+        "platforms":  [
+                          "PC",
+                          "PlayStation 4",
+                          "Xbox Series X/S",
+                          "Xbox One"
+                      ],
+        "metascore":  88,
+        "description_fr":  "Raz plonge dans l\u0027esprit des gens pour démêler leurs traumatismes dans des niveaux d\u0027une inventivité folle. Une suite drôle, humaine et visuellement débordante d\u0027idées."
+    },
+    {
+        "title":  "Outer Wilds",
+        "appid":  753640,
+        "studio":  "Mobius Digital",
+        "studio_country":  "États-Unis",
+        "studio_year":  2013,
+        "release_date":  "2019-05-28",
+        "age_rating":  7,
+        "genres":  [
+                       "Aventure"
+                   ],
+        "platforms":  [
+                          "PC",
+                          "PlayStation 5",
+                          "PlayStation 4",
+                          "Xbox Series X/S",
+                          "Xbox One",
+                          "Nintendo Switch"
+                      ],
+        "metascore":  85,
+        "description_fr":  "Explorez un système solaire miniature piégé dans une boucle temporelle de 22 minutes, où la seule progression est ce que vous comprenez. Une des plus grandes aventures de découverte du jeu vidéo."
+    },
+    {
+        "title":  "Subnautica",
+        "appid":  264710,
+        "studio":  "Unknown Worlds Entertainment",
+        "studio_country":  "États-Unis",
+        "studio_year":  2001,
+        "release_date":  "2018-01-23",
+        "age_rating":  12,
+        "genres":  [
+                       "Aventure",
+                       "Simulation"
+                   ],
+        "platforms":  [
+                          "PC",
+                          "PlayStation 5",
+                          "PlayStation 4",
+                          "Xbox Series X/S",
+                          "Xbox One",
+                          "Nintendo Switch"
+                      ],
+        "metascore":  87,
+        "description_fr":  "Seul survivant d\u0027un crash sur une planète océan, vous devez plonger toujours plus profond pour survivre et comprendre ce monde. Un jeu de survie qui mêle émerveillement et terreur des abysses."
+    },
+    {
+        "title":  "Inside",
+        "appid":  304430,
+        "studio":  "Playdead",
+        "studio_country":  "Danemark",
+        "studio_year":  2006,
+        "release_date":  "2016-07-07",
+        "age_rating":  18,
+        "genres":  [
+                       "Plateforme",
+                       "Aventure"
+                   ],
+        "platforms":  [
+                          "PC",
+                          "PlayStation 4",
+                          "Xbox One",
+                          "Nintendo Switch",
+                          "Mobile"
+                      ],
+        "metascore":  91,
+        "description_fr":  "Un garçon s\u0027infiltre dans un monde dystopique glaçant, sans un mot de dialogue. Mise en scène magistrale, énigmes élégantes et un final parmi les plus marquants du jeu vidéo."
+    },
+    {
+        "title":  "Limbo",
+        "appid":  48000,
+        "studio":  "Playdead",
+        "studio_country":  "Danemark",
+        "studio_year":  2006,
+        "release_date":  "2011-08-02",
+        "age_rating":  18,
+        "genres":  [
+                       "Plateforme",
+                       "Aventure"
+                   ],
+        "platforms":  [
+                          "PC",
+                          "PlayStation 4",
+                          "Xbox One",
+                          "Nintendo Switch",
+                          "Mobile"
+                      ],
+        "metascore":  88,
+        "description_fr":  "Un puzzle-platformer en noir et blanc où un enfant traverse une forêt cauchemardesque à la recherche de sa sœur. Son ambiance d\u0027ombres et de silence a marqué toute une génération d\u0027indés."
+    },
+    {
+        "title":  "Little Nightmares",
+        "appid":  424840,
+        "studio":  "Tarsier Studios",
+        "studio_country":  "Suède",
+        "studio_year":  2004,
+        "release_date":  "2017-04-28",
+        "age_rating":  16,
+        "genres":  [
+                       "Horreur",
+                       "Plateforme",
+                       "Aventure"
+                   ],
+        "platforms":  [
+                          "PC",
+                          "PlayStation 4",
+                          "Xbox One",
+                          "Nintendo Switch",
+                          "Mobile"
+                      ],
+        "metascore":  81,
+        "description_fr":  "Six, minuscule fillette en ciré jaune, doit s\u0027échapper de l\u0027Antre, un navire peuplé de créatures grotesques et affamées. Un conte horrifique où tout est démesuré, sauf vous."
+    },
+    {
+        "title":  "Tunic",
+        "appid":  553420,
+        "studio":  "Andrew Shouldice (Isometricorp Games)",
+        "studio_country":  "Canada",
+        "studio_year":  2015,
+        "release_date":  "2022-03-16",
+        "age_rating":  7,
+        "genres":  [
+                       "Aventure",
+                       "Action"
+                   ],
+        "platforms":  [
+                          "PC",
+                          "PlayStation 5",
+                          "PlayStation 4",
+                          "Xbox Series X/S",
+                          "Xbox One",
+                          "Nintendo Switch"
+                      ],
+        "metascore":  85,
+        "description_fr":  "Un petit renard explore un monde mystérieux en reconstituant page par page le manuel du jeu, écrit dans une langue inconnue. Hommage aux Zelda classiques, bourré de secrets vertigineux."
+    },
+    {
+        "title":  "A Plague Tale: Innocence",
+        "appid":  752590,
+        "studio":  "Asobo Studio",
+        "studio_country":  "France",
+        "studio_year":  2002,
+        "release_date":  "2019-05-14",
+        "age_rating":  18,
+        "genres":  [
+                       "Aventure",
+                       "Action"
+                   ],
+        "platforms":  [
+                          "PC",
+                          "PlayStation 5",
+                          "PlayStation 4",
+                          "Xbox Series X/S",
+                          "Xbox One"
+                      ],
+        "metascore":  81,
+        "description_fr":  "Dans la France médiévale ravagée par la peste et l\u0027Inquisition, Amicia protège son petit frère face à des nuées de rats terrifiantes. Une aventure narrative française poignante et superbement mise en scène."
+    },
+    {
+        "title":  "It Takes Two",
+        "appid":  1426210,
+        "studio":  "Hazelight Studios",
+        "studio_country":  "Suède",
+        "studio_year":  2014,
+        "release_date":  "2021-03-26",
+        "age_rating":  12,
+        "genres":  [
+                       "Aventure",
+                       "Multijoueur",
+                       "Plateforme"
+                   ],
+        "platforms":  [
+                          "PC",
+                          "PlayStation 5",
+                          "PlayStation 4",
+                          "Xbox Series X/S",
+                          "Xbox One",
+                          "Nintendo Switch"
+                      ],
+        "metascore":  88,
+        "description_fr":  "Un couple au bord du divorce se retrouve transformé en poupées et doit coopérer pour redevenir humain. Jouable uniquement à deux, c\u0027est une avalanche d\u0027idées de gameplay qui a remporté le titre de jeu de l\u0027année 2021."
+    },
+    {
+        "title":  "Gris",
+        "appid":  683320,
+        "studio":  "Nomada Studio",
+        "studio_country":  "Espagne",
+        "studio_year":  2016,
+        "release_date":  "2018-12-13",
+        "age_rating":  7,
+        "genres":  [
+                       "Plateforme",
+                       "Aventure"
+                   ],
+        "platforms":  [
+                          "PC",
+                          "PlayStation 5",
+                          "PlayStation 4",
+                          "Xbox Series X/S",
+                          "Xbox One",
+                          "Nintendo Switch",
+                          "Mobile"
+                      ],
+        "metascore":  83,
+        "description_fr":  "Une jeune femme traverse un monde aquarelle qui retrouve ses couleurs au fil de son deuil. Une expérience contemplative sans échec possible, portée par une direction artistique sublime."
+    },
+    {
+        "title":  "Spiritfarer",
+        "appid":  972660,
+        "studio":  "Thunder Lotus Games",
+        "studio_country":  "Canada",
+        "studio_year":  2014,
+        "release_date":  "2020-08-18",
+        "age_rating":  12,
+        "genres":  [
+                       "Gestion",
+                       "Aventure",
+                       "Simulation"
+                   ],
+        "platforms":  [
+                          "PC",
+                          "PlayStation 4",
+                          "Xbox One",
+                          "Nintendo Switch",
+                          "Mobile"
+                      ],
+        "metascore":  84,
+        "description_fr":  "Stella, passeuse d\u0027âmes, accueille des esprits sur son bateau et les accompagne jusqu\u0027à leur dernier voyage. Un jeu de gestion chaleureux qui parle de la mort avec une douceur rare."
+    },
+    {
+        "title":  "Firewatch",
+        "appid":  383870,
+        "studio":  "Campo Santo",
+        "studio_country":  "États-Unis",
+        "studio_year":  2013,
+        "release_date":  "2016-02-09",
+        "age_rating":  16,
+        "genres":  [
+                       "Aventure"
+                   ],
+        "platforms":  [
+                          "PC",
+                          "PlayStation 4",
+                          "Xbox One",
+                          "Nintendo Switch"
+                      ],
+        "metascore":  81,
+        "description_fr":  "Henry, guetteur d\u0027incendies dans le Wyoming, n\u0027a pour seul lien humain que la voix de Delilah à la radio. Un récit intimiste dans une nature magnifique, où le mystère s\u0027installe peu à peu."
+    },
+    {
+        "title":  "What Remains of Edith Finch",
+        "appid":  501300,
+        "studio":  "Giant Sparrow",
+        "studio_country":  "États-Unis",
+        "studio_year":  2009,
+        "release_date":  "2017-04-25",
+        "age_rating":  16,
+        "genres":  [
+                       "Aventure"
+                   ],
+        "platforms":  [
+                          "PC",
+                          "PlayStation 5",
+                          "PlayStation 4",
+                          "Xbox Series X/S",
+                          "Xbox One",
+                          "Nintendo Switch",
+                          "Mobile"
+                      ],
+        "metascore":  88,
+        "description_fr":  "Edith revient dans la maison familiale pour découvrir comment chaque membre de sa lignée maudite a disparu. Chaque souvenir se joue différemment, dans l\u0027un des récits interactifs les plus inventifs du médium."
+    },
+    {
+        "title":  "Stray",
+        "appid":  1332010,
+        "studio":  "BlueTwelve Studio",
+        "studio_country":  "France",
+        "studio_year":  2015,
+        "release_date":  "2022-07-19",
+        "age_rating":  12,
+        "genres":  [
+                       "Aventure"
+                   ],
+        "platforms":  [
+                          "PC",
+                          "PlayStation 5",
+                          "PlayStation 4",
+                          "Xbox Series X/S",
+                          "Xbox One"
+                      ],
+        "metascore":  83,
+        "description_fr":  "Un chat errant tombe dans une cité cybernétique souterraine peuplée de robots et doit retrouver le chemin de la surface. On y miaule, on griffe les canapés et on explore une ville néon fascinante."
+    },
+    {
+        "title":  "Sid Meier\u0027s Civilization VI",
+        "appid":  289070,
+        "studio":  "Firaxis Games",
+        "studio_country":  "Etats-Unis",
+        "studio_year":  1996,
+        "release_date":  "2016-10-21",
+        "age_rating":  12,
+        "genres":  [
+                       "Stratégie"
+                   ],
+        "platforms":  [
+                          "PC",
+                          "PlayStation 4",
+                          "Xbox One",
+                          "Nintendo Switch",
+                          "Mobile"
+                      ],
+        "metascore":  88,
+        "description_fr":  "Guidez une civilisation de l\u0027âge de pierre jusqu\u0027à la conquête spatiale, tour après tour. Les villes s\u0027étalent désormais en districts sur la carte, ce qui renouvelle profondément la stratégie de la série."
+    },
+    {
+        "title":  "Age of Empires II: Definitive Edition",
+        "appid":  813780,
+        "studio":  "Forgotten Empires",
+        "studio_country":  "Etats-Unis",
+        "studio_year":  2013,
+        "release_date":  "2019-11-14",
+        "age_rating":  12,
+        "genres":  [
+                       "Stratégie",
+                       "Multijoueur"
+                   ],
+        "platforms":  [
+                          "PC",
+                          "Xbox Series X/S",
+                          "Xbox One",
+                          "PlayStation 5"
+                      ],
+        "metascore":  84,
+        "description_fr":  "Le RTS médiéval culte revient en 4K avec de nouvelles campagnes et civilisations. Vingt ans après, sa boucle récolte-construction-conquête reste l\u0027une des plus solides du genre."
+    },
+    {
+        "title":  "Age of Empires IV",
+        "appid":  1466860,
+        "studio":  "Relic Entertainment",
+        "studio_country":  "Canada",
+        "studio_year":  1997,
+        "release_date":  "2021-10-28",
+        "age_rating":  12,
+        "genres":  [
+                       "Stratégie",
+                       "Multijoueur"
+                   ],
+        "platforms":  [
+                          "PC",
+                          "Xbox Series X/S",
+                          "Xbox One"
+                      ],
+        "metascore":  81,
+        "description_fr":  "Le retour de la stratégie en temps réel historique avec huit civilisations aux mécaniques vraiment différenciées. Ses campagnes documentaires mêlent batailles et images d\u0027archives avec élégance."
+    },
+    {
+        "title":  "Crusader Kings III",
+        "appid":  1158310,
+        "studio":  "Paradox Development Studio",
+        "studio_country":  "Suède",
+        "studio_year":  1995,
+        "release_date":  "2020-09-01",
+        "age_rating":  16,
+        "genres":  [
+                       "Stratégie",
+                       "RPG",
+                       "Simulation"
+                   ],
+        "platforms":  [
+                          "PC",
+                          "PlayStation 5",
+                          "Xbox Series X/S"
+                      ],
+        "metascore":  91,
+        "description_fr":  "Incarnez une dynastie médiévale où chaque mariage, complot et trahison compte plus que les batailles. Un générateur d\u0027histoires personnelles unique, à mi-chemin entre grande stratégie et jeu de rôle."
+    },
+    {
+        "title":  "Stellaris",
+        "appid":  281990,
+        "studio":  "Paradox Development Studio",
+        "studio_country":  "Suède",
+        "studio_year":  1995,
+        "release_date":  "2016-05-09",
+        "age_rating":  7,
+        "genres":  [
+                       "Stratégie",
+                       "Simulation"
+                   ],
+        "platforms":  [
+                          "PC",
+                          "PlayStation 4",
+                          "Xbox One"
+                      ],
+        "metascore":  78,
+        "description_fr":  "Explorez une galaxie générée aléatoirement à la tête d\u0027un empire spatial entièrement personnalisable. Diplomatie, anomalies étranges et crises de fin de partie font de chaque run un space opera différent."
+    },
+    {
+        "title":  "Europa Universalis IV",
+        "appid":  236850,
+        "studio":  "Paradox Development Studio",
+        "studio_country":  "Suède",
+        "studio_year":  1995,
+        "release_date":  "2013-08-13",
+        "age_rating":  12,
+        "genres":  [
+                       "Stratégie"
+                   ],
+        "platforms":  [
+                          "PC"
+                      ],
+        "metascore":  87,
+        "description_fr":  "Quatre siècles d\u0027histoire mondiale à réécrire à la tête de n\u0027importe quelle nation, de la Castille au Japon. Commerce, religion, guerres et colonisation : la grande stratégie dans ce qu\u0027elle a de plus profond."
+    },
+    {
+        "title":  "Hearts of Iron IV",
+        "appid":  394360,
+        "studio":  "Paradox Development Studio",
+        "studio_country":  "Suède",
+        "studio_year":  1995,
+        "release_date":  "2016-06-06",
+        "age_rating":  7,
+        "genres":  [
+                       "Stratégie",
+                       "Simulation"
+                   ],
+        "platforms":  [
+                          "PC"
+                      ],
+        "metascore":  83,
+        "description_fr":  "Dirigez n\u0027importe quelle nation pendant la Seconde Guerre mondiale, de la production industrielle aux fronts qui s\u0027étirent sur des continents. La logistique et la planification y pèsent autant que les divisions blindées."
+    },
+    {
+        "title":  "Total War: WARHAMMER III",
+        "appid":  1142710,
+        "studio":  "Creative Assembly",
+        "studio_country":  "Royaume-Uni",
+        "studio_year":  1987,
+        "release_date":  "2022-02-17",
+        "age_rating":  16,
+        "genres":  [
+                       "Stratégie"
+                   ],
+        "platforms":  [
+                          "PC"
+                      ],
+        "metascore":  86,
+        "description_fr":  "L\u0027affrontement final de la trilogie Total War fantastique, avec démons du Chaos, Kislev et Cathay. Des batailles en temps réel spectaculaires posées sur une immense campagne au tour par tour."
+    },
+    {
+        "title":  "XCOM 2",
+        "appid":  268500,
+        "studio":  "Firaxis Games",
+        "studio_country":  "Etats-Unis",
+        "studio_year":  1996,
+        "release_date":  "2016-02-05",
+        "age_rating":  16,
+        "genres":  [
+                       "Stratégie"
+                   ],
+        "platforms":  [
+                          "PC",
+                          "PlayStation 4",
+                          "Xbox One",
+                          "Nintendo Switch",
+                          "Mobile"
+                      ],
+        "metascore":  88,
+        "description_fr":  "Vingt ans après l\u0027invasion, vous menez la résistance contre l\u0027occupant alien à coups d\u0027embuscades tactiques. Chaque soldat perdu l\u0027est pour de bon, et chaque tir manqué peut faire basculer la mission."
+    },
+    {
+        "title":  "Factorio",
+        "appid":  427520,
+        "studio":  "Wube Software",
+        "studio_country":  "République tchèque",
+        "studio_year":  2014,
+        "release_date":  "2020-08-14",
+        "age_rating":  7,
+        "genres":  [
+                       "Gestion",
+                       "Simulation",
+                       "Stratégie"
+                   ],
+        "platforms":  [
+                          "PC",
+                          "Nintendo Switch"
+                      ],
+        "metascore":  90,
+        "description_fr":  "Crashé sur une planète hostile, vous bâtissez une usine qui s\u0027automatise jusqu\u0027au lancement d\u0027une fusée. Le jeu d\u0027optimisation par excellence, capable d\u0027avaler des centaines d\u0027heures sans prévenir."
+    },
+    {
+        "title":  "Satisfactory",
+        "appid":  526870,
+        "studio":  "Coffee Stain Studios",
+        "studio_country":  "Suède",
+        "studio_year":  2010,
+        "release_date":  "2024-09-10",
+        "age_rating":  7,
+        "genres":  [
+                       "Gestion",
+                       "Simulation",
+                       "Aventure"
+                   ],
+        "platforms":  [
+                          "PC",
+                          "PlayStation 5",
+                          "Xbox Series X/S"
+                      ],
+        "metascore":  91,
+        "description_fr":  "Construisez en vue première personne des usines vertigineuses sur une planète extraterrestre somptueuse. Tapis roulants, trains et tuyaux s\u0027entremêlent dans un vertige logistique en 3D, jouable en coop."
+    },
+    {
+        "title":  "RimWorld",
+        "appid":  294100,
+        "studio":  "Ludeon Studios",
+        "studio_country":  "Canada",
+        "studio_year":  2013,
+        "release_date":  "2018-10-17",
+        "age_rating":  16,
+        "genres":  [
+                       "Gestion",
+                       "Simulation",
+                       "Stratégie"
+                   ],
+        "platforms":  [
+                          "PC",
+                          "PlayStation 4",
+                          "Xbox One"
+                      ],
+        "metascore":  87,
+        "description_fr":  "Gérez une colonie de naufragés sur une planète lointaine, sous la coupe d\u0027un conteur IA qui orchestre drames et catastrophes. Chaque partie devient une histoire de survie qu\u0027on raconte ensuite à ses amis."
+    },
+    {
+        "title":  "Cities: Skylines",
+        "appid":  255710,
+        "studio":  "Colossal Order",
+        "studio_country":  "Finlande",
+        "studio_year":  2009,
+        "release_date":  "2015-03-10",
+        "age_rating":  3,
+        "genres":  [
+                       "Gestion",
+                       "Simulation"
+                   ],
+        "platforms":  [
+                          "PC",
+                          "PlayStation 4",
+                          "Xbox One",
+                          "Nintendo Switch"
+                      ],
+        "metascore":  85,
+        "description_fr":  "Le city-builder qui a redonné ses lettres de noblesse au genre : zonage, trafic, services publics et quartiers à thème. Sa communauté de mods en a fait un bac à sable urbain quasi infini."
+    },
+    {
+        "title":  "Planet Coaster",
+        "appid":  493340,
+        "studio":  "Frontier Developments",
+        "studio_country":  "Royaume-Uni",
+        "studio_year":  1994,
+        "release_date":  "2016-11-17",
+        "age_rating":  3,
+        "genres":  [
+                       "Gestion",
+                       "Simulation"
+                   ],
+        "platforms":  [
+                          "PC",
+                          "PlayStation 4",
+                          "PlayStation 5",
+                          "Xbox One",
+                          "Xbox Series X/S"
+                      ],
+        "metascore":  84,
+        "description_fr":  "Concevez le parc d\u0027attractions de vos rêves, montagne russe par montagne russe, pièce par pièce. Ses outils de construction libre en font autant un jeu de gestion qu\u0027un atelier créatif."
+    },
+    {
+        "title":  "Planet Zoo",
+        "appid":  703080,
+        "studio":  "Frontier Developments",
+        "studio_country":  "Royaume-Uni",
+        "studio_year":  1994,
+        "release_date":  "2019-11-05",
+        "age_rating":  3,
+        "genres":  [
+                       "Gestion",
+                       "Simulation"
+                   ],
+        "platforms":  [
+                          "PC",
+                          "PlayStation 5",
+                          "Xbox Series X/S"
+                      ],
+        "metascore":  80,
+        "description_fr":  "Bâtissez un zoo où chaque animal a des besoins, un caractère et une génétique simulés avec un soin impressionnant. La conservation des espèces est au coeur du jeu, pas seulement la rentabilité."
+    },
+    {
+        "title":  "Two Point Hospital",
+        "appid":  535930,
+        "studio":  "Two Point Studios",
+        "studio_country":  "Royaume-Uni",
+        "studio_year":  2016,
+        "release_date":  "2018-08-30",
+        "age_rating":  3,
+        "genres":  [
+                       "Gestion",
+                       "Simulation"
+                   ],
+        "platforms":  [
+                          "PC",
+                          "PlayStation 4",
+                          "Xbox One",
+                          "Nintendo Switch"
+                      ],
+        "metascore":  83,
+        "description_fr":  "Héritier spirituel de Theme Hospital, ce jeu de gestion vous fait soigner des maladies absurdes comme la tête-ampoule. Humour anglais, gestion fine du personnel et progression addictive d\u0027hôpital en hôpital."
+    },
+    {
+        "title":  "Les Sims 4",
+        "appid":  1222670,
+        "studio":  "Maxis",
+        "studio_country":  "Etats-Unis",
+        "studio_year":  1987,
+        "release_date":  "2014-09-02",
+        "age_rating":  12,
+        "genres":  [
+                       "Simulation"
+                   ],
+        "platforms":  [
+                          "PC",
+                          "PlayStation 4",
+                          "Xbox One"
+                      ],
+        "metascore":  70,
+        "description_fr":  "Créez des Sims, construisez leur maison et orchestrez leur vie, de la carrière aux histoires de coeur. Passé en free-to-play, c\u0027est toujours le bac à sable de simulation de vie le plus joué au monde."
+    },
+    {
+        "title":  "Forza Horizon 5",
+        "appid":  1551360,
+        "studio":  "Playground Games",
+        "studio_country":  "Royaume-Uni",
+        "studio_year":  2010,
+        "release_date":  "2021-11-09",
+        "age_rating":  3,
+        "genres":  [
+                       "Course",
+                       "Multijoueur"
+                   ],
+        "platforms":  [
+                          "PC",
+                          "Xbox Series X/S",
+                          "Xbox One",
+                          "PlayStation 5"
+                      ],
+        "metascore":  92,
+        "description_fr":  "Un festival automobile en monde ouvert dans un Mexique somptueux, des volcans aux jungles. Conduite arcade accessible, des centaines de voitures et une générosité de contenu rarement égalée."
+    },
+    {
+        "title":  "Assetto Corsa",
+        "appid":  244210,
+        "studio":  "Kunos Simulazioni",
+        "studio_country":  "Italie",
+        "studio_year":  2005,
+        "release_date":  "2014-12-19",
+        "age_rating":  3,
+        "genres":  [
+                       "Course",
+                       "Simulation"
+                   ],
+        "platforms":  [
+                          "PC",
+                          "PlayStation 4",
+                          "Xbox One"
+                      ],
+        "metascore":  85,
+        "description_fr":  "Une simulation de pilotage réputée pour sa physique de conduite parmi les plus crédibles du marché. Portée par une communauté de mods gigantesque, elle reste une référence pour les amateurs de volant."
+    },
+    {
+        "title":  "Euro Truck Simulator 2",
+        "appid":  227300,
+        "studio":  "SCS Software",
+        "studio_country":  "République tchèque",
+        "studio_year":  1997,
+        "release_date":  "2012-10-19",
+        "age_rating":  3,
+        "genres":  [
+                       "Simulation",
+                       "Course"
+                   ],
+        "platforms":  [
+                          "PC"
+                      ],
+        "metascore":  79,
+        "description_fr":  "Sillonnez les routes d\u0027Europe au volant de votre camion et faites grandir votre entreprise de transport. Étonnamment apaisant, c\u0027est devenu un phénomène culte bien au-delà des passionnés de poids lourds."
+    },
+    {
+        "title":  "Microsoft Flight Simulator",
+        "appid":  1250410,
+        "studio":  "Asobo Studio",
+        "studio_country":  "France",
+        "studio_year":  2002,
+        "release_date":  "2020-08-18",
+        "age_rating":  3,
+        "genres":  [
+                       "Simulation"
+                   ],
+        "platforms":  [
+                          "PC",
+                          "Xbox Series X/S"
+                      ],
+        "metascore":  91,
+        "description_fr":  "Survolez la Terre entière reconstituée en streaming à partir de données satellites et cartographiques. Une prouesse technique du studio bordelais Asobo, du Cessna de tourisme au long-courrier."
+    },
+    {
+        "title":  "Resident Evil 2",
+        "appid":  883710,
+        "studio":  "Capcom",
+        "studio_country":  "Japon",
+        "studio_year":  1983,
+        "release_date":  "2019-01-25",
+        "age_rating":  18,
+        "genres":  [
+                       "Horreur",
+                       "Action",
+                       "Aventure"
+                   ],
+        "platforms":  [
+                          "PC",
+                          "PlayStation 4",
+                          "PlayStation 5",
+                          "Xbox One",
+                          "Xbox Series X/S"
+                      ],
+        "metascore":  91,
+        "description_fr":  "Le remake exemplaire du classique de 1998 : Leon et Claire piégés dans un commissariat infesté de zombies. Le Tyrant qui vous traque sans répit reste l\u0027une des grandes idées du survival horror moderne."
+    },
+    {
+        "title":  "Resident Evil 4",
+        "appid":  2050650,
+        "studio":  "Capcom",
+        "studio_country":  "Japon",
+        "studio_year":  1983,
+        "release_date":  "2023-03-24",
+        "age_rating":  18,
+        "genres":  [
+                       "Horreur",
+                       "Action",
+                       "Aventure"
+                   ],
+        "platforms":  [
+                          "PC",
+                          "PlayStation 4",
+                          "PlayStation 5",
+                          "Xbox Series X/S",
+                          "Mobile"
+                      ],
+        "metascore":  93,
+        "description_fr":  "Leon part secourir la fille du président dans un village espagnol gangrené par une secte. Capcom réinvente son propre chef-d\u0027oeuvre avec un équilibre action-horreur d\u0027une précision redoutable."
+    },
+    {
+        "title":  "Resident Evil Village",
+        "appid":  1196590,
+        "studio":  "Capcom",
+        "studio_country":  "Japon",
+        "studio_year":  1983,
+        "release_date":  "2021-05-07",
+        "age_rating":  18,
+        "genres":  [
+                       "Horreur",
+                       "Action",
+                       "FPS"
+                   ],
+        "platforms":  [
+                          "PC",
+                          "PlayStation 4",
+                          "PlayStation 5",
+                          "Xbox One",
+                          "Xbox Series X/S",
+                          "Mobile"
+                      ],
+        "metascore":  84,
+        "description_fr":  "Ethan Winters traque sa fille enlevée dans un village d\u0027Europe de l\u0027Est peuplé de loups-garous et dominé par un château gothique. Entre horreur viscérale et action débridée, avec l\u0027inoubliable Lady Dimitrescu."
+    },
+    {
+        "title":  "Alien: Isolation",
+        "appid":  214490,
+        "studio":  "Creative Assembly",
+        "studio_country":  "Royaume-Uni",
+        "studio_year":  1987,
+        "release_date":  "2014-10-07",
+        "age_rating":  18,
+        "genres":  [
+                       "Horreur",
+                       "Aventure"
+                   ],
+        "platforms":  [
+                          "PC",
+                          "PlayStation 4",
+                          "Xbox One",
+                          "Nintendo Switch",
+                          "Mobile"
+                      ],
+        "metascore":  81,
+        "description_fr":  "Amanda Ripley, traquée dans une station spatiale par un unique xénomorphe à l\u0027IA imprévisible. Fidèle à l\u0027esthétique rétro-futuriste du film de 1979, c\u0027est l\u0027une des expériences les plus tendues du jeu d\u0027horreur."
+    },
+    {
+        "title":  "Outlast",
+        "appid":  238320,
+        "studio":  "Red Barrels",
+        "studio_country":  "Canada",
+        "studio_year":  2011,
+        "release_date":  "2013-09-04",
+        "age_rating":  18,
+        "genres":  [
+                       "Horreur"
+                   ],
+        "platforms":  [
+                          "PC",
+                          "PlayStation 4",
+                          "Xbox One",
+                          "Nintendo Switch"
+                      ],
+        "metascore":  80,
+        "description_fr":  "Un journaliste s\u0027infiltre dans un asile psychiatrique avec pour seule arme un caméscope à vision nocturne. Impossible de se défendre : il ne reste qu\u0027à courir, se cacher et filmer l\u0027horreur."
+    },
+    {
+        "title":  "Street Fighter 6",
+        "appid":  1364780,
+        "studio":  "Capcom",
+        "studio_country":  "Japon",
+        "studio_year":  1983,
+        "release_date":  "2023-06-02",
+        "age_rating":  12,
+        "genres":  [
+                       "Action",
+                       "Multijoueur"
+                   ],
+        "platforms":  [
+                          "PC",
+                          "PlayStation 4",
+                          "PlayStation 5",
+                          "Xbox Series X/S"
+                      ],
+        "metascore":  92,
+        "description_fr":  "Le roi du versus fighting revient avec le système Drive, des commandes modernes pour les débutants et un mode aventure en monde ouvert. Accessible sans rien sacrifier de sa profondeur compétitive."
+    },
+    {
+        "title":  "TEKKEN 8",
+        "appid":  1778820,
+        "studio":  "Bandai Namco Studios",
+        "studio_country":  "Japon",
+        "studio_year":  2012,
+        "release_date":  "2024-01-26",
+        "age_rating":  16,
+        "genres":  [
+                       "Action",
+                       "Multijoueur"
+                   ],
+        "platforms":  [
+                          "PC",
+                          "PlayStation 5",
+                          "Xbox Series X/S"
+                      ],
+        "metascore":  90,
+        "description_fr":  "La saga Mishima atteint son paroxysme dans un huitième épisode sous Unreal Engine 5, axé sur l\u0027agression avec le système Heat. Spectaculaire, nerveux et doté d\u0027excellents outils d\u0027entraînement."
+    },
+    {
+        "title":  "Mortal Kombat 11",
+        "appid":  976310,
+        "studio":  "NetherRealm Studios",
+        "studio_country":  "Etats-Unis",
+        "studio_year":  2010,
+        "release_date":  "2019-04-23",
+        "age_rating":  18,
+        "genres":  [
+                       "Action",
+                       "Multijoueur"
+                   ],
+        "platforms":  [
+                          "PC",
+                          "PlayStation 4",
+                          "PlayStation 5",
+                          "Xbox One",
+                          "Xbox Series X/S",
+                          "Nintendo Switch"
+                      ],
+        "metascore":  83,
+        "description_fr":  "Le jeu de combat le plus brutal du marché, avec ses Fatalities toujours plus inventives et un mode histoire cinématographique à voyages temporels. Un gameplay plus posé et lisible que ses prédécesseurs."
+    }
+]

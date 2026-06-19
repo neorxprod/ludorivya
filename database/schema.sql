@@ -26,6 +26,8 @@ CREATE DATABASE IF NOT EXISTS ludorivya
 USE ludorivya;
 
 SET FOREIGN_KEY_CHECKS = 0;
+DROP TABLE IF EXISTS topic_replies;
+DROP TABLE IF EXISTS topics;
 DROP TABLE IF EXISTS duels;
 DROP TABLE IF EXISTS reviews;
 DROP TABLE IF EXISTS library_entries;
@@ -194,6 +196,39 @@ CREATE TABLE duels (
     INDEX idx_duels_loser (loser_game_id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+-- Forum : sujets de discussion, optionnellement lies a un jeu.
+CREATE TABLE topics (
+    id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    user_id INT UNSIGNED NOT NULL,
+    game_id INT UNSIGNED NULL,
+    title VARCHAR(150) NOT NULL,
+    body TEXT NOT NULL,
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT fk_topics_user
+        FOREIGN KEY (user_id) REFERENCES users(id)
+        ON DELETE CASCADE,
+    CONSTRAINT fk_topics_game
+        FOREIGN KEY (game_id) REFERENCES games(id)
+        ON DELETE SET NULL,
+    INDEX idx_topics_created (created_at)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- Relation 1-N : un sujet a plusieurs reponses.
+CREATE TABLE topic_replies (
+    id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    topic_id INT UNSIGNED NOT NULL,
+    user_id INT UNSIGNED NOT NULL,
+    body TEXT NOT NULL,
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT fk_replies_topic
+        FOREIGN KEY (topic_id) REFERENCES topics(id)
+        ON DELETE CASCADE,
+    CONSTRAINT fk_replies_user
+        FOREIGN KEY (user_id) REFERENCES users(id)
+        ON DELETE CASCADE,
+    INDEX idx_replies_topic (topic_id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
 -- =============================================================
 --  Donnees de demonstration
 -- =============================================================
@@ -311,9 +346,9 @@ INSERT INTO genres (name) VALUES
 
 -- Mots de passe : nora -> Ludorivya2026! / samir -> SamirJoue2026! / manel -> ManelTeste2026!
 INSERT INTO users (username, email, password_hash, xp) VALUES
-('nora', 'nora@example.test', '$2y$10$6RX979qMXQCassrp3nXhPuXHVO.PxDvwHwjWoCHHW8UWrhCRGm7ie', 480),
-('samir', 'samir@example.test', '$2y$10$Pr3EXuAtRdybD13yJS5IJ.4KGl6OmFOEMMXvtI7lP/9t/VJ.3PGg.', 505),
-('manel', 'manel@example.test', '$2y$10$Par5OsLxL7IIUBjNRBLa8.QbOXe0CHp1H90f.riUMvDxFiy1tPJdC', 375);
+('nora', 'nora@example.test', '$2y$10$6RX979qMXQCassrp3nXhPuXHVO.PxDvwHwjWoCHHW8UWrhCRGm7ie', 530),
+('samir', 'samir@example.test', '$2y$10$Pr3EXuAtRdybD13yJS5IJ.4KGl6OmFOEMMXvtI7lP/9t/VJ.3PGg.', 555),
+('manel', 'manel@example.test', '$2y$10$Par5OsLxL7IIUBjNRBLa8.QbOXe0CHp1H90f.riUMvDxFiy1tPJdC', 420);
 
 INSERT INTO user_profiles (user_id, bio, favorite_platform_id) VALUES
 (1, 'Fan de RPG et de mondes ouverts, toujours en quête de la quête parfaite.', 1),
@@ -1358,3 +1393,24 @@ INSERT INTO duels (user_id, winner_game_id, loser_game_id) VALUES
 (2, 4, 29),
 (1, 62, 30),
 (1, 85, 59);
+
+INSERT INTO topics (user_id, game_id, title, body) VALUES
+(1, 29, 'Le boss qui vous a fait abandonner ?', 'Pour moi c’est Malenia, j’ai dû y passer trois soirées entières. Vous avez tenu combien de tentatives ?'),
+(2, NULL, 'Votre top 3 de l’année, sans réfléchir', 'Allez, les trois premiers qui vous viennent. Pas le droit de modifier après coup !'),
+(3, 94, 'Stardew : plutôt élevage ou cultures ?', 'Je relance une ferme et j’hésite sur la spécialisation. Les animaux rapportent bien mais les cultures d’automne sont rentables…'),
+(1, 51, 'Silksong existe-t-il vraiment ?', 'Chaque Direct je me dis que c’est le bon. Chaque Direct je suis déçu. On tient le coup ensemble ?'),
+(2, 12, 'Vos réglages de visée en 2026', 'Sensibilité, DPI, résolution étirée ou pas ? Je refais ma config et je veux vos avis.'),
+(3, NULL, 'Quel jeu rétro faire découvrir à un débutant ?', 'Ma petite sœur veut découvrir les classiques. Je pensais commencer par Portal puis un Zelda-like. Des idées ?');
+
+INSERT INTO topic_replies (topic_id, user_id, body) VALUES
+(1, 2, 'Malenia évidemment. Le waterfowl dance est juste injuste sans le bon timing.'),
+(1, 3, 'Moi c’est Radahn avant le nerf, en coop il fondait mais en solo c’était l’enfer.'),
+(2, 1, 'Baldur’s Gate 3, Hades, Outer Wilds. Aucun regret.'),
+(2, 3, 'Stardew Valley, Vampire Survivors, Subnautica. Team détente.'),
+(2, 2, 'CS2, DOOM Eternal, The Witcher 3. Oui je sais, ça pique.'),
+(3, 1, 'Les canneberges d’automne, c’est le jackpot assuré. Les animaux c’est pour le plaisir.'),
+(4, 2, 'C’est devenu un meme à ce stade. Mais la base Hollow Knight est tellement bonne que j’attendrai.'),
+(4, 3, 'Il est sorti dans nos cœurs depuis longtemps.'),
+(5, 1, '800 DPI, sensi 1.2, résolution native. La constance avant tout.'),
+(6, 1, 'Portal est parfait pour commencer : court, drôle, brillant. Ensuite Celeste avec le mode assisté.'),
+(6, 2, 'Half-Life 2 reste une leçon de game design, même vingt ans après.');
