@@ -42,22 +42,17 @@ if (is_logged_in()) {
 <section class="versus-arena" data-versus data-logged="<?= is_logged_in() ? '1' : '0' ?>" data-csrf="<?= e($_SESSION['csrf_token'] ?? '') ?>">
     <canvas class="particles-canvas" data-particles aria-hidden="true"></canvas>
     <span class="glow-orb glow-violet" style="width: 30rem; height: 30rem; top: -8rem; left: 50%; transform: translateX(-50%);"></span>
-    <div class="container position-relative">
-        <div class="text-center mb-4 reveal">
-            <p class="eyebrow">Le choix de la communauté</p>
-            <h1 class="page-title mb-1">Mode <?= flame_text('Versus') ?></h1>
-            <p class="page-lead mb-0">Deux jeux. Un seul survivant. Ton vote fait bouger le classement Elo en direct.</p>
-        </div>
-
-        <div class="versus-hud reveal" data-versus-hud>
-            <div class="hud-block"><span class="hud-value" data-hud-duels><?= number_format($duelsCount, 0, ',', ' ') ?></span><span class="hud-label">duels joués</span></div>
-            <div class="hud-block"><span class="hud-value" data-hud-streak>0</span><span class="hud-label">série en cours</span></div>
-            <?php if (is_logged_in()): ?>
-                <div class="hud-block">
-                    <span class="hud-value"><span class="level-badge"><i class="bi bi-lightning-charge-fill"></i> Niv. <span data-hud-level><?= level_from_xp($userXp) ?></span></span></span>
-                    <span class="hud-label"><span data-hud-xp><?= $userXp ?></span> XP</span>
-                </div>
-            <?php endif; ?>
+    <img class="deco-manette" src="assets/img/deco-manette.svg" alt="" style="top: 8%; right: -2%; transform: rotate(16deg);" aria-hidden="true">
+    <div class="container position-relative versus-shell">
+        <div class="versus-topbar reveal">
+            <h1 class="versus-heading mb-0">Mode <?= flame_text('Versus') ?></h1>
+            <div class="versus-hud" data-versus-hud>
+                <div class="hud-block"><span class="hud-value" data-hud-duels><?= number_format($duelsCount, 0, ',', ' ') ?></span><span class="hud-label">duels</span></div>
+                <div class="hud-block"><span class="hud-value" data-hud-streak>0</span><span class="hud-label">série</span></div>
+                <?php if (is_logged_in()): ?>
+                    <div class="hud-block"><span class="hud-value">Niv. <span data-hud-level><?= level_from_xp($userXp) ?></span></span><span class="hud-label"><span data-hud-xp><?= $userXp ?></span> XP</span></div>
+                <?php endif; ?>
+            </div>
         </div>
 
         <?php if (count($pair) === 2): ?>
@@ -74,13 +69,13 @@ if (is_logged_in()) {
                         <span class="versus-cover">
                             <img src="<?= e($game['cover_url']) ?>" alt="Jaquette de <?= e($game['title']) ?>" data-versus-img>
                             <span class="versus-shine" aria-hidden="true"></span>
-                        </span>
-                        <span class="versus-card-body">
-                            <span class="versus-title" data-versus-title><?= e($game['title']) ?></span>
-                            <span class="versus-meta" data-versus-meta><?= e($game['studio_name']) ?><?= $game['genre_names'] ? ' · ' . e($game['genre_names']) : '' ?></span>
-                            <span class="versus-elo">
-                                <i class="bi bi-fire"></i> <span data-versus-elo><?= (int)$game['elo'] ?></span> Elo
-                                <span class="versus-delta" data-versus-delta aria-live="polite"></span>
+                            <span class="versus-card-body">
+                                <span class="versus-title" data-versus-title><?= e($game['title']) ?></span>
+                                <span class="versus-meta" data-versus-meta><?= e($game['studio_name']) ?><?= $game['genre_names'] ? ' · ' . e($game['genre_names']) : '' ?></span>
+                                <span class="versus-elo">
+                                    <i class="bi bi-fire"></i> <span data-versus-elo><?= (int)$game['elo'] ?></span> Elo
+                                    <span class="versus-delta" data-versus-delta aria-live="polite"></span>
+                                </span>
                             </span>
                         </span>
                     </button>
@@ -90,21 +85,18 @@ if (is_logged_in()) {
                 </div>
             </div>
 
-            <?php if (!is_logged_in()): ?>
-                <div class="text-center mt-4 reveal">
+            <div class="versus-bottombar reveal">
+                <a class="btn btn-ghost btn-sm" href="rankings.php"><i class="bi bi-trophy"></i> Classement</a>
+                <?php if (!is_logged_in()): ?>
                     <a class="btn btn-accent" href="login.php?redirect=versus.php">Connecte-toi pour voter</a>
-                    <p class="text-soft small mt-2 mb-0">Chaque vote rapporte 5 XP et fait évoluer le classement.</p>
-                </div>
-            <?php else: ?>
-                <p class="text-center text-soft mt-4 reveal">Clique sur ton préféré — ou utilise les flèches ← → du clavier.</p>
-            <?php endif; ?>
+                <?php else: ?>
+                    <span class="text-soft small d-none d-md-inline">Clique sur ton préféré — ou flèches ← →</span>
+                <?php endif; ?>
+                <button type="button" class="btn btn-ghost btn-sm" data-versus-skip><i class="bi bi-shuffle"></i> Je ne connais pas</button>
+            </div>
         <?php else: ?>
             <div class="empty-state"><p class="mb-0">Pas assez de jeux dans la base pour lancer un duel.</p></div>
         <?php endif; ?>
-
-        <div class="text-center mt-4 reveal">
-            <a class="btn btn-ghost btn-sm" href="rankings.php"><i class="bi bi-trophy"></i> Voir le classement Elo</a>
-        </div>
     </div>
 </section>
 

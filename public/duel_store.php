@@ -23,6 +23,33 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     redirect_to('versus.php');
 }
 
+// "Je ne connais pas" : on sert une nouvelle paire sans toucher a l'Elo.
+// Accessible meme sans connexion (aucune ecriture en base).
+if ((string)($_POST['action'] ?? '') === 'skip') {
+    $sentToken = (string)($_POST['csrf_token'] ?? '');
+    if (!hash_equals((string)($_SESSION['csrf_token'] ?? ''), $sentToken)) {
+        $isAjax ? duel_json(['ok' => false, 'error' => 'Session expirée, recharge la page.'], 403) : redirect_to('versus.php');
+    }
+
+    $skipStatement = $pdo->query("
+        SELECT g.id, g.title, g.cover_url, g.elo, g.metascore,
+               s.name AS studio_name,
+               (SELECT GROUP_CONCAT(ge.name ORDER BY ge.name SEPARATOR ', ')
+                FROM game_genres gg INNER JOIN genres ge ON ge.id = gg.genre_id
+                WHERE gg.game_id = g.id) AS genre_names
+        FROM games g
+        INNER JOIN studios s ON s.id = g.studio_id
+        WHERE g.cover_url IS NOT NULL
+        ORDER BY RAND()
+        LIMIT 2
+    ");
+    $skipPair = $skipStatement->fetchAll();
+    $_SESSION['versus_pair'] = array_map(static fn (array $g): int => (int)$g['id'], $skipPair);
+    $_SESSION['versus_streak'] = 0;
+
+    $isAjax ? duel_json(['ok' => true, 'skipped' => true, 'next' => $skipPair]) : redirect_to('versus.php');
+}
+
 if (!is_logged_in()) {
     $isAjax
         ? duel_json(['ok' => false, 'error' => 'Connecte-toi pour voter.', 'login' => true], 401)
