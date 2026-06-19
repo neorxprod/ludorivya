@@ -111,7 +111,7 @@ $rest = array_slice($eloRanking, 3);
                         <span><a href="game.php?id=<?= (int)$game['id'] ?>"><?= e($game['title']) ?></a>
                             <span class="text-soft small d-block"><?= (int)$game['review_count'] ?> avis</span>
                         </span>
-                        <span class="rating-pill"><i class="bi bi-star-fill"></i> <?= format_rating((string)$game['average_rating']) ?>/20</span>
+                        <span class="rating-pill"><i class="bi bi-star-fill"></i> <?= format_stars10((string)$game['average_rating']) ?>/10</span>
                     </div>
                 <?php endforeach; ?>
             <?php endif; ?>

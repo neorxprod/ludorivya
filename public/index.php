@@ -75,6 +75,7 @@ $versusTeaser = $pdo->query("
     <?php endif; ?>
     <span class="glow-orb glow-violet" style="width: 32rem; height: 32rem; top: -8rem; right: -6rem;"></span>
     <span class="glow-orb glow-cyan" style="width: 24rem; height: 24rem; bottom: -6rem; left: -4rem;"></span>
+    <img class="deco-manette" src="assets/img/deco-manette.svg" alt="" style="bottom: 4%; left: 2%;" aria-hidden="true">
     <div class="container">
         <div class="hero-copy reveal">
             <p class="eyebrow">Le réseau de tes jeux vidéo</p>
@@ -276,7 +277,7 @@ $versusTeaser = $pdo->query("
                             <strong><?= e($review['username']) ?></strong>
                             <span class="review-quote-game">à propos de <a href="game.php?id=<?= (int)$review['game_id'] ?>"><?= e($review['game_title']) ?></a></span>
                         </div>
-                        <span class="rating-pill"><i class="bi bi-star-fill"></i> <?= (int)$review['rating'] ?>/20</span>
+                        <?= render_stars((int)$review['rating']) ?>
                     </div>
                     <p class="review-quote-text">« <?= e($review['comment']) ?> »</p>
                 </blockquote>
