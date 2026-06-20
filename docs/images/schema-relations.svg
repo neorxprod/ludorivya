@@ -1,128 +1,136 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1140 600" font-family="Segoe UI, Arial, sans-serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1180 820" font-family="Segoe UI, Arial, sans-serif">
   <style>
-    .box { fill: #ffffff; stroke: #c9c9d6; stroke-width: 1.5; }
-    .assoc { fill: #eef0ff; stroke: #8a8ae0; stroke-width: 1.5; }
-    .tname { font-size: 14px; font-weight: 700; fill: #1d1d1f; }
-    .col { font-size: 11.5px; fill: #5b5b66; }
-    .key { font-size: 11.5px; fill: #4f46e5; font-weight: 600; }
-    .rel { font-size: 12px; font-weight: 700; fill: #4f46e5; stroke: #f8f8fb; stroke-width: 5; paint-order: stroke; }
-    .line { stroke: #9a9ab0; stroke-width: 1.6; fill: none; }
-    .dashed { stroke-dasharray: 5 4; }
+    .bg { fill: #f7f7fb; }
+    .entity { fill: #ffffff; stroke: #3a3a4a; stroke-width: 2; }
+    .assoc  { fill: #ede9fe; stroke: #7c3aed; stroke-width: 2; }
+    .hub    { fill: #ffffff; stroke: #6d28d9; stroke-width: 3.5; }
+    .tname  { font-size: 16px; font-weight: 800; fill: #1d1d28; text-anchor: middle; }
+    .tsub   { font-size: 11px; fill: #7c3aed; text-anchor: middle; font-weight: 600; }
+    .l1n { stroke: #16a34a; stroke-width: 2.6; fill: none; }
+    .lnn { stroke: #7c3aed; stroke-width: 2.6; fill: none; }
+    .lnnp{ stroke: #ea580c; stroke-width: 2.6; fill: none; }
+    .l11 { stroke: #2563eb; stroke-width: 2.6; fill: none; }
+    .lfk { stroke: #9ca3af; stroke-width: 2; stroke-dasharray: 5 4; fill: none; }
+    .card { font-size: 13px; font-weight: 800; fill: #111; stroke: #ffffff; stroke-width: 3.5; paint-order: stroke; }
+    .ltitle { font-size: 22px; font-weight: 800; fill: #1d1d28; }
+    .lgd { font-size: 13px; fill: #1d1d28; }
   </style>
 
-  <rect width="1140" height="600" fill="#f8f8fb"/>
-  <text x="40" y="38" font-size="17" font-weight="700" fill="#1d1d1f">Ludorivya — schéma relationnel (11 tables)</text>
+  <rect class="bg" width="1180" height="820"/>
+  <text class="ltitle" x="40" y="46">Ludorivya — les relations de la base</text>
+  <text class="lgd" x="40" y="70" fill="#6b7280">Les boîtes violettes sont des « tables de liaison » : elles relient deux tables entre elles.</text>
 
-  <!-- Lignes (dessinées sous les boîtes) -->
-  <line class="line" x1="135" y1="118" x2="580" y2="135"/>
-  <line class="line" x1="135" y1="295" x2="360" y2="295"/>
-  <line class="line" x1="360" y1="295" x2="580" y2="135"/>
-  <line class="line" x1="135" y1="465" x2="360" y2="470"/>
-  <line class="line" x1="360" y1="470" x2="580" y2="135"/>
-  <line class="line" x1="980" y1="115" x2="980" y2="290"/>
-  <line class="line" x1="980" y1="115" x2="965" y2="485"/>
-  <line class="line" x1="580" y1="135" x2="965" y2="485"/>
-  <line class="line" x1="980" y1="115" x2="705" y2="485"/>
-  <line class="line" x1="580" y1="135" x2="705" y2="485"/>
-  <line class="line dashed" x1="980" y1="115" x2="580" y2="135"/>
-  <line class="line" x1="580" y1="210" x2="580" y2="320"/>
-  <line class="line dashed" x1="980" y1="170" x2="690" y2="360"/>
+  <!-- ============ LIAISONS (dessinées sous les boîtes) ============ -->
 
-  <!-- Étiquettes de relations -->
-  <text class="rel" x="330" y="115">1-N</text>
-  <text class="rel" x="240" y="288">N-N</text>
-  <text class="rel" x="240" y="458">N-N</text>
-  <text class="rel" x="990" y="210">1-1</text>
-  <text class="rel" x="740" y="112">created_by (1-N)</text>
-  <text class="rel" x="850" y="330">avis</text>
-  <text class="rel" x="630" y="330">bibliothèque</text>
+  <!-- studios 1-N games -->
+  <line class="l1n" x1="250" y1="360" x2="500" y2="360"/>
+  <!-- platforms (1-N) game_platforms (N-1) games -->
+  <line class="lnn" x1="250" y1="140" x2="300" y2="140"/>
+  <line class="lnn" x1="470" y1="140" x2="540" y2="332"/>
+  <!-- genres (1-N) game_genres (N-1) games -->
+  <line class="lnn" x1="250" y1="600" x2="300" y2="600"/>
+  <line class="lnn" x1="470" y1="600" x2="540" y2="392"/>
+  <!-- games (1-N) duels (N-1) users -->
+  <line class="lnnp" x1="600" y1="334" x2="600" y2="166"/>
+  <line class="lnnp" x1="700" y1="140" x2="830" y2="180"/>
+  <!-- games (1-N) reviews (N-1) users -->
+  <line class="lnnp" x1="585" y1="394" x2="560" y2="500"/>
+  <line class="lnnp" x1="660" y1="522" x2="845" y2="216"/>
+  <!-- games (1-N) library_entries (N-1) users -->
+  <line class="lnnp" x1="630" y1="394" x2="700" y2="500"/>
+  <line class="lnnp" x1="800" y1="522" x2="880" y2="216"/>
+  <!-- users 1-1 user_profiles -->
+  <line class="l11" x1="915" y1="216" x2="915" y2="330"/>
+  <!-- users (1-N) topics (1-N) topic_replies -->
+  <line class="lfk" x1="965" y1="204" x2="965" y2="452"/>
+  <line class="lfk" x1="965" y1="500" x2="965" y2="592"/>
 
-  <!-- studios -->
-  <rect class="box" x="40" y="70" width="190" height="96" rx="10"/>
-  <text class="tname" x="55" y="92">studios</text>
-  <text class="key" x="55" y="112">id (PK)</text>
-  <text class="col" x="55" y="128">name · country</text>
-  <text class="col" x="55" y="144">founded_year · website</text>
+  <!-- ============ CARDINALITES (1 / N) ============ -->
+  <text class="card" x="262" y="352">1</text>
+  <text class="card" x="486" y="352">N</text>
+  <text class="card" x="262" y="132">1</text>
+  <text class="card" x="486" y="132">N</text>
+  <text class="card" x="520" y="318">1</text>
+  <text class="card" x="262" y="592">1</text>
+  <text class="card" x="486" y="592">N</text>
+  <text class="card" x="520" y="408">1</text>
+  <text class="card" x="610" y="326">1</text>
+  <text class="card" x="610" y="172">N</text>
+  <text class="card" x="715" y="135">N</text>
+  <text class="card" x="820" y="180">1</text>
+  <text class="card" x="568" y="420">1</text>
+  <text class="card" x="548" y="500">N</text>
+  <text class="card" x="855" y="214">1</text>
+  <text class="card" x="640" y="420">1</text>
+  <text class="card" x="700" y="512">N</text>
+  <text class="card" x="895" y="214">1</text>
+  <text class="card" x="900" y="212">1</text>
+  <text class="card" x="900" y="326">1</text>
 
-  <!-- games -->
-  <rect class="box" x="470" y="60" width="220" height="150" rx="10"/>
-  <text class="tname" x="485" y="82">games</text>
-  <text class="key" x="485" y="102">id (PK)</text>
-  <text class="key" x="485" y="118">studio_id (FK, RESTRICT)</text>
-  <text class="key" x="485" y="134">created_by (FK, SET NULL)</text>
-  <text class="col" x="485" y="150">title · description</text>
-  <text class="col" x="485" y="166">release_date · age_rating</text>
-  <text class="col" x="485" y="182">cover_url</text>
-
-  <!-- users -->
-  <rect class="box" x="880" y="60" width="200" height="110" rx="10"/>
-  <text class="tname" x="895" y="82">users</text>
-  <text class="key" x="895" y="102">id (PK)</text>
-  <text class="col" x="895" y="118">username (UNIQUE)</text>
-  <text class="col" x="895" y="134">email (UNIQUE)</text>
-  <text class="col" x="895" y="150">password_hash</text>
-
-  <!-- user_profiles -->
-  <rect class="box" x="880" y="240" width="200" height="100" rx="10"/>
-  <text class="tname" x="895" y="262">user_profiles</text>
-  <text class="key" x="895" y="282">user_id (PK = FK)</text>
-  <text class="col" x="895" y="298">bio</text>
-  <text class="key" x="895" y="314">favorite_platform_id (FK)</text>
-
+  <!-- ============ BOITES ============ -->
   <!-- platforms -->
-  <rect class="box" x="40" y="250" width="190" height="90" rx="10"/>
-  <text class="tname" x="55" y="272">platforms</text>
-  <text class="key" x="55" y="292">id (PK)</text>
-  <text class="col" x="55" y="308">name (UNIQUE)</text>
-  <text class="col" x="55" y="324">manufacturer · generation</text>
-
+  <rect class="entity" x="90" y="116" width="160" height="48" rx="10"/>
+  <text class="tname" x="170" y="146">platforms</text>
   <!-- game_platforms -->
-  <rect class="box assoc" x="280" y="250" width="160" height="90" rx="10"/>
-  <text class="tname" x="295" y="272">game_platforms</text>
-  <text class="key" x="295" y="292">PK (game_id,</text>
-  <text class="key" x="295" y="306">platform_id)</text>
-  <text class="col" x="295" y="324">release_region</text>
-
-  <!-- genres -->
-  <rect class="box" x="40" y="430" width="190" height="70" rx="10"/>
-  <text class="tname" x="55" y="452">genres</text>
-  <text class="key" x="55" y="472">id (PK)</text>
-  <text class="col" x="55" y="488">name (UNIQUE)</text>
-
-  <!-- game_genres -->
-  <rect class="box assoc" x="280" y="430" width="160" height="80" rx="10"/>
-  <text class="tname" x="295" y="452">game_genres</text>
-  <text class="key" x="295" y="472">PK (game_id,</text>
-  <text class="key" x="295" y="486">genre_id)</text>
-
-  <!-- library_entries -->
-  <rect class="box assoc" x="600" y="430" width="210" height="110" rx="10"/>
-  <text class="tname" x="615" y="452">library_entries</text>
-  <text class="key" x="615" y="472">id (PK)</text>
-  <text class="key" x="615" y="488">UNIQUE (user_id, game_id)</text>
-  <text class="col" x="615" y="504">status · playtime_hours</text>
-  <text class="col" x="615" y="520">added_at</text>
-
-  <!-- reviews -->
-  <rect class="box assoc" x="860" y="430" width="210" height="110" rx="10"/>
-  <text class="tname" x="875" y="452">reviews</text>
-  <text class="key" x="875" y="472">id (PK)</text>
-  <text class="key" x="875" y="488">UNIQUE (game_id, user_id)</text>
-  <text class="col" x="875" y="504">rating (0–20) · comment</text>
-  <text class="col" x="875" y="520">created_at</text>
-
+  <rect class="assoc" x="300" y="112" width="170" height="56" rx="10"/>
+  <text class="tname" x="385" y="136">game_platforms</text>
+  <text class="tsub" x="385" y="154">liaison N-N</text>
   <!-- duels -->
-  <rect class="box assoc" x="470" y="320" width="220" height="92" rx="10"/>
-  <text class="tname" x="485" y="342">duels (mode versus)</text>
-  <text class="key" x="485" y="362">winner_game_id (FK)</text>
-  <text class="key" x="485" y="378">loser_game_id (FK)</text>
-  <text class="col" x="485" y="394">user_id (FK, SET NULL) · created_at</text>
+  <rect class="assoc" x="515" y="112" width="185" height="56" rx="10"/>
+  <text class="tname" x="607" y="136">duels</text>
+  <text class="tsub" x="607" y="154">liaison N-N (versus)</text>
+  <!-- users -->
+  <rect class="entity" x="830" y="156" width="170" height="48" rx="10"/>
+  <text class="tname" x="915" y="186">users</text>
+  <!-- studios -->
+  <rect class="entity" x="90" y="336" width="160" height="48" rx="10"/>
+  <text class="tname" x="170" y="366">studios</text>
+  <!-- games (HUB) -->
+  <rect class="hub" x="500" y="332" width="160" height="58" rx="12"/>
+  <text class="tname" x="580" y="358" font-size="18">games</text>
+  <text class="tsub" x="580" y="376" fill="#6d28d9">le catalogue</text>
+  <!-- user_profiles -->
+  <rect class="entity" x="830" y="330" width="170" height="48" rx="10"/>
+  <text class="tname" x="915" y="360">user_profiles</text>
+  <!-- reviews -->
+  <rect class="assoc" x="475" y="500" width="170" height="56" rx="10"/>
+  <text class="tname" x="560" y="524">reviews</text>
+  <text class="tsub" x="560" y="542">liaison N-N (note)</text>
+  <!-- library_entries -->
+  <rect class="assoc" x="665" y="500" width="180" height="56" rx="10"/>
+  <text class="tname" x="755" y="524">library_entries</text>
+  <text class="tsub" x="755" y="542">liaison N-N (biblio)</text>
+  <!-- game_genres -->
+  <rect class="assoc" x="300" y="572" width="170" height="56" rx="10"/>
+  <text class="tname" x="385" y="596">game_genres</text>
+  <text class="tsub" x="385" y="614">liaison N-N</text>
+  <!-- genres -->
+  <rect class="entity" x="90" y="576" width="160" height="48" rx="10"/>
+  <text class="tname" x="170" y="606">genres</text>
+  <!-- topics -->
+  <rect class="entity" x="880" y="452" width="170" height="48" rx="10"/>
+  <text class="tname" x="965" y="482">topics</text>
+  <!-- topic_replies -->
+  <rect class="assoc" x="880" y="592" width="170" height="48" rx="10"/>
+  <text class="tname" x="965" y="622">topic_replies</text>
+  <text class="card" x="952" y="222">1</text>
+  <text class="card" x="952" y="446">N</text>
+  <text class="card" x="952" y="516">1</text>
+  <text class="card" x="952" y="588">N</text>
 
-  <!-- Légende -->
-  <rect x="40" y="540" width="14" height="14" rx="4" class="box"/>
-  <text class="col" x="62" y="551">table d'entités</text>
-  <rect x="180" y="540" width="14" height="14" rx="4" class="box assoc"/>
-  <text class="col" x="202" y="551">table d'association (N-N)</text>
-  <line class="line dashed" x1="390" y1="547" x2="430" y2="547"/>
-  <text class="col" x="440" y="551">relation facultative (NULL autorisé)</text>
+  <!-- ============ LEGENDE ============ -->
+  <rect x="90" y="700" width="1000" height="96" rx="12" fill="#ffffff" stroke="#e5e7eb" stroke-width="1.5"/>
+  <text class="lgd" x="110" y="726" font-weight="800">Légende des relations</text>
+
+  <line class="l1n" x1="115" y1="752" x2="155" y2="752"/>
+  <text class="lgd" x="165" y="757">1-N — un studio a plusieurs jeux</text>
+
+  <line class="l11" x1="115" y1="778" x2="155" y2="778"/>
+  <text class="lgd" x="165" y="783">1-1 — un user a un seul profil</text>
+
+  <line class="lnn" x1="545" y1="752" x2="585" y2="752"/>
+  <text class="lgd" x="595" y="757">N-N — via une table de liaison</text>
+
+  <line class="lnnp" x1="545" y1="778" x2="585" y2="778"/>
+  <text class="lgd" x="595" y="783">N-N « porteuse » — la liaison a des attributs (note, heures, vainqueur…)</text>
 </svg>

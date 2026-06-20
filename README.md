@@ -22,18 +22,102 @@
 - 🎓 Projet réalisé dans le cadre d'une **SAE** (application web + base de données relationnelle).
 - 📘 Documentation : [guide complet du projet](docs/RAPPORT.md) · [schéma de la base](docs/SCHEMA_RELATIONNEL.md) · [bonus NoSQL](docs/BONUS_NOSQL.md)
 
+---
+
+## 🚀 Installation et test en 5 minutes
+
+> Suis ces étapes dans l'ordre. À la fin, le site tourne sur ta machine et tu peux te connecter.
+
+### Prérequis : installer XAMPP (une seule fois)
+
+XAMPP fournit les 3 outils dont le site a besoin : **Apache** (le serveur web), **MySQL** (la base de données) et **PHP 8**.
+
+1. Télécharge XAMPP : <https://www.apachefriends.org/fr/index.html>
+2. Installe-le (laisse les options par défaut). Sous Windows il s'installe dans `C:\xampp`.
+
+### Étape 1 — Récupérer le projet
+
+Télécharge le projet et place le dossier où tu veux, par exemple dans `Documents`.
+
+```bat
+git clone https://github.com/neorxprod/ludorivya.git
+```
+
+> Pas de Git ? Sur la page GitHub : bouton vert **Code → Download ZIP**, puis décompresse-le.
+
+### Étape 2 — Démarrer les serveurs
+
+Ouvre le **XAMPP Control Panel** et clique sur **Start** en face de **Apache** puis de **MySQL**. Les deux doivent devenir **verts**. ✅
+
+> ⚠️ Si MySQL ne démarre pas, c'est souvent qu'un autre programme occupe son port — ferme Skype ou un autre serveur MySQL et réessaie.
+
+### Étape 3 — Créer la base de données
+
+Le fichier `database/schema.sql` **crée tout seul** la base `ludorivya`, ses 13 tables et les 328 jeux. Tu n'as rien à créer à la main.
+
+**Méthode simple (avec phpMyAdmin) :**
+
+1. Ouvre <http://localhost/phpmyadmin>
+2. Onglet **Importer** (en haut)
+3. **Choisir un fichier** → sélectionne `database/schema.sql` dans le dossier du projet
+4. Tout en bas, clique **Importer / Exécuter**
+5. Un bandeau vert confirme : la base `ludorivya` apparaît dans la liste à gauche.
+
+**Méthode ligne de commande** (équivalente) — ouvre un terminal **dans le dossier du projet** :
+
+```bat
+C:\xampp\mysql\bin\mysql.exe -u root --default-character-set=utf8mb4 < database\schema.sql
+```
+
+### Étape 4 — Rendre le site accessible par Apache
+
+Apache ne sert que les fichiers placés dans `C:\xampp\htdocs`. **Le plus simple : copie le dossier du projet dans `htdocs`** et renomme-le `ludorivya`. Tu dois obtenir : `C:\xampp\htdocs\ludorivya\public\index.php`.
+
+> *Alternative pour ne pas copier (optionnel)* : créer un raccourci. Ouvre un terminal **en administrateur** et tape :
+> ```bat
+> mklink /J C:\xampp\htdocs\ludorivya "C:\chemin\complet\vers\LUDORIVYA"
+> ```
+
+### Étape 5 — Ouvrir le site 🎉
+
+Dans ton navigateur :
+
+```text
+http://localhost/ludorivya/public/
+```
+
+### Étape 6 — Tester que tout marche
+
+1. La page d'accueil s'affiche avec des jaquettes de jeux → **Apache + MySQL fonctionnent**.
+2. Clique **Connexion** et entre le compte de démo :
+   ```text
+   Email : nora@example.test
+   Mot de passe : Ludorivya2026!
+   ```
+3. Va sur **Versus** dans le menu, clique sur un jeu : le score Elo bouge → **les écritures en base fonctionnent**.
+4. Va sur **Forum**, ouvre un sujet, réponds → tout est opérationnel. ✅
+
+### 🛠️ En cas de problème
+
+| Symptôme | Cause et solution |
+| --- | --- |
+| Page **« Base de données non connectée »** | MySQL n'est pas démarré (étape 2) **ou** le schéma n'a pas été importé (étape 3). |
+| Erreur / page blanche | Apache n'est pas démarré, ou le dossier n'est pas dans `htdocs` (étape 4). |
+| **`localhost:8123` ne marche pas** | C'est une adresse de **test temporaire**. L'adresse réelle est **`http://localhost/ludorivya/public/`** (via Apache). |
+| Identifiants MySQL personnalisés | Copie `config/database.example.php` en `config/database.php` et mets-y tes identifiants (ce fichier est ignoré par Git). |
+
+---
+
 ## Sommaire
 
-1. [Aperçu](#aperçu)
-2. [Fonctionnalités](#fonctionnalités)
-3. [Technologies](#technologies)
-4. [Comment le catalogue a été construit (le pipeline)](#comment-le-catalogue-a-été-construit-le-pipeline)
-5. [Relations SQL demandées](#relations-sql-demandées)
-6. [Installation avec XAMPP](#installation-avec-xampp)
-7. [Structure du projet](#structure-du-projet)
-8. [Sécurité appliquée](#sécurité-appliquée)
-9. [Bonus NoSQL](#bonus-nosql)
-10. [État du projet](#état-du-projet)
+- [Aperçu](#aperçu)
+- [Fonctionnalités](#fonctionnalités)
+- [Technologies](#technologies)
+- [Relations SQL demandées](#relations-sql-demandées)
+- [Comment le catalogue a été construit](#comment-le-catalogue-a-été-construit-le-pipeline)
+- [Structure du projet](#structure-du-projet)
+- [Sécurité appliquée](#sécurité-appliquée)
+- [Bonus NoSQL](#bonus-nosql) · [État du projet](#état-du-projet)
 
 ## Aperçu
 
@@ -59,37 +143,27 @@
 - deux jeux tirés au sort s'affrontent, tu votes pour ton préféré ;
 - le **score Elo** des deux jeux est recalculé par le serveur dans une transaction (formule Elo, K = 32) ;
 - chaque vote rapporte **5 XP**, enchaîne les duels et fais grimper ta série ;
-- anti-triche : le serveur ne valide un vote que pour la paire qu'il a lui-même servie, avec un délai minimal entre deux votes ;
-- tout est animé : cartes qui claquent, deltas Elo flottants, compteurs, sans recharger la page (fetch + JSON).
+- bouton **« Je ne connais pas »** pour passer sans fausser le classement ;
+- anti-triche : le serveur ne valide un vote que pour la paire qu'il a lui-même servie ;
+- tout est animé (confettis, deltas Elo, secousse) sans recharger la page (fetch + JSON).
 
 **Pour tous les visiteurs :**
 
-- catalogue de plus de 320 vrais jeux (des classiques des années 90 aux sorties récentes) : jaquettes, **note presse (metascore)**, note des joueurs, studio, genres, plateformes ;
-- recherche, filtres par **genre** et **plateforme**, tri (récents / mieux notés / alphabétique), **pagination** ;
+- catalogue de **328 vrais jeux** : jaquettes, **note presse (metascore)**, note des joueurs, studio, genres, plateformes ;
+- recherche, filtres par **genre** et **plateforme**, tri, **pagination** ;
 - **classements** : Elo communautaire (podium), jeux les mieux notés, joueurs les plus actifs ;
-- fiche détaillée par jeu : description, bilan de duels (victoires/défaites), avis, **jeux similaires** (par genres partagés) ;
-- statistiques en direct issues de la base (répartitions, totaux).
+- fiche détaillée : description, bilan de duels, avis, **jeux similaires** (par genres partagés).
 
-**Le forum (comme au bon vieux temps) :**
+**Le forum :** sujets de discussion (rattachables à un jeu), réponses, suppression de ses messages.
 
-- des sujets de discussion, optionnellement rattachés à un jeu du catalogue ;
-- réponses, suppression de ses propres messages, XP à la clé (+15 sujet, +5 réponse) ;
-- tri par dernière activité, compteur de réponses.
-
-**Pour les joueurs connectés :**
-
-- inscription / connexion sécurisées, **XP et niveaux** (1 niveau tous les 250 XP) ;
-- noter un jeu **directement aux étoiles** (1 à 10), commentaire facultatif (+20 XP) ;
-- bibliothèque personnelle : statut (souhaité / en cours / terminé / abandonné), heures de jeu (+10 XP) ;
-- ajouter un jeu au catalogue (+30 XP), modifier/supprimer **ses propres** fiches ;
-- modifier son profil public (bio, plateforme préférée).
+**Pour les joueurs connectés :** inscription/connexion sécurisées, **XP et niveaux**, notes **aux étoiles** (commentaire facultatif), bibliothèque personnelle (statut + heures), ajout/édition de ses jeux, profil modifiable.
 
 ## Technologies
 
 | Partie | Technologie |
 | --- | --- |
-| Interface | HTML, CSS, Bootstrap 5 (local) + design system personnalisé (effets « flamme », liquid glass, particules) |
-| Interactions | JavaScript vanilla : versus en fetch/JSON, validation, animations au scroll, compteurs, cartes 3D |
+| Interface | HTML, CSS, Bootstrap 5 (local) + design system personnalisé (effets « flamme », particules, 3D) |
+| Interactions | JavaScript vanilla : versus en fetch/JSON, validation, animations au scroll, compteurs |
 | Serveur | PHP 8.x |
 | Base de données | MySQL / MariaDB |
 | Accès BDD | PDO (requêtes préparées natives, transactions) |
@@ -97,150 +171,84 @@
 
 Le site fonctionne **sans connexion internet** : Bootstrap, les icônes, la police Inter et les 328 jaquettes sont stockés en local dans `public/assets/`.
 
-> Les jaquettes et noms de jeux appartiennent à leurs éditeurs respectifs et sont utilisés ici à des fins pédagogiques uniquement (projet universitaire non commercial). Les descriptions sont rédigées originales, et les metascores sont des approximations.
-
-## Comment le catalogue a été construit (le pipeline)
-
-Le catalogue n'est pas saisi à la main dans le SQL : il est **généré par un pipeline reproductible**, versionné dans [`database/dataset/`](database/dataset/) :
-
-1. **`games.json`** — le dataset source : pour chaque jeu, le titre réel, le studio (et son pays/année), la date de sortie, le PEGI, 1-3 genres, les plateformes, un metascore approximatif, une **description française originale** et l'**appid Steam** du jeu.
-2. **`fetch_covers.ps1`** — télécharge une seule fois les jaquettes officielles (600×900) depuis le **CDN public de Steam** (`cdn.cloudflare.steamstatic.com/steam/apps/<appid>/library_600x900.jpg`) vers `public/assets/img/covers/`. Le téléchargement sert aussi de **validation** : un appid faux ne renvoie pas d'image, et le jeu est écarté.
-3. **`build_seed.php`** — génère `database/schema.sql` complet : les 13 tables, les 328 jeux avec leurs liaisons genres/plateformes, les comptes de démonstration, les avis, les sujets de forum, et une **simulation de 150 duels Elo** (graine aléatoire fixe → résultat reproductible, le favori au metascore gagne 70 % du temps) pour que le classement Versus soit crédible dès l'import.
-
-Pour régénérer la base de zéro :
-
-```bat
-cd database\dataset
-powershell -File fetch_covers.ps1
-php build_seed.php
-```
-
-L'application, elle, ne dépend **d'aucune API externe** : tout est servi en local depuis MySQL.
+> Les jaquettes et noms de jeux appartiennent à leurs éditeurs respectifs et sont utilisés à des fins **pédagogiques uniquement** (projet universitaire non commercial). Les descriptions sont originales et les metascores des approximations.
 
 ## Relations SQL demandées
 
-Le sujet demande au minimum une relation 1-1, une relation 1-N et une relation N-N — toutes sont **réellement utilisées par l'application** (lecture ET écriture) :
+Le sujet demande au minimum une relation 1-1, une 1-N et une N-N — toutes sont **réellement utilisées** (lecture ET écriture) :
 
-| Type | Tables | Utilisation dans le site |
+| Type | Tables | Comment c'est utilisé |
 | --- | --- | --- |
-| **1-1** | `users` / `user_profiles` (PK partagée) | création à l'inscription, modification depuis « Mon profil » |
-| **1-N** | `studios` → `games` | affichée sur chaque fiche, choisie à l'ajout d'un jeu |
-| **N-N** | `games` ↔ `platforms` via `game_platforms` (PK composite) | filtres du catalogue, fiches, statistiques |
+| **1-1** | `users` ↔ `user_profiles` (clé primaire partagée) | créé à l'inscription, modifié dans « Mon profil » |
+| **1-N** | `studios` → `games` | affiché sur chaque fiche, choisi à l'ajout d'un jeu |
+| **N-N** | `games` ↔ `platforms` via `game_platforms` | filtres du catalogue, fiches, statistiques |
 
-Le schéma va plus loin :
-
-- `games` ↔ `genres` (2e N-N, filtre par genre + jeux similaires) ;
-- `users` ↔ `games` via `library_entries` (N-N **porteuse** : statut, heures) ;
-- `users` ↔ `games` via `reviews` (un avis par joueur et par jeu, garanti par `UNIQUE`) ;
-- `users` ↔ `games` via `duels` (N-N porteuse **orientée** : vainqueur/perdant, alimente le classement Elo) ;
-- `users` → `games` via `created_by` (seul l'auteur d'une fiche peut la modifier/supprimer).
+Le schéma va plus loin : `games` ↔ `genres` (2e N-N), et trois **N-N porteuses** (`library_entries`, `reviews`, `duels`) qui portent des attributs.
 
 ![Schéma relationnel](docs/images/schema-relations.svg)
 
-Détails table par table : [docs/SCHEMA_RELATIONNEL.md](docs/SCHEMA_RELATIONNEL.md)
+➡️ Détail table par table : **[docs/SCHEMA_RELATIONNEL.md](docs/SCHEMA_RELATIONNEL.md)**
 
-## Installation avec XAMPP
+## Comment le catalogue a été construit (le pipeline)
 
-1. **Démarrer** Apache et MySQL dans le panneau XAMPP.
+Le catalogue n'est pas tapé à la main : il est **généré par un pipeline reproductible**, versionné dans [`database/dataset/`](database/dataset/) :
 
-2. **Importer la base** (au choix) :
+1. **`games.json`** — le dataset source : titre, studio, date, PEGI, genres, plateformes, metascore, **description originale** et **appid Steam** de chaque jeu.
+2. **`fetch_covers.ps1`** — télécharge une fois les jaquettes officielles depuis le CDN public de Steam vers `public/assets/img/covers/`. Un appid faux ne renvoie pas d'image → le jeu est écarté (le téléchargement sert de **validation**).
+3. **`build_seed.php`** — génère `database/schema.sql` : les 13 tables, les 328 jeux, les comptes de démo, les avis, le forum, et une **simulation de 150 duels Elo** (graine fixe → reproductible) pour un classement crédible dès l'import.
 
-   - *Avec phpMyAdmin* : ouvrir `http://localhost/phpmyadmin` → onglet **Importer** → choisir `database/schema.sql` → Exécuter.
-   - *En ligne de commande* (depuis le dossier du projet) :
-
-   ```bat
-   C:\xampp\mysql\bin\mysql.exe -u root --default-character-set=utf8mb4 < database\schema.sql
-   ```
-
-3. **Relier le projet à Apache** (lien symbolique, terminal administrateur) :
-
-   ```bat
-   mklink /J C:\xampp\htdocs\ludorivya "C:\chemin\vers\LUDORIVYA"
-   ```
-
-   (ou copier simplement le dossier du projet dans `C:\xampp\htdocs\`).
-
-4. **Ouvrir le site** : <http://localhost/ludorivya/public/>
-
-5. *(Facultatif)* Si tes identifiants MySQL ne sont pas ceux par défaut de XAMPP (`root` sans mot de passe), copie `config/database.example.php` vers `config/database.php` et adapte-le. Ce fichier est ignoré par Git.
-
-### Compte de démonstration
-
-```text
-Email : nora@example.test
-Mot de passe : Ludorivya2026!
-```
-
-(deux autres comptes existent : samir / SamirJoue2026! et manel / ManelTeste2026!)
+Pour tout régénérer : `cd database\dataset` puis `powershell -File fetch_covers.ps1` et `php build_seed.php`.
 
 ## Structure du projet
 
 ```text
 LUDORIVYA/
-  .github/workflows/php.yml   <- CI : vérification de syntaxe PHP à chaque push
-  config/
-    database.example.php      <- modèle de configuration (le vrai est gitignoré)
+  config/database.example.php   Modèle de connexion (le vrai est gitignoré, jamais de secret).
   database/
-    schema.sql                <- création de la base + 328 vrais jeux + 150 duels simulés
-    dataset/                  <- le pipeline du catalogue (games.json + scripts)
-  docs/
-    SCHEMA_RELATIONNEL.md     <- le schéma expliqué table par table
-    BONUS_NOSQL.md            <- bonus : limites du relationnel + MongoDB
-    PLAN_ACTION.md
-    images/                   <- captures, bannière, diagramme
-  public/                     <- racine web
-    index.php                 <- accueil
-    games.php                 <- catalogue (recherche, filtres, tri, pagination)
-    game.php                  <- fiche d'un jeu + avis + bibliothèque + jeux similaires
-    versus.php / duel_store.php  <- mode versus (votes Elo en fetch/JSON)
-    rankings.php              <- classements (Elo, notes, joueurs)
-    forum.php / topic.php     <- forum (sujets + reponses)
-    topic_store.php / reply_store.php / topic_delete.php / reply_delete.php
-    create.php / edit.php     <- formulaires d'ajout / modification d'un jeu
-    game_store.php / game_update.php / game_delete.php
-    review_store.php / review_delete.php
-    library_store.php / library_delete.php
-    login.php / login_store.php / logout.php
-    register.php / register_store.php
-    profile.php / profile_update.php
-    users.php / stats.php
-    assets/                   <- CSS, JS, police, jaquettes, Bootstrap local
+    schema.sql                  Création de la base + 328 jeux + 150 duels.
+    dataset/                    Le pipeline du catalogue (games.json + scripts).
+  docs/                         RAPPORT.md, SCHEMA_RELATIONNEL.md, BONUS_NOSQL.md, images.
+  public/                       LA RACINE WEB (servie par Apache) :
+    index.php games.php game.php          accueil, catalogue, fiche
+    versus.php duel_store.php             mode versus (Elo en fetch/JSON)
+    rankings.php                          classements
+    forum.php topic.php + handlers        forum (sujets, réponses)
+    create/edit + game_*.php              CRUD des jeux
+    review_* library_* profile_*          notes, bibliothèque, profil
+    login/register/logout                 authentification
+    assets/                               CSS, JS, police, jaquettes, Bootstrap (tout en local)
   src/
-    bootstrap.php             <- session, CSRF, connexion PDO
-    Database.php              <- connexion PDO centralisée
-    functions.php             <- helpers (validation, sécurité, XP/niveaux, rendu)
+    bootstrap.php               Session, CSRF, connexion PDO (inclus par toutes les pages).
+    Database.php                La connexion PDO centralisée.
+    functions.php               Helpers : validation, sécurité, XP, rendu des composants.
+  .github/workflows/php.yml     CI : vérifie la syntaxe PHP à chaque push.
 ```
 
-Convention : chaque formulaire a sa page d'affichage (`page.php`) et son traitement POST séparé (`*_store.php`, `*_update.php`, `*_delete.php`).
+Convention : chaque formulaire a sa page d'affichage (`page.php`) et son traitement POST séparé (`*_store.php`, `*_delete.php`).
 
 ## Sécurité appliquée
 
-- **Requêtes préparées PDO partout** (`ATTR_EMULATE_PREPARES = false`) — aucune concaténation de données utilisateur dans le SQL.
-- **Jeton CSRF** vérifié (`hash_equals`) sur tous les POST, y compris les votes du versus et la déconnexion.
-- **Serveur autoritaire sur le versus** : la paire de jeux est choisie et mémorisée côté serveur, le calcul Elo et l'XP sont faits côté serveur, délai minimal entre deux votes.
-- Mots de passe : `password_hash()` / `password_verify()`, **anti force brute** (pause après 5 échecs).
-- Sessions durcies : cookie `HttpOnly` + `SameSite=Lax`, `session_regenerate_id()` après connexion/inscription.
-- Échappement HTML systématique (`e()`), validation serveur de toutes les entrées, autorisations vérifiées côté serveur.
-- Redirections restreintes aux pages internes (anti open redirect), erreurs techniques journalisées jamais affichées.
+| Menace | Parade |
+| --- | --- |
+| Injection SQL | Requêtes préparées partout (`EMULATE_PREPARES=false`) |
+| XSS | `e()` (htmlspecialchars) sur **toute** sortie |
+| CSRF | Jeton de session vérifié (`hash_equals`) sur tous les POST |
+| Vol de session | Cookie `HttpOnly` + `SameSite`, `session_regenerate_id()` au login |
+| Force brute | Pause de 60 s après 5 échecs |
+| Triche au versus | Paire mémorisée côté serveur + délai entre votes |
 
-## Vérification automatique
-
-`.github/workflows/php.yml` vérifie la syntaxe de tous les fichiers PHP à chaque push sur GitHub.
+La règle d'or : **le serveur ne fait jamais confiance au client.** Tout est re-validé et recalculé côté serveur.
 
 ## Bonus NoSQL
 
-[docs/BONUS_NOSQL.md](docs/BONUS_NOSQL.md) décrit un scénario de montée en charge (millions de jeux, milliards d'avis et de votes versus), identifie les requêtes du projet qui deviendraient coûteuses, et propose une alternative conceptuelle avec MongoDB, sans implémentation.
+[docs/BONUS_NOSQL.md](docs/BONUS_NOSQL.md) décrit un scénario de montée en charge (millions de jeux, milliards de votes), les requêtes qui deviendraient coûteuses, et une alternative conceptuelle MongoDB — sans implémentation.
 
 ## État du projet
 
-- [x] Base relationnelle 13 tables (1-1, 1-N, 2× N-N, 3× N-N porteuses dont les duels, forum).
-- [x] Forum : sujets liés aux jeux, réponses, modération de ses messages.
-- [x] Notes aux étoiles en un clic, commentaire facultatif.
-- [x] Catalogue de 328 vrais jeux, rétro inclus (jaquettes locales, metascore, descriptions originales).
-- [x] Mode Versus : votes Elo en direct, XP, séries, anti-triche serveur.
-- [x] Classements : Elo (podium), notes, joueurs.
-- [x] CRUD complet : jeux, avis, bibliothèque, profil.
-- [x] Recherche, filtres par genre et plateforme, tri, pagination.
-- [x] Authentification sécurisée + CSRF partout.
-- [x] Design « gaming premium » : effets flamme, particules, cartes 3D, fonctionne hors ligne.
-- [x] Documentation (README, schéma, bonus NoSQL) + CI.
+- [x] Base relationnelle 13 tables (1-1, 1-N, 2× N-N, 3× N-N porteuses, forum).
+- [x] Catalogue de 328 vrais jeux, rétro inclus (jaquettes locales, metascore).
+- [x] Mode Versus : Elo en direct, XP, anti-triche serveur.
+- [x] Classements, forum, notes aux étoiles, CRUD complet.
+- [x] Recherche, filtres, tri, pagination · Auth sécurisée + CSRF partout.
+- [x] Design « gaming premium » fonctionnant hors ligne.
+- [x] Documentation complète (README, guide, schéma, bonus) + CI.
