@@ -471,6 +471,31 @@
 
         cards.forEach((card) => card.addEventListener('click', () => vote(card)));
 
+        // "Je ne connais pas" : nouvelle paire, sans vote ni Elo (serie remise a zero).
+        const skipButton = arena.querySelector('[data-versus-skip]');
+        if (skipButton) {
+            skipButton.addEventListener('click', async () => {
+                if (busy) { return; }
+                busy = true;
+                const body = new FormData();
+                body.append('ajax', '1');
+                body.append('csrf_token', csrf);
+                body.append('action', 'skip');
+                try {
+                    const response = await fetch('duel_store.php', { method: 'POST', body });
+                    const data = await response.json();
+                    if (data.ok && data.next) {
+                        setHud('[data-hud-streak]', 0);
+                        loadPair(data.next);
+                    } else {
+                        busy = false;
+                    }
+                } catch (error) {
+                    busy = false;
+                }
+            });
+        }
+
         // Vote au clavier : fleche gauche / fleche droite.
         document.addEventListener('keydown', (event) => {
             if (event.key === 'ArrowLeft') { vote(cards[0]); }
