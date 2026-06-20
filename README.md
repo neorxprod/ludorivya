@@ -1,26 +1,56 @@
-# Ludorivya
+<div align="center">
 
 ![Bannière Ludorivya](docs/images/ludorivya-banner.svg)
 
-**Ludorivya** est le réseau de tes jeux vidéo : une application web dynamique en **PHP 8**, **PDO** et **MySQL/MariaDB**. Explore un catalogue de **plus de 320 vrais jeux**, note-les **en un clic avec des étoiles**, construis ta bibliothèque, débats sur le **forum**… et surtout, affronte la communauté dans le **mode Versus** : deux jeux face à face, ton vote fait évoluer leur classement Elo en direct.
+# Ludorivya
 
-- **Dépôt** : <https://github.com/neorxprod/ludorivya>
-- **Auteur** : neorxprod
-- Projet réalisé dans le cadre d'une SAE (application web + base de données relationnelle).
+**Le réseau social de tes jeux vidéo — catalogue, versus, classements et forum.**
+
+![PHP](https://img.shields.io/badge/PHP-8.x-777BB4?logo=php&logoColor=white)
+![MySQL](https://img.shields.io/badge/MySQL%2FMariaDB-PDO-4479A1?logo=mysql&logoColor=white)
+![Bootstrap](https://img.shields.io/badge/Bootstrap-5-7952B3?logo=bootstrap&logoColor=white)
+![JavaScript](https://img.shields.io/badge/JavaScript-vanilla-F7DF1E?logo=javascript&logoColor=black)
+![Jeux](https://img.shields.io/badge/catalogue-328%20jeux-8b5cf6)
+![Statut](https://img.shields.io/badge/statut-SAE-success)
+
+</div>
+
+**Ludorivya** est une application web dynamique en **PHP 8**, **PDO** et **MySQL/MariaDB**. Explore un catalogue de **328 vrais jeux** (des classiques des années 90 aux sorties récentes), note-les **en un clic avec des étoiles**, construis ta bibliothèque, débats sur le **forum**… et surtout, affronte la communauté dans le **mode Versus** : deux jeux face à face, ton vote fait évoluer leur classement Elo en direct.
+
+- 🔗 **Dépôt** : <https://github.com/neorxprod/ludorivya>
+- 👤 **Auteur** : neorxprod
+- 🎓 Projet réalisé dans le cadre d'une **SAE** (application web + base de données relationnelle).
+- 📘 Documentation : [guide complet du projet](docs/RAPPORT.md) · [schéma de la base](docs/SCHEMA_RELATIONNEL.md) · [bonus NoSQL](docs/BONUS_NOSQL.md)
+
+## Sommaire
+
+1. [Aperçu](#aperçu)
+2. [Fonctionnalités](#fonctionnalités)
+3. [Technologies](#technologies)
+4. [Comment le catalogue a été construit (le pipeline)](#comment-le-catalogue-a-été-construit-le-pipeline)
+5. [Relations SQL demandées](#relations-sql-demandées)
+6. [Installation avec XAMPP](#installation-avec-xampp)
+7. [Structure du projet](#structure-du-projet)
+8. [Sécurité appliquée](#sécurité-appliquée)
+9. [Bonus NoSQL](#bonus-nosql)
+10. [État du projet](#état-du-projet)
 
 ## Aperçu
 
 | Accueil | Mode Versus |
-| --- | --- |
+| :---: | :---: |
 | ![Page d'accueil](docs/images/accueil.png) | ![Mode versus](docs/images/versus.png) |
+| **L'accueil** : héros animé, sélection à la une, chiffres en direct. | **Le versus** : deux jeux, un vote, l'Elo bouge en temps réel. |
 
 | Catalogue | Classements |
-| --- | --- |
+| :---: | :---: |
 | ![Catalogue](docs/images/catalogue.png) | ![Classements](docs/images/classements.png) |
+| **328 jeux** avec recherche, filtres, tri et pagination. | **Podium Elo**, meilleures notes et joueurs les plus actifs. |
 
 | Fiche jeu | Forum |
-| --- | --- |
+| :---: | :---: |
 | ![Fiche d'un jeu](docs/images/fiche-jeu.png) | ![Forum](docs/images/forum.png) |
+| **Fiche détaillée** : avis aux étoiles, bilan de duels, jeux similaires. | **Forum** façon jeuxvideo.com : sujets liés aux jeux et réponses. |
 
 ## Fonctionnalités
 
