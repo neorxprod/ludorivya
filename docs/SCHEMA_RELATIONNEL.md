@@ -2,7 +2,7 @@
 
 ## Objectif
 
-Ludorivya est le réseau de tes jeux vidéo : un catalogue de ~115 vrais jeux, des avis, des bibliothèques personnelles, et un **mode versus** où les votes de la communauté font évoluer un classement Elo.
+Ludorivya est le réseau de tes jeux vidéo : un catalogue de 328 vrais jeux, des avis, des bibliothèques personnelles, et un **mode versus** où les votes de la communauté font évoluer un classement Elo.
 
 Le schéma complet est dans [`database/schema.sql`](../database/schema.sql) (13 tables), généré par le pipeline documenté dans [`database/dataset/`](../database/dataset/).
 

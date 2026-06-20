@@ -2,7 +2,7 @@
 
 ![Bannière Ludorivya](docs/images/ludorivya-banner.svg)
 
-**Ludorivya** est le réseau de tes jeux vidéo : une application web dynamique en **PHP 8**, **PDO** et **MySQL/MariaDB**. Explore un catalogue de **plus de 115 vrais jeux**, note-les **en un clic avec des étoiles**, construis ta bibliothèque, débats sur le **forum**… et surtout, affronte la communauté dans le **mode Versus** : deux jeux face à face, ton vote fait évoluer leur classement Elo en direct.
+**Ludorivya** est le réseau de tes jeux vidéo : une application web dynamique en **PHP 8**, **PDO** et **MySQL/MariaDB**. Explore un catalogue de **plus de 320 vrais jeux**, note-les **en un clic avec des étoiles**, construis ta bibliothèque, débats sur le **forum**… et surtout, affronte la communauté dans le **mode Versus** : deux jeux face à face, ton vote fait évoluer leur classement Elo en direct.
 
 - **Dépôt** : <https://github.com/neorxprod/ludorivya>
 - **Auteur** : neorxprod
@@ -34,7 +34,7 @@
 
 **Pour tous les visiteurs :**
 
-- catalogue de ~115 vrais jeux : jaquettes, **note presse (metascore)**, note des joueurs, studio, genres, plateformes ;
+- catalogue de plus de 320 vrais jeux (des classiques des années 90 aux sorties récentes) : jaquettes, **note presse (metascore)**, note des joueurs, studio, genres, plateformes ;
 - recherche, filtres par **genre** et **plateforme**, tri (récents / mieux notés / alphabétique), **pagination** ;
 - **classements** : Elo communautaire (podium), jeux les mieux notés, joueurs les plus actifs ;
 - fiche détaillée par jeu : description, bilan de duels (victoires/défaites), avis, **jeux similaires** (par genres partagés) ;
@@ -65,7 +65,7 @@
 | Accès BDD | PDO (requêtes préparées natives, transactions) |
 | Versionnage | Git + GitHub |
 
-Le site fonctionne **sans connexion internet** : Bootstrap, les icônes, la police Inter et les ~115 jaquettes sont stockés en local dans `public/assets/`.
+Le site fonctionne **sans connexion internet** : Bootstrap, les icônes, la police Inter et les 328 jaquettes sont stockés en local dans `public/assets/`.
 
 > Les jaquettes et noms de jeux appartiennent à leurs éditeurs respectifs et sont utilisés ici à des fins pédagogiques uniquement (projet universitaire non commercial). Les descriptions sont rédigées originales, et les metascores sont des approximations.
 
@@ -75,7 +75,7 @@ Le catalogue n'est pas saisi à la main dans le SQL : il est **généré par un 
 
 1. **`games.json`** — le dataset source : pour chaque jeu, le titre réel, le studio (et son pays/année), la date de sortie, le PEGI, 1-3 genres, les plateformes, un metascore approximatif, une **description française originale** et l'**appid Steam** du jeu.
 2. **`fetch_covers.ps1`** — télécharge une seule fois les jaquettes officielles (600×900) depuis le **CDN public de Steam** (`cdn.cloudflare.steamstatic.com/steam/apps/<appid>/library_600x900.jpg`) vers `public/assets/img/covers/`. Le téléchargement sert aussi de **validation** : un appid faux ne renvoie pas d'image, et le jeu est écarté.
-3. **`build_seed.php`** — génère `database/schema.sql` complet : les 13 tables, les ~115 jeux avec leurs liaisons genres/plateformes, les comptes de démonstration, les avis, les sujets de forum, et une **simulation de 150 duels Elo** (graine aléatoire fixe → résultat reproductible, le favori au metascore gagne 70 % du temps) pour que le classement Versus soit crédible dès l'import.
+3. **`build_seed.php`** — génère `database/schema.sql` complet : les 13 tables, les 328 jeux avec leurs liaisons genres/plateformes, les comptes de démonstration, les avis, les sujets de forum, et une **simulation de 150 duels Elo** (graine aléatoire fixe → résultat reproductible, le favori au metascore gagne 70 % du temps) pour que le classement Versus soit crédible dès l'import.
 
 Pour régénérer la base de zéro :
 
@@ -151,7 +151,7 @@ LUDORIVYA/
   config/
     database.example.php      <- modèle de configuration (le vrai est gitignoré)
   database/
-    schema.sql                <- création de la base + ~115 vrais jeux + 150 duels simulés
+    schema.sql                <- création de la base + 328 vrais jeux + 150 duels simulés
     dataset/                  <- le pipeline du catalogue (games.json + scripts)
   docs/
     SCHEMA_RELATIONNEL.md     <- le schéma expliqué table par table
@@ -206,7 +206,7 @@ Convention : chaque formulaire a sa page d'affichage (`page.php`) et son traitem
 - [x] Base relationnelle 13 tables (1-1, 1-N, 2× N-N, 3× N-N porteuses dont les duels, forum).
 - [x] Forum : sujets liés aux jeux, réponses, modération de ses messages.
 - [x] Notes aux étoiles en un clic, commentaire facultatif.
-- [x] Catalogue de ~115 vrais jeux (jaquettes locales, metascore, descriptions originales).
+- [x] Catalogue de 328 vrais jeux, rétro inclus (jaquettes locales, metascore, descriptions originales).
 - [x] Mode Versus : votes Elo en direct, XP, séries, anti-triche serveur.
 - [x] Classements : Elo (podium), notes, joueurs.
 - [x] CRUD complet : jeux, avis, bibliothèque, profil.

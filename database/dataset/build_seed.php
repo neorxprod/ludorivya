@@ -62,8 +62,8 @@ foreach ($gamesJson as $g) {
 $games = [];
 foreach ($gamesJson as $g) {
     $cover = $coversDir . '/' . $g['appid'] . '.jpg';
-    if (!is_file($cover)) {
-        fwrite(STDERR, "SKIP (pas de jaquette) : {$g['title']}\n");
+    if (!is_file($cover) || filesize($cover) < 5000) {
+        fwrite(STDERR, "SKIP (pas de jaquette valide) : {$g['title']}\n");
         continue;
     }
     $genres = array_values(array_unique(array_filter($g['genres'], fn ($x) => isset($genreId[$x]))));
