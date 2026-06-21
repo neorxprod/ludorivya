@@ -6,3 +6,10 @@ config/database.php
 node_modules/
 .DS_Store
 Thumbs.db
+
+# Notes personnelles (preparation oral/video, plan, rapport) - gardees en local, hors depot
+docs/SOUTENANCE.md
+docs/VIDEO.md
+docs/PLAN_ACTION.md
+docs/RAPPORT.md
+docs/RAPPORT.pdf

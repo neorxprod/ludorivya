@@ -20,7 +20,7 @@
 - 🔗 **Dépôt** : <https://github.com/neorxprod/ludorivya>
 - 👤 **Auteur** : neorxprod
 - 🎓 Projet réalisé dans le cadre d'une **SAE** (application web + base de données relationnelle).
-- 📘 Documentation : [guide complet du projet](docs/RAPPORT.md) · [schéma de la base](docs/SCHEMA_RELATIONNEL.md) · [bonus NoSQL](docs/BONUS_NOSQL.md)
+- 📘 Documentation : [schéma de la base](docs/SCHEMA_RELATIONNEL.md) · [bonus NoSQL](docs/BONUS_NOSQL.md)
 
 ---
 
@@ -305,7 +305,7 @@ LUDORIVYA/
   database/
     schema.sql                  Création de la base + 328 jeux + 150 duels.
     dataset/                    Le pipeline du catalogue (games.json + scripts).
-  docs/                         RAPPORT.md, SCHEMA_RELATIONNEL.md, BONUS_NOSQL.md, images.
+  docs/                         SCHEMA_RELATIONNEL.md, BONUS_NOSQL.md, images.
   public/                       LA RACINE WEB (servie par Apache) :
     index.php games.php game.php          accueil, catalogue, fiche
     versus.php duel_store.php             mode versus (Elo en fetch/JSON)
