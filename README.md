@@ -185,7 +185,97 @@ Le sujet demande au minimum une relation 1-1, une 1-N et une N-N — toutes sont
 
 Le schéma va plus loin : `games` ↔ `genres` (2e N-N), et trois **N-N porteuses** (`library_entries`, `reviews`, `duels`) qui portent des attributs.
 
-![Schéma relationnel](docs/images/schema-relations.svg)
+```mermaid
+erDiagram
+    STUDIOS   ||--o{ GAMES           : "1-N"
+    USERS     ||--|| USER_PROFILES   : "1-1"
+    USERS     ||--o{ GAMES           : "created_by"
+    PLATFORMS ||--o{ USER_PROFILES   : "favorite"
+    PLATFORMS ||--o{ GAME_PLATFORMS  : ""
+    GAMES     ||--o{ GAME_PLATFORMS  : ""
+    GENRES    ||--o{ GAME_GENRES     : ""
+    GAMES     ||--o{ GAME_GENRES     : ""
+    GAMES     ||--o{ REVIEWS         : ""
+    USERS     ||--o{ REVIEWS         : ""
+    GAMES     ||--o{ LIBRARY_ENTRIES : ""
+    USERS     ||--o{ LIBRARY_ENTRIES : ""
+    GAMES     ||--o{ DUELS           : ""
+    USERS     ||--o{ DUELS           : ""
+    USERS     ||--o{ TOPICS          : ""
+    GAMES     ||--o{ TOPICS          : ""
+    TOPICS    ||--o{ TOPIC_REPLIES   : ""
+    USERS     ||--o{ TOPIC_REPLIES   : ""
+
+    GAMES {
+        int id PK
+        int studio_id FK
+        int created_by FK
+        string title
+        int metascore
+        int elo
+    }
+    USERS {
+        int id PK
+        string username
+        string email
+        int xp
+    }
+    USER_PROFILES {
+        int user_id PK
+        int favorite_platform_id FK
+    }
+    STUDIOS {
+        int id PK
+        string name
+    }
+    PLATFORMS {
+        int id PK
+        string name
+    }
+    GENRES {
+        int id PK
+        string name
+    }
+    GAME_PLATFORMS {
+        int game_id FK
+        int platform_id FK
+    }
+    GAME_GENRES {
+        int game_id FK
+        int genre_id FK
+    }
+    REVIEWS {
+        int id PK
+        int game_id FK
+        int user_id FK
+        int rating
+    }
+    LIBRARY_ENTRIES {
+        int id PK
+        int user_id FK
+        int game_id FK
+        string status
+    }
+    DUELS {
+        int id PK
+        int winner_game_id FK
+        int loser_game_id FK
+        int user_id FK
+    }
+    TOPICS {
+        int id PK
+        int user_id FK
+        int game_id FK
+        string title
+    }
+    TOPIC_REPLIES {
+        int id PK
+        int topic_id FK
+        int user_id FK
+    }
+```
+
+> Les tables de liaison (`game_platforms`, `game_genres`, `reviews`, `library_entries`, `duels`, `topic_replies`) portent chacune deux clés étrangères : c'est la traduction concrète des relations N-N.
 
 ➡️ Détail table par table : **[docs/SCHEMA_RELATIONNEL.md](docs/SCHEMA_RELATIONNEL.md)**
 

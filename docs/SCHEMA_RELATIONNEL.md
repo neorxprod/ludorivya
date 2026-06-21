@@ -8,7 +8,27 @@ Le schéma complet est dans [`database/schema.sql`](../database/schema.sql) (13 
 
 ## Diagramme
 
-![Schéma relationnel](images/schema-relations.svg)
+```mermaid
+erDiagram
+    STUDIOS   ||--o{ GAMES           : "1-N"
+    USERS     ||--|| USER_PROFILES   : "1-1"
+    USERS     ||--o{ GAMES           : "created_by"
+    PLATFORMS ||--o{ USER_PROFILES   : "favorite"
+    PLATFORMS ||--o{ GAME_PLATFORMS  : ""
+    GAMES     ||--o{ GAME_PLATFORMS  : ""
+    GENRES    ||--o{ GAME_GENRES     : ""
+    GAMES     ||--o{ GAME_GENRES     : ""
+    GAMES     ||--o{ REVIEWS         : ""
+    USERS     ||--o{ REVIEWS         : ""
+    GAMES     ||--o{ LIBRARY_ENTRIES : ""
+    USERS     ||--o{ LIBRARY_ENTRIES : ""
+    GAMES     ||--o{ DUELS           : ""
+    USERS     ||--o{ DUELS           : ""
+    USERS     ||--o{ TOPICS          : ""
+    GAMES     ||--o{ TOPICS          : ""
+    TOPICS    ||--o{ TOPIC_REPLIES   : ""
+    USERS     ||--o{ TOPIC_REPLIES   : ""
+```
 
 ```text
 studios   (1) ---- (N) games                          <- 1-N demandee
