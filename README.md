@@ -26,7 +26,7 @@
 
 ## 🚀 Installation et test en 5 minutes
 
-> Suis ces étapes dans l'ordre. À la fin, le site tourne sur ta machine et tu peux te connecter.
+> Suivez les étapes dans l'ordre pour que le site tourne sur votre machine.
 
 ### Prérequis : installer XAMPP (une seule fois)
 
