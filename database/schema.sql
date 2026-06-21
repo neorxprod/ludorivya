@@ -14,9 +14,10 @@
 --    1-N : users -> games (created_by)        (qui a ajoute le jeu)
 --    1-N : platforms -> user_profiles         (plateforme preferee)
 --
---  Donnees : ~115 vrais jeux (jaquettes locales, descriptions originales,
---  note presse approximative type Metacritic). Le score Elo de depart est
---  issu d'une simulation de 150 duels (voir table duels).
+--  Donnees : 328 vrais jeux (jaquettes locales, descriptions originales,
+--  note presse approximative type Metacritic). Les scores Elo de depart
+--  sont pre-calcules par une simulation de 150 duels reproductible
+--  (graine fixe) ; ces 150 duels sont aussi inseres dans la table duels.
 -- =============================================================
 
 CREATE DATABASE IF NOT EXISTS ludorivya
@@ -26,6 +27,9 @@ CREATE DATABASE IF NOT EXISTS ludorivya
 USE ludorivya;
 
 SET FOREIGN_KEY_CHECKS = 0;
+DROP TABLE IF EXISTS friendships;
+DROP TABLE IF EXISTS reply_votes;
+DROP TABLE IF EXISTS topic_votes;
 DROP TABLE IF EXISTS topic_replies;
 DROP TABLE IF EXISTS topics;
 DROP TABLE IF EXISTS duels;
@@ -100,7 +104,7 @@ CREATE TABLE games (
     elo INT NOT NULL DEFAULT 1000,
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     CONSTRAINT chk_games_age_rating CHECK (age_rating BETWEEN 3 AND 18),
-    CONSTRAINT chk_games_metascore CHECK (metascore IS NULL OR metascore <= 100),
+    CONSTRAINT chk_games_metascore CHECK (metascore IS NULL OR metascore BETWEEN 0 AND 100),
     CONSTRAINT fk_games_studio
         FOREIGN KEY (studio_id) REFERENCES studios(id)
         ON DELETE RESTRICT,
@@ -148,6 +152,7 @@ CREATE TABLE library_entries (
     playtime_hours DECIMAL(6, 1) NOT NULL DEFAULT 0,
     added_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     UNIQUE KEY uniq_library_user_game (user_id, game_id),
+    CONSTRAINT chk_library_playtime CHECK (playtime_hours >= 0),
     CONSTRAINT fk_library_entries_user
         FOREIGN KEY (user_id) REFERENCES users(id)
         ON DELETE CASCADE,
@@ -183,6 +188,7 @@ CREATE TABLE duels (
     winner_game_id INT UNSIGNED NOT NULL,
     loser_game_id INT UNSIGNED NOT NULL,
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT chk_duels_distinct CHECK (winner_game_id <> loser_game_id),
     CONSTRAINT fk_duels_user
         FOREIGN KEY (user_id) REFERENCES users(id)
         ON DELETE SET NULL,
@@ -214,10 +220,12 @@ CREATE TABLE topics (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- Relation 1-N : un sujet a plusieurs reponses.
+-- parent_id : reponse a une reponse (fil imbrique facon Reddit/Discord).
 CREATE TABLE topic_replies (
     id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     topic_id INT UNSIGNED NOT NULL,
     user_id INT UNSIGNED NOT NULL,
+    parent_id INT UNSIGNED NULL,
     body TEXT NOT NULL,
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     CONSTRAINT fk_replies_topic
@@ -226,7 +234,58 @@ CREATE TABLE topic_replies (
     CONSTRAINT fk_replies_user
         FOREIGN KEY (user_id) REFERENCES users(id)
         ON DELETE CASCADE,
-    INDEX idx_replies_topic (topic_id)
+    CONSTRAINT fk_replies_parent
+        FOREIGN KEY (parent_id) REFERENCES topic_replies(id)
+        ON DELETE CASCADE,
+    INDEX idx_replies_topic (topic_id),
+    INDEX idx_replies_parent (parent_id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- Votes (like / dislike) sur les sujets : N-N porteuse user <-> topic.
+CREATE TABLE topic_votes (
+    user_id INT UNSIGNED NOT NULL,
+    topic_id INT UNSIGNED NOT NULL,
+    value TINYINT NOT NULL,
+    PRIMARY KEY (user_id, topic_id),
+    CONSTRAINT chk_topic_votes_value CHECK (value IN (-1, 1)),
+    CONSTRAINT fk_topic_votes_user
+        FOREIGN KEY (user_id) REFERENCES users(id)
+        ON DELETE CASCADE,
+    CONSTRAINT fk_topic_votes_topic
+        FOREIGN KEY (topic_id) REFERENCES topics(id)
+        ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- Votes sur les reponses : N-N porteuse user <-> reply.
+CREATE TABLE reply_votes (
+    user_id INT UNSIGNED NOT NULL,
+    reply_id INT UNSIGNED NOT NULL,
+    value TINYINT NOT NULL,
+    PRIMARY KEY (user_id, reply_id),
+    CONSTRAINT chk_reply_votes_value CHECK (value IN (-1, 1)),
+    CONSTRAINT fk_reply_votes_user
+        FOREIGN KEY (user_id) REFERENCES users(id)
+        ON DELETE CASCADE,
+    CONSTRAINT fk_reply_votes_reply
+        FOREIGN KEY (reply_id) REFERENCES topic_replies(id)
+        ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- Amities : N-N reflexive user <-> user (demande puis acceptation).
+-- requester_id = qui envoie la demande, addressee_id = qui la recoit.
+CREATE TABLE friendships (
+    requester_id INT UNSIGNED NOT NULL,
+    addressee_id INT UNSIGNED NOT NULL,
+    status ENUM('pending', 'accepted') NOT NULL DEFAULT 'pending',
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (requester_id, addressee_id),
+    CONSTRAINT chk_friendship_distinct CHECK (requester_id <> addressee_id),
+    CONSTRAINT fk_friend_requester
+        FOREIGN KEY (requester_id) REFERENCES users(id)
+        ON DELETE CASCADE,
+    CONSTRAINT fk_friend_addressee
+        FOREIGN KEY (addressee_id) REFERENCES users(id)
+        ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- =============================================================
@@ -2878,3 +2937,15 @@ INSERT INTO topic_replies (topic_id, user_id, body) VALUES
 (5, 1, '800 DPI, sensi 1.2, résolution native. La constance avant tout.'),
 (6, 1, 'Portal est parfait pour commencer : court, drôle, brillant. Ensuite Celeste avec le mode assisté.'),
 (6, 2, 'Half-Life 2 reste une leçon de game design, même vingt ans après.');
+
+INSERT INTO topic_replies (topic_id, user_id, parent_id, body) VALUES
+(1, 1, 1, 'Tout a fait d''accord, le waterfowl dance m''a rendu fou aussi !');
+
+INSERT INTO topic_votes (user_id, topic_id, value) VALUES
+(1, 2, 1), (2, 2, 1), (3, 2, 1), (1, 4, 1), (2, 4, 1), (3, 1, 1), (2, 1, 1), (1, 3, 1), (2, 5, -1), (3, 6, 1);
+
+INSERT INTO reply_votes (user_id, reply_id, value) VALUES
+(1, 1, 1), (3, 1, 1), (2, 2, 1), (1, 3, 1), (2, 3, 1), (3, 3, 1), (1, 5, 1), (2, 7, 1), (3, 7, 1);
+
+INSERT INTO friendships (requester_id, addressee_id, status) VALUES
+(1, 2, 'accepted'), (3, 2, 'accepted'), (1, 3, 'pending');

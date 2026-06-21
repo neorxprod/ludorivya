@@ -123,11 +123,11 @@ $versusTeaser = $pdo->query("
             <div class="col-lg-4">
                 <div class="steps-row">
                     <div class="step-item reveal">
-                        <span class="step-num text-flame">01</span>
+                        <span class="step-num">01</span>
                         <div><h3>Explore le catalogue</h3><p>Cherche par titre, studio ou genre et découvre de nouveaux jeux.</p></div>
                     </div>
                     <div class="step-item reveal" style="--reveal-delay: 90ms">
-                        <span class="step-num text-flame">02</span>
+                        <span class="step-num">02</span>
                         <div><h3>Construis ta bibliothèque</h3><p>Ajoute tes jeux, suis leur statut et tes heures de jeu.</p></div>
                     </div>
                 </div>
@@ -144,11 +144,11 @@ $versusTeaser = $pdo->query("
             <div class="col-lg-4">
                 <div class="steps-row">
                     <div class="step-item reveal">
-                        <span class="step-num text-flame">03</span>
+                        <span class="step-num">03</span>
                         <div><h3>Note les jeux que tu termines</h3><p>Donne ton avis et aide la communauté à se faire une idée.</p></div>
                     </div>
                     <div class="step-item reveal" style="--reveal-delay: 90ms">
-                        <span class="step-num text-flame">04</span>
+                        <span class="step-num">04</span>
                         <div><h3>Compare-toi aux autres</h3><p>Gagne de l'XP, grimpe les niveaux et vise le haut du classement.</p></div>
                     </div>
                 </div>
@@ -245,7 +245,7 @@ $versusTeaser = $pdo->query("
                 <i class="bi bi-bookmark-heart feature-card-icon"></i>
                 <div>
                     <h3>Ta bibliothèque personnelle</h3>
-                    <p>Ajoute tes jeux, passe-les de « souhaité » à « terminé », suis tes heures de jeu — tout est sauvegardé dans la base.</p>
+                    <p>Ajoute tes jeux, passe-les de « souhaité » à « terminé », suis tes heures de jeu · tout est sauvegardé dans la base.</p>
                 </div>
             </div>
             <div class="feature-card reveal">

@@ -1,10 +1,16 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
   <defs>
     <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="#6366f1"/>
-      <stop offset="1" stop-color="#a855f7"/>
+      <stop offset="0" stop-color="#818cf8"/>
+      <stop offset="1" stop-color="#4338ca"/>
     </linearGradient>
   </defs>
   <rect width="64" height="64" rx="16" fill="url(#g)"/>
-  <text x="32" y="44" font-family="Segoe UI, Arial, sans-serif" font-size="34" font-weight="700" fill="#fff" text-anchor="middle">L</text>
+  <!-- croix directionnelle -->
+  <path d="M21 31h3v-3h3v3h3v3h-3v3h-3v-3h-3z" fill="#fff"/>
+  <!-- boutons d'action -->
+  <circle cx="42" cy="31" r="2.7" fill="#fff"/>
+  <circle cx="47.5" cy="36.5" r="2.7" fill="#fff"/>
+  <circle cx="36.5" cy="36.5" r="2.7" fill="#fff"/>
+  <circle cx="42" cy="42" r="2.7" fill="#fff"/>
 </svg>

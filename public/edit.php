@@ -49,7 +49,7 @@ $genreStatement = $pdo->prepare('SELECT genre_id FROM game_genres WHERE game_id 
 $genreStatement->execute(['id' => $gameId]);
 $checkedGenres = array_map('intval', array_column($genreStatement->fetchAll(), 'genre_id'));
 
-render_header('Modifier — ' . $game['title'], 'games');
+render_header('Modifier · ' . $game['title'], 'games');
 ?>
 
 <section class="container page-head">

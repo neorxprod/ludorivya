@@ -18,16 +18,23 @@ if ($topicId === false || $topicId === null || $topicId < 1) {
     redirect_to('forum.php');
 }
 
+$userId = current_user_id();
+$loggedIn = $userId !== null;
+$voteUserId = $userId ?? 0;
+
+// Sujet + auteur + jeu lie + score de vote + mon vote.
 $topicStatement = $pdo->prepare("
     SELECT t.id, t.title, t.body, t.created_at, t.user_id,
            u.username,
-           g.id AS game_id, g.title AS game_title, g.cover_url
+           g.id AS game_id, g.title AS game_title,
+           (SELECT COALESCE(SUM(value), 0) FROM topic_votes tv WHERE tv.topic_id = t.id) AS score,
+           (SELECT value FROM topic_votes tv WHERE tv.topic_id = t.id AND tv.user_id = :me) AS my_vote
     FROM topics t
     INNER JOIN users u ON u.id = t.user_id
     LEFT JOIN games g ON g.id = t.game_id
     WHERE t.id = :id
 ");
-$topicStatement->execute(['id' => $topicId]);
+$topicStatement->execute(['id' => $topicId, 'me' => $voteUserId]);
 $topic = $topicStatement->fetch();
 
 if (!$topic) {
@@ -35,19 +42,76 @@ if (!$topic) {
     redirect_to('forum.php');
 }
 
+// Toutes les reponses du sujet, a plat, avec score + mon vote.
 $repliesStatement = $pdo->prepare("
-    SELECT r.id, r.body, r.created_at, r.user_id, u.username
+    SELECT r.id, r.body, r.created_at, r.user_id, r.parent_id, u.username,
+           (SELECT COALESCE(SUM(value), 0) FROM reply_votes rv WHERE rv.reply_id = r.id) AS score,
+           (SELECT value FROM reply_votes rv WHERE rv.reply_id = r.id AND rv.user_id = :me) AS my_vote
     FROM topic_replies r
     INNER JOIN users u ON u.id = r.user_id
     WHERE r.topic_id = :id
     ORDER BY r.created_at ASC, r.id ASC
 ");
-$repliesStatement->execute(['id' => $topicId]);
-$replies = $repliesStatement->fetchAll();
+$repliesStatement->execute(['id' => $topicId, 'me' => $voteUserId]);
+$flat = $repliesStatement->fetchAll();
 
-$userId = current_user_id();
+// On construit l'arbre des reponses (parent_id) en memoire.
+$children = [];
+foreach ($flat as $r) {
+    $children[(int)$r['parent_id']][] = $r;
+}
+$replyCount = count($flat);
 
 render_header($topic['title'], 'forum');
+
+// Formulaire de reponse reutilisable (sujet ou reponse imbriquee).
+$replyForm = static function (int $parentId = 0) use ($loggedIn, $topic): void {
+    if (!$loggedIn) {
+        return;
+    }
+    ?>
+    <details class="reply-toggle">
+        <summary><i class="bi bi-reply"></i> Répondre</summary>
+        <form class="reply-inline" method="post" action="reply_store.php">
+            <?= csrf_field() ?>
+            <input type="hidden" name="topic_id" value="<?= (int)$topic['id'] ?>">
+            <?php if ($parentId > 0): ?><input type="hidden" name="parent_id" value="<?= $parentId ?>"><?php endif; ?>
+            <textarea class="form-control" name="body" rows="2" required minlength="2" maxlength="5000" placeholder="Ta réponse…"></textarea>
+            <button class="btn btn-accent btn-sm mt-2" type="submit">Envoyer</button>
+        </form>
+    </details>
+    <?php
+};
+
+// Rendu recursif d'une reponse et de ses enfants.
+$renderReply = static function (array $r, int $depth) use (&$renderReply, $children, $userId, $loggedIn, $replyForm): void {
+    $myVote = $r['my_vote'] !== null ? (int)$r['my_vote'] : 0;
+    ?>
+    <article class="reply-node" style="--depth: <?= min($depth, 6) ?>">
+        <?= render_vote('reply', (int)$r['id'], (int)$r['score'], $myVote, $loggedIn) ?>
+        <div class="reply-body">
+            <div class="reply-head">
+                <a class="reply-author" href="player.php?id=<?= (int)$r['user_id'] ?>"><?= e($r['username']) ?></a>
+                <span class="text-soft small"><?= format_date_fr(substr((string)$r['created_at'], 0, 10)) ?></span>
+                <?php if ($userId !== null && (int)$r['user_id'] === $userId): ?>
+                    <form method="post" action="reply_delete.php" class="d-inline" data-confirm="Supprimer cette réponse ?">
+                        <?= csrf_field() ?>
+                        <input type="hidden" name="reply_id" value="<?= (int)$r['id'] ?>">
+                        <button class="btn btn-link btn-sm text-danger p-0" type="submit"><i class="bi bi-trash"></i></button>
+                    </form>
+                <?php endif; ?>
+            </div>
+            <p class="mb-2"><?= nl2br(e($r['body'])) ?></p>
+            <?php $replyForm((int)$r['id']); ?>
+        </div>
+    </article>
+    <?php
+    foreach ($children[(int)$r['id']] ?? [] as $child) {
+        $renderReply($child, $depth + 1);
+    }
+};
+
+$topicMyVote = $topic['my_vote'] !== null ? (int)$topic['my_vote'] : 0;
 ?>
 
 <section class="container page-head">
@@ -58,55 +122,40 @@ render_header($topic['title'], 'forum');
     <?php endif; ?>
 </section>
 
-<section class="container" style="max-width: 920px; padding-bottom: 4rem;">
+<section class="container" style="max-width: 940px; padding-bottom: 4rem;">
     <article class="content-panel reveal forum-post forum-post-op">
-        <div class="review-quote-head">
-            <span class="avatar-initial" aria-hidden="true"><?= e(mb_strtoupper(mb_substr($topic['username'], 0, 1))) ?></span>
-            <div>
-                <strong><?= e($topic['username']) ?></strong>
-                <span class="review-quote-game">auteur du sujet · <?= format_date_fr(substr((string)$topic['created_at'], 0, 10)) ?></span>
-            </div>
-            <?php if ($userId !== null && (int)$topic['user_id'] === $userId): ?>
-                <form method="post" action="topic_delete.php" data-confirm="Supprimer ce sujet et toutes ses réponses ?">
-                    <?= csrf_field() ?>
-                    <input type="hidden" name="topic_id" value="<?= (int)$topic['id'] ?>">
-                    <button class="btn btn-link btn-sm text-danger p-0" type="submit"><i class="bi bi-trash"></i></button>
-                </form>
-            <?php endif; ?>
-        </div>
-        <p class="mb-0 mt-3 lh-lg"><?= nl2br(e($topic['body'])) ?></p>
-    </article>
-
-    <?php foreach ($replies as $reply): ?>
-        <article class="content-panel reveal forum-post">
-            <div class="review-quote-head">
-                <span class="avatar-initial" aria-hidden="true"><?= e(mb_strtoupper(mb_substr($reply['username'], 0, 1))) ?></span>
-                <div>
-                    <strong><?= e($reply['username']) ?></strong>
-                    <span class="review-quote-game"><?= format_date_fr(substr((string)$reply['created_at'], 0, 10)) ?></span>
-                </div>
-                <?php if ($userId !== null && (int)$reply['user_id'] === $userId): ?>
-                    <form method="post" action="reply_delete.php" data-confirm="Supprimer ta réponse ?">
+        <?= render_vote('topic', (int)$topic['id'], (int)$topic['score'], $topicMyVote, $loggedIn) ?>
+        <div class="reply-body">
+            <div class="reply-head">
+                <a class="reply-author" href="player.php?id=<?= (int)$topic['user_id'] ?>"><?= e($topic['username']) ?></a>
+                <span class="text-soft small">auteur · <?= format_date_fr(substr((string)$topic['created_at'], 0, 10)) ?></span>
+                <?php if ($userId !== null && (int)$topic['user_id'] === $userId): ?>
+                    <form method="post" action="topic_delete.php" class="d-inline" data-confirm="Supprimer ce sujet et toutes ses réponses ?">
                         <?= csrf_field() ?>
-                        <input type="hidden" name="reply_id" value="<?= (int)$reply['id'] ?>">
+                        <input type="hidden" name="topic_id" value="<?= (int)$topic['id'] ?>">
                         <button class="btn btn-link btn-sm text-danger p-0" type="submit"><i class="bi bi-trash"></i></button>
                     </form>
                 <?php endif; ?>
             </div>
-            <p class="mb-0 mt-3 lh-lg"><?= nl2br(e($reply['body'])) ?></p>
-        </article>
-    <?php endforeach; ?>
+            <p class="mb-2 lh-lg"><?= nl2br(e($topic['body'])) ?></p>
+            <?php $replyForm(0); ?>
+        </div>
+    </article>
 
-    <?php if ($userId !== null): ?>
-        <form class="content-panel reveal mt-4" method="post" action="reply_store.php">
-            <?= csrf_field() ?>
-            <input type="hidden" name="topic_id" value="<?= (int)$topic['id'] ?>">
-            <label class="form-label" for="body"><i class="bi bi-reply"></i> Ta réponse <span class="text-soft small">(+5 XP)</span></label>
-            <textarea class="form-control" id="body" name="body" rows="3" required minlength="2" maxlength="5000" placeholder="Apporte ta pierre au débat…"></textarea>
-            <button class="btn btn-accent btn-sm mt-3" type="submit">Répondre</button>
-        </form>
+    <h2 class="h5 mt-4 mb-3"><?= $replyCount ?> réponse<?= $replyCount > 1 ? 's' : '' ?></h2>
+
+    <?php if ($replyCount === 0): ?>
+        <p class="text-soft">Aucune réponse pour l’instant.<?= $loggedIn ? ' Lance la discussion !' : '' ?></p>
     <?php else: ?>
-        <p class="text-soft mt-4"><a href="login.php?redirect=<?= e(urlencode('topic.php?id=' . (int)$topic['id'])) ?>">Connecte-toi</a> pour répondre.</p>
+        <div class="reply-tree">
+            <?php foreach ($children[0] ?? [] as $root): ?>
+                <?php $renderReply($root, 0); ?>
+            <?php endforeach; ?>
+        </div>
+    <?php endif; ?>
+
+    <?php if (!$loggedIn): ?>
+        <p class="text-soft mt-4"><a href="login.php?redirect=<?= e(urlencode('topic.php?id=' . (int)$topic['id'])) ?>">Connecte-toi</a> pour voter et répondre.</p>
     <?php endif; ?>
 </section>
 

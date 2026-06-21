@@ -17,6 +17,12 @@ function current_page(string $page, string $current): string
     return $page === $current ? 'active' : '';
 }
 
+// Marque le lien de la page courante pour les lecteurs d'ecran.
+function aria_current(string $page, string $current): string
+{
+    return $page === $current ? ' aria-current="page"' : '';
+}
+
 function flash(string $type, string $message): void
 {
     $_SESSION['flash'] = ['type' => $type, 'message' => $message];
@@ -251,7 +257,7 @@ function format_date_fr(?string $sqlDate): string
 function format_rating(?string $rating): string
 {
     if ($rating === null) {
-        return '—';
+        return '·';
     }
 
     return number_format((float)$rating, 1, ',', ' ');
@@ -261,7 +267,7 @@ function format_rating(?string $rating): string
 function format_stars10(?string $rating20): string
 {
     if ($rating20 === null) {
-        return '—';
+        return '·';
     }
 
     return number_format((float)$rating20 / 2, 1, ',', ' ');
@@ -295,6 +301,44 @@ function library_status_label(string $status): string
         'abandonne' => 'Abandonné',
         default => $status,
     };
+}
+
+// Widget de vote (like/dislike) pour un sujet ou une reponse de forum.
+// $myVote : -1, 0 ou 1 (vote actuel du joueur connecte).
+function render_vote(string $type, int $id, int $score, int $myVote, bool $enabled): string
+{
+    $disabled = $enabled ? '' : ' disabled';
+    $upOn = $myVote === 1 ? ' on' : '';
+    $downOn = $myVote === -1 ? ' on' : '';
+    return '<div class="vote" data-vote data-type="' . e($type) . '" data-id="' . $id . '">'
+        . '<button type="button" class="vote-btn vote-up' . $upOn . '" data-dir="1" aria-label="J\'aime"' . $disabled . '><i class="bi bi-caret-up-fill"></i></button>'
+        . '<span class="vote-score" data-vote-score>' . $score . '</span>'
+        . '<button type="button" class="vote-btn vote-down' . $downOn . '" data-dir="-1" aria-label="Je n\'aime pas"' . $disabled . '><i class="bi bi-caret-down-fill"></i></button>'
+        . '</div>';
+}
+
+// Etat de la relation entre le joueur connecte ($me) et un autre ($other).
+// Retourne : self | none | friends | pending_sent | pending_received.
+function friendship_status(PDO $pdo, int $me, int $other): string
+{
+    if ($me === $other) {
+        return 'self';
+    }
+    // Parametres distincts : en prepares natifs, un nom ne se reutilise pas.
+    $st = $pdo->prepare('
+        SELECT requester_id, status FROM friendships
+        WHERE (requester_id = :me1 AND addressee_id = :other1)
+           OR (requester_id = :other2 AND addressee_id = :me2)
+    ');
+    $st->execute(['me1' => $me, 'other1' => $other, 'other2' => $other, 'me2' => $me]);
+    $row = $st->fetch();
+    if (!$row) {
+        return 'none';
+    }
+    if ($row['status'] === 'accepted') {
+        return 'friends';
+    }
+    return (int)$row['requester_id'] === $me ? 'pending_sent' : 'pending_received';
 }
 
 // Ajoute de l'XP a un joueur (duel, avis, contribution au catalogue).
@@ -343,15 +387,17 @@ function render_header(string $title, string $current = '', bool $fullBleed = fa
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="description" content="Ludorivya — la médiathèque de jeux vidéo : catalogue, avis des joueurs et bibliothèque personnelle.">
-        <meta name="theme-color" content="#050508">
-        <title><?= e($title) ?> — Ludorivya</title>
+        <meta name="description" content="Ludorivya · la médiathèque de jeux vidéo : catalogue, avis des joueurs et bibliothèque personnelle.">
+        <meta name="theme-color" content="#0b0a1a">
+        <meta name="csrf-token" content="<?= e($_SESSION['csrf_token'] ?? '') ?>">
+        <title><?= e($title) ?> · Ludorivya</title>
         <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
         <link href="assets/vendor/bootstrap/bootstrap.min.css" rel="stylesheet">
         <link href="assets/vendor/bootstrap-icons/bootstrap-icons.min.css" rel="stylesheet">
         <link href="assets/css/styles.css" rel="stylesheet">
     </head>
     <body>
+    <a class="skip-link" href="#contenu">Aller au contenu</a>
     <!-- Filtre SVG reutilise par tous les textes "flamme" (effet Splaze). -->
     <svg class="flame-filter-def" aria-hidden="true" focusable="false">
         <defs>
@@ -372,12 +418,12 @@ function render_header(string $title, string $current = '', bool $fullBleed = fa
                 </button>
                 <div class="collapse navbar-collapse" id="mainNav">
                     <ul class="navbar-nav mx-auto gap-lg-1">
-                        <li class="nav-item"><a class="nav-link <?= current_page('home', $current) ?>" href="index.php">Accueil</a></li>
-                        <li class="nav-item"><a class="nav-link <?= current_page('games', $current) ?>" href="games.php">Jeux</a></li>
-                        <li class="nav-item"><a class="nav-link nav-link-hot <?= current_page('versus', $current) ?>" href="versus.php">Versus</a></li>
-                        <li class="nav-item"><a class="nav-link <?= current_page('rankings', $current) ?>" href="rankings.php">Classements</a></li>
-                        <li class="nav-item"><a class="nav-link <?= current_page('forum', $current) ?>" href="forum.php">Forum</a></li>
-                        <li class="nav-item"><a class="nav-link <?= current_page('users', $current) ?>" href="users.php">Joueurs</a></li>
+                        <li class="nav-item"><a class="nav-link <?= current_page('home', $current) ?>"<?= aria_current('home', $current) ?> href="index.php">Accueil</a></li>
+                        <li class="nav-item"><a class="nav-link <?= current_page('games', $current) ?>"<?= aria_current('games', $current) ?> href="games.php">Jeux</a></li>
+                        <li class="nav-item"><a class="nav-link nav-link-hot <?= current_page('versus', $current) ?>"<?= aria_current('versus', $current) ?> href="versus.php">Versus</a></li>
+                        <li class="nav-item"><a class="nav-link <?= current_page('rankings', $current) ?>"<?= aria_current('rankings', $current) ?> href="rankings.php">Classements</a></li>
+                        <li class="nav-item"><a class="nav-link <?= current_page('forum', $current) ?>"<?= aria_current('forum', $current) ?> href="forum.php">Forum</a></li>
+                        <li class="nav-item"><a class="nav-link <?= current_page('users', $current) ?>"<?= aria_current('users', $current) ?> href="users.php">Joueurs</a></li>
                     </ul>
                     <div class="d-flex align-items-center gap-2 nav-actions">
                         <?php if ($connectedUsername !== null): ?>
@@ -406,7 +452,7 @@ function render_header(string $title, string $current = '', bool $fullBleed = fa
             </div>
         </nav>
     </header>
-    <main<?= $fullBleed ? '' : ' class="page-shell"' ?>>
+    <main id="contenu" tabindex="-1"<?= $fullBleed ? '' : ' class="page-shell"' ?>>
         <?php if ($flash !== null): ?>
             <div class="flash-wrap container">
                 <div class="alert alert-<?= e($flash['type']) ?> alert-dismissible fade show" role="alert">
@@ -427,7 +473,7 @@ function render_footer(): void
             <div class="footer-grid">
                 <div>
                     <span class="footer-brand">Ludorivya<span class="brand-dot">.</span></span>
-                    <p class="footer-tagline">La médiathèque de jeux vidéo — SAE PHP · PDO · MySQL.</p>
+                    <p class="footer-tagline">La médiathèque de jeux vidéo · SAE PHP · PDO · MySQL.</p>
                 </div>
                 <nav class="footer-links" aria-label="Liens du pied de page">
                     <a href="games.php">Catalogue</a>
@@ -437,7 +483,7 @@ function render_footer(): void
                     <a href="stats.php">Statistiques</a>
                 </nav>
             </div>
-            <p class="footer-note">Modèle relationnel : 1-1, 1-N, N-N — données de démonstration fictives.</p>
+            <p class="footer-note">Modèle relationnel : 1-1, 1-N, N-N · données de démonstration fictives.</p>
         </div>
     </footer>
     <script src="assets/vendor/bootstrap/bootstrap.bundle.min.js"></script>

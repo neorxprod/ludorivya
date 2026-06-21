@@ -1,5 +1,5 @@
 /* =============================================================
-   LUDORIVYA — interactions
+   LUDORIVYA · interactions
    - apparitions au scroll (IntersectionObserver)
    - compteurs animes
    - parallaxe legere du collage d'accueil
@@ -291,6 +291,45 @@
         requestAnimationFrame(tick);
     });
 
+    /* ---------- Votes du forum (like / dislike en AJAX) ---------- */
+
+    const csrfToken = document.querySelector('meta[name="csrf-token"]')?.content || '';
+
+    document.querySelectorAll('[data-vote]').forEach((widget) => {
+        const type = widget.dataset.type;
+        const id = widget.dataset.id;
+        const scoreEl = widget.querySelector('[data-vote-score]');
+        const upBtn = widget.querySelector('.vote-up');
+        const downBtn = widget.querySelector('.vote-down');
+
+        widget.querySelectorAll('.vote-btn').forEach((btn) => {
+            if (btn.disabled) {
+                return;
+            }
+            btn.addEventListener('click', async () => {
+                const dir = parseInt(btn.dataset.dir, 10);
+                const body = new FormData();
+                body.append('csrf_token', csrfToken);
+                body.append('type', type);
+                body.append('target_id', id);
+                body.append('value', String(dir));
+                try {
+                    const res = await fetch('vote_store.php', { method: 'POST', body });
+                    const data = await res.json();
+                    if (!data.ok) {
+                        if (data.login) { window.location.href = 'login.php'; }
+                        return;
+                    }
+                    scoreEl.textContent = data.score;
+                    upBtn.classList.toggle('on', data.myVote === 1);
+                    downBtn.classList.toggle('on', data.myVote === -1);
+                } catch (e) {
+                    /* silencieux : on laisse l'utilisateur reessayer */
+                }
+            });
+        });
+    });
+
     /* ---------- Selecteur d'etoiles (avis) ---------- */
 
     document.querySelectorAll('[data-star-picker]').forEach((picker) => {
@@ -314,6 +353,22 @@
             });
         });
         picker.addEventListener('mouseleave', () => paint(current()));
+
+        // Empeche d'envoyer un avis sans note et donne un retour visible
+        // (le champ etant cache, le "required" HTML ne s'applique pas).
+        const form = picker.closest('form');
+        if (form) {
+            form.addEventListener('submit', (event) => {
+                if (current() < 1) {
+                    event.preventDefault();
+                    if (valueLabel) {
+                        valueLabel.textContent = 'Choisis une note !';
+                        valueLabel.classList.add('text-danger');
+                    }
+                    buttons[0]?.focus();
+                }
+            });
+        }
     });
 
     /* ---------- Mode versus ---------- */
@@ -497,9 +552,16 @@
         }
 
         // Vote au clavier : fleche gauche / fleche droite.
-        document.addEventListener('keydown', (event) => {
-            if (event.key === 'ArrowLeft') { vote(cards[0]); }
-            if (event.key === 'ArrowRight') { vote(cards[1]); }
-        });
+        // Garde : seulement si 2 cartes, on ignore la repetition (touche
+        // maintenue) et on ne capte pas la frappe dans un champ de saisie.
+        if (cards.length === 2) {
+            document.addEventListener('keydown', (event) => {
+                if (event.repeat) { return; }
+                const t = event.target;
+                if (t && (t.tagName === 'INPUT' || t.tagName === 'TEXTAREA' || t.isContentEditable)) { return; }
+                if (event.key === 'ArrowLeft') { event.preventDefault(); vote(cards[0]); }
+                if (event.key === 'ArrowRight') { event.preventDefault(); vote(cards[1]); }
+            });
+        }
     }
 })();

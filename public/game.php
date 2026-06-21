@@ -229,7 +229,7 @@ render_header($game['title'], 'games', true);
                 <?php endif; ?>
 
                 <?php if ($reviews === []): ?>
-                    <p class="text-soft mb-0">Aucun avis pour l’instant — sois le premier&nbsp;!</p>
+                    <p class="text-soft mb-0">Aucun avis pour l’instant · sois le premier&nbsp;!</p>
                 <?php else: ?>
                     <?php foreach ($reviews as $review): ?>
                         <article class="review">

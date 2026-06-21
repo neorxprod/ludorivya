@@ -5,22 +5,22 @@
       <stop offset="1" stop-color="#17172b"/>
     </linearGradient>
     <linearGradient id="accent" x1="0" y1="0" x2="1" y2="0">
-      <stop offset="0" stop-color="#6366f1"/>
-      <stop offset="1" stop-color="#a855f7"/>
+      <stop offset="0" stop-color="#4f46e5"/>
+      <stop offset="1" stop-color="#4f46e5"/>
     </linearGradient>
     <radialGradient id="glow1" cx="0.2" cy="0.1" r="0.6">
-      <stop offset="0" stop-color="#6366f1" stop-opacity="0.35"/>
-      <stop offset="1" stop-color="#6366f1" stop-opacity="0"/>
+      <stop offset="0" stop-color="#4f46e5" stop-opacity="0.35"/>
+      <stop offset="1" stop-color="#4f46e5" stop-opacity="0"/>
     </radialGradient>
     <radialGradient id="glow2" cx="0.85" cy="0.9" r="0.5">
-      <stop offset="0" stop-color="#a855f7" stop-opacity="0.3"/>
-      <stop offset="1" stop-color="#a855f7" stop-opacity="0"/>
+      <stop offset="0" stop-color="#4f46e5" stop-opacity="0.3"/>
+      <stop offset="1" stop-color="#4f46e5" stop-opacity="0"/>
     </radialGradient>
   </defs>
   <rect width="1200" height="300" rx="18" fill="url(#bg)"/>
   <rect width="1200" height="300" rx="18" fill="url(#glow1)"/>
   <rect width="1200" height="300" rx="18" fill="url(#glow2)"/>
-  <text x="600" y="148" text-anchor="middle" font-size="68" font-weight="700" fill="#f5f5f7" letter-spacing="-2">Ludorivya<tspan fill="#a5b4fc">.</tspan></text>
-  <text x="600" y="196" text-anchor="middle" font-size="22" fill="#98a2b3">La médiathèque de jeux vidéo — PHP · PDO · MySQL</text>
+  <text x="600" y="148" text-anchor="middle" font-size="68" font-weight="700" fill="#f5f5f7" letter-spacing="-2">Ludorivya<tspan fill="#c7d2fe">.</tspan></text>
+  <text x="600" y="196" text-anchor="middle" font-size="22" fill="#98a2b3">La médiathèque de jeux vidéo · PHP · PDO · MySQL</text>
   <rect x="500" y="222" width="200" height="4" rx="2" fill="url(#accent)"/>
 </svg>

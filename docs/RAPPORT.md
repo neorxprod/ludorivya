@@ -25,11 +25,11 @@ Navigateur <──(page HTML + CSS + JS)────────┘
 
 1. Ouvrir le **panneau XAMPP** → démarrer **Apache** et **MySQL** (boutons *Start*).
 2. Importer la base : ouvrir `http://localhost/phpmyadmin` → onglet **Importer** → fichier `database/schema.sql` → **Exécuter**. (Ou en ligne de commande : `C:\xampp\mysql\bin\mysql.exe -u root --default-character-set=utf8mb4 < database\schema.sql`.)
-3. Relier le projet à Apache (une seule fois, terminal **administrateur**) :
+3. Rendre le projet visible par Apache : **copier le dossier du projet dans `C:\xampp\htdocs\`** et le nommer `ludorivya` (méthode la plus simple).
+   *Alternative* (sans copier) : un raccourci de dossier, dans un terminal **administrateur** :
    ```bat
    mklink /J C:\xampp\htdocs\ludorivya "C:\Users\rosyp\Documents\LUDORIVYA"
    ```
-   Cela crée un « raccourci de dossier » : Apache voit le projet sans le copier.
 4. Ouvrir **http://localhost/ludorivya/public/** — c'est l'URL officielle du site.
 5. Compte de démo : `nora@example.test` / `Ludorivya2026!`.
 
@@ -95,10 +95,10 @@ public/assets/
                              étoiles, particules, et le client du versus (fetch + animations).
   vendor/                    Bootstrap + icônes EN LOCAL (le site marche sans internet).
   fonts/                     La police Inter en local.
-  img/covers/                Les ~115 jaquettes (nommées par appid Steam).
+  img/covers/                Les 328 jaquettes (nommées par appid Steam).
 
 database/
-  schema.sql                 TOUT : création de la base, 13 tables, données de démo.
+  schema.sql                 TOUT : création de la base, 16 tables, données de démo.
   dataset/games.json         Le dataset source des jeux (rédigé à la main).
   dataset/fetch_covers.ps1   Téléchargement (une fois) des jaquettes depuis le CDN Steam.
   dataset/build_seed.php     Le générateur : JSON → schema.sql (+ simulation de 150 duels).
@@ -169,7 +169,7 @@ Le niveau n'est **pas stocké** : il est calculé (`niveau = 1 + xp ÷ 250`) —
 
 La règle d'or : **le serveur ne fait jamais confiance au client.** Tout ce que le navigateur envoie est re-validé, recalculé, re-vérifié.
 
-## 9. Le pipeline du catalogue (comment on a eu ~115 vrais jeux)
+## 9. Le pipeline du catalogue (comment on a eu 328 vrais jeux)
 
 1. **`dataset/games.json`** : un dataset rédigé jeu par jeu — titre réel, studio, date, PEGI, genres, plateformes, metascore approximatif, description française **originale** (rien n'est copié des fiches officielles), et l'**appid Steam**.
 2. **`dataset/fetch_covers.ps1`** : pour chaque appid, télécharge la jaquette officielle 600×900 depuis le CDN public de Steam vers `public/assets/img/covers/`. Si l'appid est faux, il n'y a pas d'image → le jeu est écarté. **Le téléchargement sert donc de validation.**

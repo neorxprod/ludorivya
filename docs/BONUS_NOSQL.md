@@ -24,7 +24,7 @@ Le modèle relationnel reste fiable, mais certaines opérations deviennent coût
 Exemples concrets tirés de ce projet, problématiques à grande échelle :
 
 - La requête du catalogue (`games.php`) : deux sous-requêtes agrégées (note moyenne, genres concaténés) **par ligne affichée** + deux `EXISTS` de filtrage sur les tables de liaison.
-- Le top 5 (`stats.php`) : `AVG` + `GROUP BY` + `HAVING` sur la totalité de la table `reviews` à chaque visite.
+- Les classements (`rankings.php`) : `AVG` + `GROUP BY` + `HAVING` sur la totalité de la table `reviews`, plus un tri du catalogue par score Elo, à chaque visite.
 - La recherche (`LIKE` sur titre, description et nom de studio joints) sur des millions de jeux.
 - Le mode versus (`duel_store.php`) : chaque vote fait un `UPDATE games SET elo = ...` — à des millions de votes/heure, les jeux populaires deviennent des **lignes chaudes** (contention de verrous sur les mêmes enregistrements), et la table `duels` grossit sans fin.
 
@@ -61,6 +61,18 @@ Exemple de document MongoDB pour la recherche :
 ```
 
 La note moyenne n'est plus calculée à la lecture : elle est mise à jour dans le document à chaque nouvel avis (écriture un peu plus chère, lectures beaucoup plus rapides — le bon compromis quand on lit 1000 fois plus qu'on n'écrit).
+
+### Pourquoi MongoDB plutôt qu'une autre techno NoSQL ?
+
+Chaque problème de scalabilité a son outil idéal ; on retient MongoDB comme **compromis pédagogique** parce qu'il couvre le cas le plus large avec un seul modèle (le document) :
+
+| Besoin | Outil le plus adapté | Pourquoi |
+| --- | --- | --- |
+| Catalogue dénormalisé, lectures sans jointure | **MongoDB** (documents) | un document = un jeu complet, lu en une fois |
+| Recherche plein texte sur des millions d'avis | **Elasticsearch** | index inversé, pertinence et tolérance aux fautes que `LIKE` ne sait pas faire |
+| Compteurs « chauds » du versus (Elo, votes/s) | **Redis** | compteurs atomiques en mémoire, encaisse les pics d'écriture sans verrou de ligne |
+
+Dans un vrai déploiement on combinerait les trois. Pour cette SAE, **MongoDB** est retenu car il illustre le mieux le passage du relationnel au document (dénormalisation) ; Elasticsearch et Redis sont cités comme compléments pour la recherche et les compteurs.
 
 ## Conclusion
 

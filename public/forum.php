@@ -12,18 +12,22 @@ if ($pdo === null) {
     exit;
 }
 
-// Sujets tries par derniere activite (creation du sujet ou derniere reponse).
+// Tri : 'populaire' (score de votes) ou 'recent' (derniere activite, defaut).
+$sort = (string)($_GET['sort'] ?? 'recent');
+$orderBy = $sort === 'populaire' ? 'score DESC, last_activity DESC' : 'last_activity DESC';
+
 $topics = $pdo->query("
     SELECT
         t.id, t.title, t.created_at,
-        u.username,
+        u.id AS author_id, u.username,
         g.id AS game_id, g.title AS game_title,
         (SELECT COUNT(*) FROM topic_replies r WHERE r.topic_id = t.id) AS reply_count,
+        (SELECT COALESCE(SUM(value), 0) FROM topic_votes tv WHERE tv.topic_id = t.id) AS score,
         COALESCE((SELECT MAX(r.created_at) FROM topic_replies r WHERE r.topic_id = t.id), t.created_at) AS last_activity
     FROM topics t
     INNER JOIN users u ON u.id = t.user_id
     LEFT JOIN games g ON g.id = t.game_id
-    ORDER BY last_activity DESC
+    ORDER BY {$orderBy}
     LIMIT 50
 ")->fetchAll();
 
@@ -34,7 +38,7 @@ $gamesList = $pdo->query('SELECT id, title FROM games ORDER BY title')->fetchAll
     <span class="glow-orb glow-cyan" style="width: 22rem; height: 22rem; top: -8rem; right: -4rem;"></span>
     <p class="eyebrow reveal">La place du village</p>
     <h1 class="page-title reveal">Le <?= flame_text('forum') ?></h1>
-    <p class="page-lead reveal">Débats, conseils et mauvaise foi assumée — comme au bon vieux temps des forums jeux vidéo.</p>
+    <p class="page-lead reveal">Débats, conseils et mauvaise foi assumée · comme au bon vieux temps des forums jeux vidéo.</p>
 </section>
 
 <section class="container" style="padding-bottom: 4rem;">
@@ -69,6 +73,11 @@ $gamesList = $pdo->query('SELECT id, title FROM games ORDER BY title')->fetchAll
         <p class="text-soft reveal"><a href="login.php?redirect=forum.php">Connecte-toi</a> pour créer un sujet ou répondre.</p>
     <?php endif; ?>
 
+    <div class="forum-tabs reveal">
+        <a class="forum-tab <?= $sort !== 'populaire' ? 'active' : '' ?>" href="forum.php">Récents</a>
+        <a class="forum-tab <?= $sort === 'populaire' ? 'active' : '' ?>" href="forum.php?sort=populaire">Populaires</a>
+    </div>
+
     <?php if ($topics === []): ?>
         <div class="empty-state reveal">
             <i class="bi bi-chat-square-text empty-icon" aria-hidden="true"></i>
@@ -79,7 +88,10 @@ $gamesList = $pdo->query('SELECT id, title FROM games ORDER BY title')->fetchAll
         <div class="content-panel reveal p-0 overflow-hidden">
             <?php foreach ($topics as $topic): ?>
                 <a class="forum-row" href="topic.php?id=<?= (int)$topic['id'] ?>">
-                    <span class="avatar-initial" aria-hidden="true"><?= e(mb_strtoupper(mb_substr($topic['username'], 0, 1))) ?></span>
+                    <span class="forum-row-score" title="Votes de la communauté">
+                        <i class="bi bi-caret-up-fill"></i>
+                        <strong><?= (int)$topic['score'] ?></strong>
+                    </span>
                     <span class="forum-row-main">
                         <strong><?= e($topic['title']) ?></strong>
                         <span class="text-soft small">

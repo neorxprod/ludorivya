@@ -4,7 +4,7 @@
 
 Ludorivya est le réseau de tes jeux vidéo : un catalogue de 328 vrais jeux, des avis, des bibliothèques personnelles, et un **mode versus** où les votes de la communauté font évoluer un classement Elo.
 
-Le schéma complet est dans [`database/schema.sql`](../database/schema.sql) (13 tables), généré par le pipeline documenté dans [`database/dataset/`](../database/dataset/).
+Le schéma complet est dans [`database/schema.sql`](../database/schema.sql) (16 tables), généré par le pipeline documenté dans [`database/dataset/`](../database/dataset/).
 
 ## Diagramme
 
@@ -28,6 +28,12 @@ erDiagram
     GAMES     ||--o{ TOPICS          : ""
     TOPICS    ||--o{ TOPIC_REPLIES   : ""
     USERS     ||--o{ TOPIC_REPLIES   : ""
+    TOPIC_REPLIES ||--o{ TOPIC_REPLIES : "imbriquee"
+    USERS     ||--o{ TOPIC_VOTES     : ""
+    TOPICS    ||--o{ TOPIC_VOTES     : ""
+    USERS     ||--o{ REPLY_VOTES     : ""
+    TOPIC_REPLIES ||--o{ REPLY_VOTES : ""
+    USERS     ||--o{ FRIENDSHIPS     : "demande / recoit"
 ```
 
 ```text
@@ -111,8 +117,23 @@ Le mode versus : chaque ligne enregistre un vote « `winner_game_id` bat `loser_
 ### `topics` et `topic_replies` (forum)
 
 - `topics` : un sujet de discussion, créé par un utilisateur, **optionnellement rattaché à un jeu** (`game_id` NULL, `ON DELETE SET NULL` : le sujet survit si le jeu est supprimé).
-- `topic_replies` : relation **1-N** classique (un sujet a plusieurs réponses), `ON DELETE CASCADE` (supprimer un sujet emporte ses réponses).
+- `topic_replies` : relation **1-N** (un sujet a plusieurs réponses), `ON DELETE CASCADE`. La colonne **`parent_id`** (clé étrangère vers `topic_replies` elle-même) permet les **réponses imbriquées** façon Reddit/Discord : c'est une relation **réflexive** 1-N.
 - Suppression réservée à l'auteur (`WHERE user_id` côté PHP).
+
+### `topic_votes` et `reply_votes` (like / dislike)
+
+Deux relations **N-N porteuses** : un joueur vote (`value` = +1 ou -1, contrainte `CHECK`) sur un sujet ou une réponse.
+
+- Clé primaire composite `(user_id, topic_id)` / `(user_id, reply_id)` : **un seul vote par joueur et par cible** (re-cliquer annule ou bascule le vote).
+- Le score affiché est la somme `SUM(value)`.
+
+### `friendships` (amis)
+
+Relation **N-N réflexive** entre utilisateurs (table user ↔ user).
+
+- `requester_id` (qui envoie la demande) + `addressee_id` (qui la reçoit), `status` ENUM(`pending`, `accepted`).
+- Clé primaire composite + `CHECK (requester_id <> addressee_id)` (on ne s'ajoute pas soi-même).
+- `ON DELETE CASCADE` des deux côtés : supprimer un compte supprime ses amitiés.
 
 ## Choix d'intégrité
 

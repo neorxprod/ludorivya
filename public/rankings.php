@@ -52,7 +52,7 @@ $rest = array_slice($eloRanking, 3);
     <span class="glow-orb glow-violet" style="width: 24rem; height: 24rem; top: -10rem; right: -6rem;"></span>
     <p class="eyebrow reveal">La hiérarchie, votée par vous</p>
     <h1 class="page-title reveal">Les <?= flame_text('classements') ?></h1>
-    <p class="page-lead reveal">Le Elo bouge à chaque duel du <a href="versus.php">mode versus</a> — la communauté décide.</p>
+    <p class="page-lead reveal">Le Elo bouge à chaque duel du <a href="versus.php">mode versus</a> · la communauté décide.</p>
 </section>
 
 <section class="container">

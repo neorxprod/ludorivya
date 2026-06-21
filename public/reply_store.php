@@ -19,6 +19,8 @@ require_valid_csrf('forum.php');
 
 $topicId = post_int('topic_id', 1, 1000000000);
 $body = post_string('body', 5000);
+// Reponse a une reponse (fil imbrique) : facultatif.
+$parentId = post_int('parent_id', 1, 1000000000);
 
 if ($topicId === null || mb_strlen($body) < 2) {
     flash('danger', 'Réponse invalide.');
@@ -33,14 +35,24 @@ if ((int)$topicCheck->fetchColumn() === 0) {
     redirect_to('forum.php');
 }
 
+// Si on repond a une reponse, elle doit exister ET appartenir a ce sujet.
+if ($parentId !== null) {
+    $parentCheck = $pdo->prepare('SELECT COUNT(*) FROM topic_replies WHERE id = :id AND topic_id = :t');
+    $parentCheck->execute(['id' => $parentId, 't' => $topicId]);
+    if ((int)$parentCheck->fetchColumn() === 0) {
+        $parentId = null;
+    }
+}
+
 try {
     $statement = $pdo->prepare('
-        INSERT INTO topic_replies (topic_id, user_id, body)
-        VALUES (:topic_id, :user_id, :body)
+        INSERT INTO topic_replies (topic_id, user_id, parent_id, body)
+        VALUES (:topic_id, :user_id, :parent_id, :body)
     ');
     $statement->execute([
         'topic_id' => $topicId,
         'user_id' => current_user_id(),
+        'parent_id' => $parentId,
         'body' => $body,
     ]);
 

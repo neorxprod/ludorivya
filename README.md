@@ -4,7 +4,7 @@
 
 # Ludorivya
 
-**Le réseau social de tes jeux vidéo — catalogue, versus, classements et forum.**
+**Le réseau social de tes jeux vidéo · catalogue, versus, classements et forum.**
 
 ![PHP](https://img.shields.io/badge/PHP-8.x-777BB4?logo=php&logoColor=white)
 ![MySQL](https://img.shields.io/badge/MySQL%2FMariaDB-PDO-4479A1?logo=mysql&logoColor=white)
@@ -35,7 +35,7 @@ XAMPP fournit les 3 outils dont le site a besoin : **Apache** (le serveur web), 
 1. Télécharge XAMPP : <https://www.apachefriends.org/fr/index.html>
 2. Installe-le (laisse les options par défaut). Sous Windows il s'installe dans `C:\xampp`.
 
-### Étape 1 — Récupérer le projet
+### Étape 1 · Récupérer le projet
 
 Télécharge le projet et place le dossier où tu veux, par exemple dans `Documents`.
 
@@ -45,15 +45,15 @@ git clone https://github.com/neorxprod/ludorivya.git
 
 > Pas de Git ? Sur la page GitHub : bouton vert **Code → Download ZIP**, puis décompresse-le.
 
-### Étape 2 — Démarrer les serveurs
+### Étape 2 · Démarrer les serveurs
 
 Ouvre le **XAMPP Control Panel** et clique sur **Start** en face de **Apache** puis de **MySQL**. Les deux doivent devenir **verts**. ✅
 
-> ⚠️ Si MySQL ne démarre pas, c'est souvent qu'un autre programme occupe son port — ferme Skype ou un autre serveur MySQL et réessaie.
+> ⚠️ Si MySQL ne démarre pas, c'est souvent qu'un autre programme occupe son port · ferme Skype ou un autre serveur MySQL et réessaie.
 
-### Étape 3 — Créer la base de données
+### Étape 3 · Créer la base de données
 
-Le fichier `database/schema.sql` **crée tout seul** la base `ludorivya`, ses 13 tables et les 328 jeux. Tu n'as rien à créer à la main.
+Le fichier `database/schema.sql` **crée tout seul** la base `ludorivya`, ses 16 tables et les 328 jeux. Tu n'as rien à créer à la main.
 
 **Méthode simple (avec phpMyAdmin) :**
 
@@ -63,13 +63,13 @@ Le fichier `database/schema.sql` **crée tout seul** la base `ludorivya`, ses 13
 4. Tout en bas, clique **Importer / Exécuter**
 5. Un bandeau vert confirme : la base `ludorivya` apparaît dans la liste à gauche.
 
-**Méthode ligne de commande** (équivalente) — ouvre un terminal **dans le dossier du projet** :
+**Méthode ligne de commande** (équivalente) · ouvre un terminal **dans le dossier du projet** :
 
 ```bat
 C:\xampp\mysql\bin\mysql.exe -u root --default-character-set=utf8mb4 < database\schema.sql
 ```
 
-### Étape 4 — Rendre le site accessible par Apache
+### Étape 4 · Rendre le site accessible par Apache
 
 Apache ne sert que les fichiers placés dans `C:\xampp\htdocs`. **Le plus simple : copie le dossier du projet dans `htdocs`** et renomme-le `ludorivya`. Tu dois obtenir : `C:\xampp\htdocs\ludorivya\public\index.php`.
 
@@ -78,7 +78,7 @@ Apache ne sert que les fichiers placés dans `C:\xampp\htdocs`. **Le plus simple
 > mklink /J C:\xampp\htdocs\ludorivya "C:\chemin\complet\vers\LUDORIVYA"
 > ```
 
-### Étape 5 — Ouvrir le site 🎉
+### Étape 5 · Ouvrir le site 🎉
 
 Dans ton navigateur :
 
@@ -86,7 +86,7 @@ Dans ton navigateur :
 http://localhost/ludorivya/public/
 ```
 
-### Étape 6 — Tester que tout marche
+### Étape 6 · Tester que tout marche
 
 1. La page d'accueil s'affiche avec des jaquettes de jeux → **Apache + MySQL fonctionnent**.
 2. Clique **Connexion** et entre le compte de démo :
@@ -154,7 +154,9 @@ http://localhost/ludorivya/public/
 - **classements** : Elo communautaire (podium), jeux les mieux notés, joueurs les plus actifs ;
 - fiche détaillée : description, bilan de duels, avis, **jeux similaires** (par genres partagés).
 
-**Le forum :** sujets de discussion (rattachables à un jeu), réponses, suppression de ses messages.
+**Le forum (façon Reddit/Discord) :** sujets rattachables à un jeu, **votes like/dislike** sur les sujets et les réponses, **réponses imbriquées** (répondre à une réponse), tri par récents/populaires, suppression de ses messages.
+
+**Le côté social :** page **Joueurs** avec recherche par pseudo, **profils publics** (`player.php`), **système d'amis** (demande → acceptation), liste d'amis et demandes en attente sur ton profil.
 
 **Pour les joueurs connectés :** inscription/connexion sécurisées, **XP et niveaux**, notes **aux étoiles** (commentaire facultatif), bibliothèque personnelle (statut + heures), ajout/édition de ses jeux, profil modifiable.
 
@@ -175,7 +177,7 @@ Le site fonctionne **sans connexion internet** : Bootstrap, les icônes, la poli
 
 ## Relations SQL demandées
 
-Le sujet demande au minimum une relation 1-1, une 1-N et une N-N — toutes sont **réellement utilisées** (lecture ET écriture) :
+Le sujet demande au minimum une relation 1-1, une 1-N et une N-N · toutes sont **réellement utilisées** (lecture ET écriture) :
 
 | Type | Tables | Comment c'est utilisé |
 | --- | --- | --- |
@@ -205,6 +207,12 @@ erDiagram
     GAMES     ||--o{ TOPICS          : ""
     TOPICS    ||--o{ TOPIC_REPLIES   : ""
     USERS     ||--o{ TOPIC_REPLIES   : ""
+    TOPIC_REPLIES ||--o{ TOPIC_REPLIES : "imbriquee"
+    USERS     ||--o{ TOPIC_VOTES     : ""
+    TOPICS    ||--o{ TOPIC_VOTES     : ""
+    USERS     ||--o{ REPLY_VOTES     : ""
+    TOPIC_REPLIES ||--o{ REPLY_VOTES : ""
+    USERS     ||--o{ FRIENDSHIPS     : "ami"
 
     GAMES {
         int id PK
@@ -283,9 +291,9 @@ erDiagram
 
 Le catalogue n'est pas tapé à la main : il est **généré par un pipeline reproductible**, versionné dans [`database/dataset/`](database/dataset/) :
 
-1. **`games.json`** — le dataset source : titre, studio, date, PEGI, genres, plateformes, metascore, **description originale** et **appid Steam** de chaque jeu.
-2. **`fetch_covers.ps1`** — télécharge une fois les jaquettes officielles depuis le CDN public de Steam vers `public/assets/img/covers/`. Un appid faux ne renvoie pas d'image → le jeu est écarté (le téléchargement sert de **validation**).
-3. **`build_seed.php`** — génère `database/schema.sql` : les 13 tables, les 328 jeux, les comptes de démo, les avis, le forum, et une **simulation de 150 duels Elo** (graine fixe → reproductible) pour un classement crédible dès l'import.
+1. **`games.json`** · le dataset source : titre, studio, date, PEGI, genres, plateformes, metascore, **description originale** et **appid Steam** de chaque jeu.
+2. **`fetch_covers.ps1`** · télécharge une fois les jaquettes officielles depuis le CDN public de Steam vers `public/assets/img/covers/`. Un appid faux ne renvoie pas d'image → le jeu est écarté (le téléchargement sert de **validation**).
+3. **`build_seed.php`** · génère `database/schema.sql` : les 16 tables, les 328 jeux, les comptes de démo, les avis, le forum, et une **simulation de 150 duels Elo** (graine fixe → reproductible) pour un classement crédible dès l'import.
 
 Pour tout régénérer : `cd database\dataset` puis `powershell -File fetch_covers.ps1` et `php build_seed.php`.
 
@@ -331,11 +339,11 @@ La règle d'or : **le serveur ne fait jamais confiance au client.** Tout est re-
 
 ## Bonus NoSQL
 
-[docs/BONUS_NOSQL.md](docs/BONUS_NOSQL.md) décrit un scénario de montée en charge (millions de jeux, milliards de votes), les requêtes qui deviendraient coûteuses, et une alternative conceptuelle MongoDB — sans implémentation.
+[docs/BONUS_NOSQL.md](docs/BONUS_NOSQL.md) décrit un scénario de montée en charge (millions de jeux, milliards de votes), les requêtes qui deviendraient coûteuses, et une alternative conceptuelle MongoDB · sans implémentation.
 
 ## État du projet
 
-- [x] Base relationnelle 13 tables (1-1, 1-N, 2× N-N, 3× N-N porteuses, forum).
+- [x] Base relationnelle 16 tables (1-1, 1-N, 2× N-N, 3× N-N porteuses, forum).
 - [x] Catalogue de 328 vrais jeux, rétro inclus (jaquettes locales, metascore).
 - [x] Mode Versus : Elo en direct, XP, anti-triche serveur.
 - [x] Classements, forum, notes aux étoiles, CRUD complet.

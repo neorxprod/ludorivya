@@ -135,7 +135,7 @@ $baseQuery = array_filter([
         <div class="filter-search">
             <i class="bi bi-search" aria-hidden="true"></i>
             <label class="visually-hidden" for="q">Recherche</label>
-            <input class="form-control" id="q" name="q" value="<?= e($search) ?>" placeholder="Titre, description ou studio…">
+            <input class="form-control" id="q" name="q" type="search" enterkeyhint="search" value="<?= e($search) ?>" placeholder="Titre, description ou studio…">
         </div>
         <div>
             <label class="visually-hidden" for="genre">Genre</label>

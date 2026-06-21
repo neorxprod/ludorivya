@@ -90,7 +90,7 @@ if (is_logged_in()) {
                 <?php if (!is_logged_in()): ?>
                     <a class="btn btn-accent" href="login.php?redirect=versus.php">Connecte-toi pour voter</a>
                 <?php else: ?>
-                    <span class="text-soft small d-none d-md-inline">Clique sur ton préféré — ou flèches ← →</span>
+                    <span class="text-soft small d-none d-md-inline">Clique sur ton préféré · ou flèches ← →</span>
                 <?php endif; ?>
                 <button type="button" class="btn btn-ghost btn-sm" data-versus-skip><i class="bi bi-shuffle"></i> Je ne connais pas</button>
             </div>

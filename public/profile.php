@@ -56,6 +56,28 @@ $myGames = $myGamesStatement->fetchAll();
 $platforms = $pdo->query('SELECT id, name FROM platforms ORDER BY name')->fetchAll();
 
 $totalHours = array_sum(array_map(static fn (array $row): float => (float)$row['playtime_hours'], $library));
+
+// Mes amis (amities acceptees, dans les deux sens).
+$friendsStatement = $pdo->prepare("
+    SELECT u.id, u.username, u.xp
+    FROM friendships f
+    INNER JOIN users u ON u.id = CASE WHEN f.requester_id = :id1 THEN f.addressee_id ELSE f.requester_id END
+    WHERE f.status = 'accepted' AND (f.requester_id = :id2 OR f.addressee_id = :id3)
+    ORDER BY u.username
+");
+$friendsStatement->execute(['id1' => $userId, 'id2' => $userId, 'id3' => $userId]);
+$friends = $friendsStatement->fetchAll();
+
+// Demandes d'ami recues, en attente de ma reponse.
+$requestsStatement = $pdo->prepare("
+    SELECT u.id, u.username
+    FROM friendships f
+    INNER JOIN users u ON u.id = f.requester_id
+    WHERE f.status = 'pending' AND f.addressee_id = :id
+    ORDER BY f.created_at DESC
+");
+$requestsStatement->execute(['id' => $userId]);
+$requests = $requestsStatement->fetchAll();
 ?>
 
 <section class="container page-head">
@@ -131,6 +153,35 @@ $totalHours = array_sum(array_map(static fn (array $row): float => (float)$row['
         </div>
 
         <aside class="detail-aside">
+            <?php if ($requests !== []): ?>
+                <div class="content-panel reveal">
+                    <h2 class="h5 mb-3"><i class="bi bi-person-plus-fill"></i> Demandes d'ami <span class="badge text-bg-primary"><?= count($requests) ?></span></h2>
+                    <?php foreach ($requests as $req): ?>
+                        <div class="friend-row">
+                            <a href="player.php?id=<?= (int)$req['id'] ?>"><span class="avatar-initial" aria-hidden="true"><?= e(mb_strtoupper(mb_substr($req['username'], 0, 1))) ?></span> <strong><?= e($req['username']) ?></strong></a>
+                            <span class="d-flex gap-1">
+                                <form method="post" action="friend_store.php" class="m-0"><?= csrf_field() ?><input type="hidden" name="user_id" value="<?= (int)$req['id'] ?>"><input type="hidden" name="action" value="accept"><button class="btn btn-accent btn-sm" type="submit"><i class="bi bi-check-lg"></i></button></form>
+                                <form method="post" action="friend_store.php" class="m-0"><?= csrf_field() ?><input type="hidden" name="user_id" value="<?= (int)$req['id'] ?>"><input type="hidden" name="action" value="remove"><button class="btn btn-ghost btn-sm" type="submit"><i class="bi bi-x-lg"></i></button></form>
+                            </span>
+                        </div>
+                    <?php endforeach; ?>
+                </div>
+            <?php endif; ?>
+
+            <div class="content-panel reveal">
+                <h2 class="h5 mb-3"><i class="bi bi-people-fill"></i> Mes amis <span class="text-soft small">(<?= count($friends) ?>)</span></h2>
+                <?php if ($friends === []): ?>
+                    <p class="text-soft mb-0">Pas encore d'amis. Va sur la page <a href="users.php">Joueurs</a> pour en ajouter !</p>
+                <?php else: ?>
+                    <?php foreach ($friends as $friend): ?>
+                        <div class="friend-row">
+                            <a href="player.php?id=<?= (int)$friend['id'] ?>"><span class="avatar-initial" aria-hidden="true"><?= e(mb_strtoupper(mb_substr($friend['username'], 0, 1))) ?></span> <strong><?= e($friend['username']) ?></strong></a>
+                            <span class="level-badge">Niv. <?= level_from_xp((int)$friend['xp']) ?></span>
+                        </div>
+                    <?php endforeach; ?>
+                <?php endif; ?>
+            </div>
+
             <div class="content-panel reveal">
                 <h2 class="h5 mb-3"><i class="bi bi-person-gear"></i> Modifier mon profil</h2>
                 <form method="post" action="profile_update.php">

@@ -2,6 +2,29 @@
 
 declare(strict_types=1);
 
+// Securite : on logue les erreurs mais on ne les AFFICHE jamais au visiteur
+// (une stack trace exposerait le SQL, les tables et les chemins serveur).
+// XAMPP a display_errors=On par defaut : on le force a Off ici.
+error_reporting(E_ALL);
+ini_set('display_errors', '0');
+ini_set('log_errors', '1');
+
+// Toute exception non rattrapee (ex: panne MySQL en cours de page) affiche
+// une page d'erreur generique au lieu de la trace technique.
+set_exception_handler(static function (Throwable $e): void {
+    error_log('[Ludorivya] Exception non geree : ' . $e->getMessage());
+    if (!headers_sent()) {
+        http_response_code(500);
+    }
+    echo '<!doctype html><html lang="fr"><meta charset="utf-8">'
+        . '<title>Erreur - Ludorivya</title>'
+        . '<body style="font-family:system-ui;background:#060a16;color:#f4f3fb;'
+        . 'display:grid;place-items:center;height:100vh;margin:0;text-align:center">'
+        . '<div><h1>Oups, une erreur est survenue</h1>'
+        . '<p>Réessaie dans un instant. Si le problème persiste, vérifie que MySQL est démarré.</p>'
+        . '<p><a href="index.php" style="color:#60a5fa">Retour à l\'accueil</a></p></div></body></html>';
+});
+
 // Durcissement du cookie de session AVANT session_start :
 // - httponly : le cookie n'est pas lisible en JavaScript (anti vol de session)
 // - samesite : le cookie n'est pas envoye depuis un autre site (limite le CSRF)
