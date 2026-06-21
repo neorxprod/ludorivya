@@ -83,7 +83,7 @@ Les jeux du catalogue.
 
 **Relation N-N** : un jeu sort sur plusieurs plateformes, une plateforme accueille plusieurs jeux.
 
-`game_platforms` a une **clé primaire composite** `(game_id, platform_id)` — aucun doublon possible — et porte l'attribut de liaison `release_region`.
+`game_platforms` a une **clé primaire composite** `(game_id, platform_id)` : aucun doublon possible : et porte l'attribut de liaison `release_region`.
 
 ### `genres` et `game_genres`
 

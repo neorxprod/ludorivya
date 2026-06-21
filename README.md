@@ -103,7 +103,6 @@ http://localhost/ludorivya/public/
 | --- | --- |
 | Page **« Base de données non connectée »** | MySQL n'est pas démarré (étape 2) **ou** le schéma n'a pas été importé (étape 3). |
 | Erreur / page blanche | Apache n'est pas démarré, ou le dossier n'est pas dans `htdocs` (étape 4). |
-| **`localhost:8123` ne marche pas** | C'est une adresse de **test temporaire**. L'adresse réelle est **`http://localhost/ludorivya/public/`** (via Apache). |
 | Identifiants MySQL personnalisés | Copie `config/database.example.php` en `config/database.php` et mets-y tes identifiants (ce fichier est ignoré par Git). |
 
 ---
@@ -212,7 +211,7 @@ erDiagram
     TOPICS    ||--o{ TOPIC_VOTES     : ""
     USERS     ||--o{ REPLY_VOTES     : ""
     TOPIC_REPLIES ||--o{ REPLY_VOTES : ""
-    USERS     ||--o{ FRIENDSHIPS     : "ami"
+    USERS     ||--o{ FRIENDSHIPS     : "demande / recoit"
 
     GAMES {
         int id PK

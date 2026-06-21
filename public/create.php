@@ -41,7 +41,7 @@ $genres = $pdo->query('SELECT id, name FROM genres ORDER BY name')->fetchAll();
                 <div class="invalid-feedback">Une date de sortie est requise.</div>
             </div>
             <div class="col-md-8">
-                <label class="form-label" for="studio_id">Studio (relation 1-N)</label>
+                <label class="form-label" for="studio_id">Studio</label>
                 <select class="form-select" id="studio_id" name="studio_id" required>
                     <option value="">Choisir un studio…</option>
                     <?php foreach ($studios as $studio): ?>
@@ -68,7 +68,7 @@ $genres = $pdo->query('SELECT id, name FROM genres ORDER BY name')->fetchAll();
 
             <div class="col-md-6">
                 <fieldset>
-                    <legend class="form-label">Plateformes <span class="text-soft">(relation N-N)</span></legend>
+                    <legend class="form-label">Plateformes</legend>
                     <div class="choice-grid" data-required-group="platform_ids[]">
                         <?php foreach ($platforms as $platform): ?>
                             <div class="form-check">
@@ -82,7 +82,7 @@ $genres = $pdo->query('SELECT id, name FROM genres ORDER BY name')->fetchAll();
             </div>
             <div class="col-md-6">
                 <fieldset>
-                    <legend class="form-label">Genres <span class="text-soft">(relation N-N)</span></legend>
+                    <legend class="form-label">Genres</legend>
                     <div class="choice-grid" data-required-group="genre_ids[]">
                         <?php foreach ($genres as $genre): ?>
                             <div class="form-check">

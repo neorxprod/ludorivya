@@ -50,7 +50,7 @@ $gamesList = $pdo->query('SELECT id, title FROM games ORDER BY title')->fetchAll
                 <div class="row g-3">
                     <div class="col-md-8">
                         <label class="form-label" for="title">Titre du sujet</label>
-                        <input class="form-control" id="title" name="title" required minlength="4" maxlength="150" placeholder="Ex : Votre boss le plus dur de tous les temps ?">
+                        <input class="form-control" id="title" name="title" required minlength="4" maxlength="150" placeholder="Ex : Ton boss le plus dur de tous les temps ?">
                     </div>
                     <div class="col-md-4">
                         <label class="form-label" for="game_id">Jeu concerné <span class="text-soft">(facultatif)</span></label>

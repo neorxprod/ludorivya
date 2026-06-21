@@ -98,7 +98,7 @@ $requests = $requestsStatement->fetchAll();
                 <span class="xp-track flex-grow-1 reveal revealed"><span class="xp-fill" style="--xp-width: <?= level_progress((int)$profile['xp']) ?>%"></span></span>
                 <span class="text-soft small"><?= (int)$profile['xp'] ?> XP</span>
             </div>
-            <p class="text-soft small mt-1 mb-0">Gagne de l'XP en jouant des <a href="versus.php">duels</a> (+5), en publiant des avis (+20) et en enrichissant le catalogue (+30).</p>
+            <p class="text-soft small mt-1 mb-0">Gagne de l'XP : <a href="versus.php">duels</a> (+5), bibliothèque (+10), sujet de forum (+15), réponse (+5), avis (+20), jeu ajouté au catalogue (+30).</p>
         </div>
     </div>
 </section>

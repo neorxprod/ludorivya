@@ -51,7 +51,7 @@ try {
             if ($status === 'pending_received') {
                 $pdo->prepare('UPDATE friendships SET status = \'accepted\' WHERE requester_id = :r AND addressee_id = :a')
                     ->execute(['r' => $otherId, 'a' => $me]);
-                flash('success', 'Vous êtes maintenant amis !');
+                flash('success', 'Ami ajouté !');
             }
             break;
 

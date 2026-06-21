@@ -74,7 +74,7 @@ render_header('Modifier · ' . $game['title'], 'games');
                 <div class="invalid-feedback">Une date de sortie est requise.</div>
             </div>
             <div class="col-md-8">
-                <label class="form-label" for="studio_id">Studio (relation 1-N)</label>
+                <label class="form-label" for="studio_id">Studio</label>
                 <select class="form-select" id="studio_id" name="studio_id" required>
                     <?php foreach ($studios as $studio): ?>
                         <option value="<?= (int)$studio['id'] ?>" <?= (int)$studio['id'] === (int)$game['studio_id'] ? 'selected' : '' ?>><?= e($studio['name']) ?></option>
@@ -99,7 +99,7 @@ render_header('Modifier · ' . $game['title'], 'games');
 
             <div class="col-md-6">
                 <fieldset>
-                    <legend class="form-label">Plateformes <span class="text-soft">(relation N-N)</span></legend>
+                    <legend class="form-label">Plateformes</legend>
                     <div class="choice-grid" data-required-group="platform_ids[]">
                         <?php foreach ($platforms as $platform): ?>
                             <div class="form-check">
@@ -113,7 +113,7 @@ render_header('Modifier · ' . $game['title'], 'games');
             </div>
             <div class="col-md-6">
                 <fieldset>
-                    <legend class="form-label">Genres <span class="text-soft">(relation N-N)</span></legend>
+                    <legend class="form-label">Genres</legend>
                     <div class="choice-grid" data-required-group="genre_ids[]">
                         <?php foreach ($genres as $genre): ?>
                             <div class="form-check">

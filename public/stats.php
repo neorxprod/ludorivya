@@ -112,7 +112,7 @@ $maxHours = max(1.0, (float)max(array_column($topPlayers, 'total_hours') ?: [1])
                     <?php foreach ($topGames as $row): ?>
                         <li>
                             <a href="game.php?id=<?= (int)$row['id'] ?>"><?= e($row['title']) ?></a>
-                            <span class="rating-pill"><i class="bi bi-star-fill"></i> <?= format_rating((string)$row['average_rating']) ?>/20</span>
+                            <span class="rating-pill"><i class="bi bi-star-fill"></i> <?= format_stars10((string)$row['average_rating']) ?>/10</span>
                             <span class="text-soft small"><?= (int)$row['review_count'] ?> avis</span>
                         </li>
                     <?php endforeach; ?>
@@ -121,7 +121,7 @@ $maxHours = max(1.0, (float)max(array_column($topPlayers, 'total_hours') ?: [1])
         </div>
 
         <div class="content-panel reveal" style="--reveal-delay: 90ms">
-            <h2 class="h5 mb-3"><i class="bi bi-fire"></i> Joueurs les plus actifs</h2>
+            <h2 class="h5 mb-3"><i class="bi bi-fire"></i> Joueurs les plus actifs <span class="text-soft small">(heures de jeu)</span></h2>
             <?php foreach ($topPlayers as $row): ?>
                 <div class="bar-row">
                     <span class="bar-label"><?= e($row['username']) ?></span>

@@ -118,7 +118,7 @@ $rest = array_slice($eloRanking, 3);
         </div>
 
         <div class="content-panel reveal">
-            <h2 class="h5 mb-3"><i class="bi bi-lightning-charge-fill"></i> Joueurs les plus actifs</h2>
+            <h2 class="h5 mb-3"><i class="bi bi-lightning-charge-fill"></i> Top des joueurs <span class="text-soft small">(par XP)</span></h2>
             <?php foreach ($topPlayers as $i => $player): ?>
                 <div class="rank-row">
                     <span class="rank-pos <?= $i === 0 ? 'gold' : ($i === 1 ? 'silver' : ($i === 2 ? 'bronze' : '')) ?>"><?= $i + 1 ?></span>
